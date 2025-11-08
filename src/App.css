@@ -1,0 +1,13 @@
+/*
+This applies padding to the app to avoid placing elements in areas on mobile where they can't be interacted with.
+For example, in the area in the top left where the time is shown on Android, anything underneath it can't be used.
+ */
+#root {
+    height: 100%;
+
+    padding-top: var(--safe-area-inset-top);
+    padding-bottom: var(--safe-area-inset-bottom);
+
+    /* This background colour will only be shown in the padding area defined above. */
+    background-color: black;
+}
