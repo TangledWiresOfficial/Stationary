@@ -1,15 +1,18 @@
 import {
   Masthead,
-  MastheadMain, MastheadToggle,
-  Nav,
+  MastheadMain,
+  MastheadToggle,
+  Nav, NavItem,
   NavList,
   Page,
   PageBody,
   PageSidebar,
-  PageSidebarBody, PageToggleButton
+  PageSidebarBody,
+  PageToggleButton
 } from "@patternfly/react-core";
-import {NavLink, Outlet} from "react-router";
+import {Outlet} from "react-router";
 import {useState} from "react";
+import NavLink from "./components/NavLink.tsx";
 
 export default function Root() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -38,6 +41,7 @@ export default function Root() {
         <Nav>
           <NavList>
             <NavLink to="/">Home</NavLink>
+            <NavLink to="/addjourney">Add journey</NavLink>
           </NavList>
         </Nav>
       </PageSidebarBody>

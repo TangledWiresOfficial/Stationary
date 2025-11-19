@@ -27,6 +27,7 @@ First, make sure you install the following dependencies: (or use the `shell.nix`
 - `gobject-introspection`
 - `gtk3`
 - `harfbuzz`
+- `jdk21`
 - `librsvg`
 - `libsoup_3`
 - `make`

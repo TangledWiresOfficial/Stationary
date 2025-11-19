@@ -4,7 +4,7 @@ export default function Index() {
   return (
     <PageSection>
       <Content>
-        <h1>Test</h1>
+        <h1>Home</h1>
       </Content>
     </PageSection>
   );

@@ -18,6 +18,7 @@ pkgs.mkShell {
     cargo-tauri
     gnumake
     gobject-introspection
+    jdk21
     nodejs
     pkg-config
   ];
