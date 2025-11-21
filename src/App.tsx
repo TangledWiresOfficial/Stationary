@@ -2,6 +2,7 @@ import {createBrowserRouter, RouterProvider} from "react-router";
 import Root from "./Root.tsx";
 import Index from "./routes/Index.tsx";
 import AddJourney from "./routes/AddJourney.tsx";
+import Dev from "./routes/Dev.tsx";
 
 const router = createBrowserRouter([
   {
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
       {
         path: "/addjourney",
         element: <AddJourney />,
+      },
+      {
+        path: "/dev",
+        element: <Dev />,
       },
     ],
   }

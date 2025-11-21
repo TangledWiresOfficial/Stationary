@@ -1,11 +1,7 @@
-import {Content, PageSection} from "@patternfly/react-core";
+import PageHeader from "../components/PageHeader.tsx";
 
 export default function Index() {
   return (
-    <PageSection>
-      <Content>
-        <h1>Home</h1>
-      </Content>
-    </PageSection>
+    <PageHeader title="Home" />
   );
 }

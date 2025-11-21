@@ -1,14 +1,12 @@
 import {Content, PageSection} from "@patternfly/react-core";
-import {Lines, Stations} from "../utils/data.ts";
+import {Stations} from "../utils/station.ts";
+import {Lines} from "../utils/line.ts";
+import PageHeader from "../components/PageHeader.tsx";
 
-export default function AddJourney({}) {
+export default function AddJourney() {
   return (
     <>
-      <PageSection>
-        <Content>
-          <h1>Add journey</h1>
-        </Content>
-      </PageSection>
+      <PageHeader title="Add journey" />
       <PageSection>
         {Object.entries(Stations).map(([key, station]) => (
           <div key={key}>

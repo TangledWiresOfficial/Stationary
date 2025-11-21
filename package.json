@@ -14,9 +14,12 @@
     "@saurl/tauri-plugin-safe-area-insets-css-api": "^0.1.0",
     "@tauri-apps/api": "^2",
     "@tauri-apps/plugin-opener": "^2",
+    "@tauri-apps/plugin-store": "^2.4.1",
+    "@types/uuid": "^10.0.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "react-router": "^7.9.4"
+    "react-router": "^7.9.4",
+    "uuid": "^13.0.0"
   },
   "devDependencies": {
     "@tauri-apps/cli": "^2",
