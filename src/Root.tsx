@@ -42,6 +42,8 @@ export default function Root() {
           <NavList>
             <NavLink to="/">Home</NavLink>
             <NavLink to="/addjourney">Add journey</NavLink>
+            <NavLink to="/journeyhistory">Journey history</NavLink>
+
             {import.meta.env.DEV && (
               <NavLink to="/dev">Dev tools</NavLink>
             )}

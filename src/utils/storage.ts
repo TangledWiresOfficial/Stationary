@@ -1,5 +1,5 @@
 import {LazyStore} from "@tauri-apps/plugin-store";
-import {Journey} from "./journey.ts";
+import {isJourneyData, Journey, toJourney} from "./journey.ts";
 
 const STORE_PATH = "userdata.json";
 
@@ -14,7 +14,13 @@ export class Storage {
 
   // Get the list of journeys
   public async getJourneys() {
-    return await this.store.get(JOURNEYS_KEY);
+    const raw = await this.store.get(JOURNEYS_KEY);
+
+    if (!Array.isArray(raw)) return [];
+
+    return raw
+      .filter(isJourneyData)
+      .map(toJourney);
   }
 
   // Set the list of journeys
