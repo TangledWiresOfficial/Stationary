@@ -46,7 +46,6 @@ export const Lines = {
   waterlooAndCity: {
     displayName: "Waterloo & City",
     colour: "#6eceb2"
-
   },
   elizabeth: {
     displayName: "Elizabeth Line",
