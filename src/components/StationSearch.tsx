@@ -1,4 +1,4 @@
-import {StationId, Stations} from "../utils/station.ts";
+import {StationId, stationIds, Stations} from "../utils/station.ts";
 import {JSX, useEffect, useRef, useState} from "react";
 import {Menu, MenuContent, MenuItem, MenuList, Popper, SearchInput} from "@patternfly/react-core";
 
@@ -32,11 +32,11 @@ export function StationSearch({onUpdate, maxAutocompleteOptions = 10}: StationSe
       // When the value of the search input changes, build a list of no more than 10 autocomplete options.
       // Options which start with the search input value are listed first, followed by options which contain
       // the search input value.
-      let options = Object.entries(Stations)
-        .map(([key, station]) => [key, station.displayName])
-        .filter(([_key, station]) => station.toLowerCase().startsWith(newValue.toLowerCase()))
-        .map(([key, station]) => (
-          <MenuItem itemId={station} key={key}>
+      let options = stationIds
+        .map((id) => [id, Stations[id].displayName])
+        .filter(([_id, station]) => station.toLowerCase().startsWith(newValue.toLowerCase()))
+        .map(([id, station]) => (
+          <MenuItem itemId={id} key={id}>
             {station}
           </MenuItem>
         ));
@@ -55,10 +55,10 @@ export function StationSearch({onUpdate, maxAutocompleteOptions = 10}: StationSe
 
   // Whenever an autocomplete option is selected, set the search input value, close the menu, and put the browser
   // focus back on the search input
-  const onSelect = (e: any, itemId: any) => {
+  const onSelect = (e: any, itemId: StationId) => {
     e.stopPropagation();
     onUpdate(itemId)
-    setValue(itemId);
+    setValue(Stations[itemId].displayName);
     setIsAutocompleteOpen(false);
     searchInputRef.current.focus();
   };

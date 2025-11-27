@@ -297,3 +297,4 @@ export const Stations = {
 } as const satisfies Record<string, Station>;
 
 export type StationId = keyof typeof Stations;
+export const stationIds = Object.keys(Stations) as StationId[];
