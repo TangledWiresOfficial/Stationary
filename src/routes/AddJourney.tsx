@@ -22,7 +22,7 @@ export function AddJourney() {
             </Content>
           </div>
         ))}
-        <StationSearch onUpdate={(selectedId) => console.log(selectedId)} maxAutocompleteOptions={100} />
+        <StationSearch onUpdate={(selectedId) => console.log(selectedId)} />
       </PageSection>
     </>
   )

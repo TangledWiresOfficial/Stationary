@@ -5,7 +5,7 @@ import {LineId, Lines} from "../utils/line.ts";
 
 type StationSearchProps = {
   onUpdate: (selected: [StationId, LineId]) => void;
-  maxAutocompleteOptions: number;
+  maxAutocompleteOptions?: number;
 };
 
 export function StationSearch({onUpdate, maxAutocompleteOptions = 10}: StationSearchProps) {
