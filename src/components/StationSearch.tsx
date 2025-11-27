@@ -110,7 +110,6 @@ export function StationSearch({onUpdate, maxAutocompleteOptions = 10}: StationSe
       window.removeEventListener('keydown', handleMenuKeys);
       window.removeEventListener('click', handleClickOutside);
     };
-  // }, [isAutocompleteOpen, hint, searchInputRef.current]);
   }, [isAutocompleteOpen, searchInputRef.current]);
 
   const searchInput = (
