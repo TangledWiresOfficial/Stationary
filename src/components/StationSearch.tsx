@@ -9,7 +9,6 @@ type StationSearchProps = {
 
 export function StationSearch({onUpdate, maxAutocompleteOptions = 10}: StationSearchProps) {
   const [value, setValue] = useState('');
-  const [hint, setHint] = useState('');
   const [autocompleteOptions, setAutocompleteOptions] = useState<JSX.Element[]>([]);
 
   const [isAutocompleteOpen, setIsAutocompleteOpen] = useState(false);
@@ -35,30 +34,16 @@ export function StationSearch({onUpdate, maxAutocompleteOptions = 10}: StationSe
       // the search input value.
       let options = Object.entries(Stations)
         .map(([key, station]) => [key, station.displayName])
-        .filter(([_key, option]) => option.startsWith(newValue.toLowerCase()))
-        .map(([key, option]) => (
-          <MenuItem itemId={option} key={key}>
-            {option}
+        .filter(([_key, station]) => station.toLowerCase().startsWith(newValue.toLowerCase()))
+        .map(([key, station]) => (
+          <MenuItem itemId={station} key={key}>
+            {station}
           </MenuItem>
         ));
       if (options.length > maxAutocompleteOptions) {
         options = options.slice(0, maxAutocompleteOptions);
-      } else {
-        options = [
-          ...options,
-          ...Object.entries(Stations)
-            .map(([key, station]) => [key, station.displayName])
-            .filter(([_key, station]) => !station.startsWith(newValue.toLowerCase()) && station.includes(newValue.toLowerCase()))
-            .map(([key, station]) => (
-              <MenuItem itemId={station} key={key}>
-                {station}
-              </MenuItem>
-            ))
-        ].slice(0, maxAutocompleteOptions);
       }
 
-      // The hint is set whenever there is only one autocomplete option left.
-      setHint(options.length === 1 ? options[0].props.itemId : '');
       // The menu is hidden if there are no options
       setIsAutocompleteOpen(options.length > 0);
       setAutocompleteOptions(options);
@@ -79,17 +64,7 @@ export function StationSearch({onUpdate, maxAutocompleteOptions = 10}: StationSe
   };
 
   const handleMenuKeys = (event: any) => {
-    // If there is a hint while the browser focus is on the search input, tab or right arrow will 'accept' the hint value
-    // and set it as the search input value
-    if (hint && (event.key === 'Tab' || event.key === 'ArrowRight') && searchInputRef.current === event.target) {
-      setValue(hint);
-      setHint('');
-      setIsAutocompleteOpen(false);
-      if (event.key === 'ArrowRight') {
-        event.preventDefault();
-      }
-      // if the autocomplete is open and the browser focus is on the search input,
-    } else if (isAutocompleteOpen && searchInputRef.current && searchInputRef.current === event.target) {
+    if (isAutocompleteOpen && searchInputRef.current && searchInputRef.current === event.target) {
       // the escape key closes the autocomplete menu and keeps the focus on the search input.
       if (event.key === 'Escape') {
         setIsAutocompleteOpen(false);
@@ -101,9 +76,9 @@ export function StationSearch({onUpdate, maxAutocompleteOptions = 10}: StationSe
         event.preventDefault(); // by default, the up and down arrow keys scroll the window
         // the tab, enter, and space keys will close the menu, and the tab key will move browser
         // focus forward one element (by default)
-      } else if (event.key === 'Tab' || event.key === 'Enter' || event.key === ' ') {
+      } else if (event.key === 'Tab' || event.key === 'Enter') {
         setIsAutocompleteOpen(false);
-        if (event.key === 'Enter' || event.key === ' ') {
+        if (event.key === 'Enter') {
           event.preventDefault();
         }
       }
@@ -135,7 +110,8 @@ export function StationSearch({onUpdate, maxAutocompleteOptions = 10}: StationSe
       window.removeEventListener('keydown', handleMenuKeys);
       window.removeEventListener('click', handleClickOutside);
     };
-  }, [isAutocompleteOpen, hint, searchInputRef.current]);
+  // }, [isAutocompleteOpen, hint, searchInputRef.current]);
+  }, [isAutocompleteOpen, searchInputRef.current]);
 
   const searchInput = (
     <SearchInput
@@ -143,7 +119,6 @@ export function StationSearch({onUpdate, maxAutocompleteOptions = 10}: StationSe
       onChange={onChange}
       onClear={onClear}
       ref={searchInputRef}
-      hint={hint}
       id="autocomplete-search"
       aria-label='Search with autocomplete'
     />
