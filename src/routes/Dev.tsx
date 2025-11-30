@@ -7,7 +7,20 @@ import {Lines} from "../utils/line.ts";
 
 export function Dev() {
   const addTestJourney = async () => {
-    await new Journey(Date.now(), ["actonTown", "aldgate"]).save()
+    await new Journey(Date.now(), [
+      {
+        station: "paddington",
+        line: "circle"
+      },
+      {
+        station: "bakerStreet",
+        line: "circle",
+      },
+      {
+        station: "stratford",
+        line: "jubilee"
+      }
+    ]).save()
   };
 
   return (

@@ -1,14 +1,22 @@
 import {StationId, stationIds, Stations} from "../utils/station.ts";
 import {JSX, useEffect, useRef, useState} from "react";
 import {Content, Menu, MenuContent, MenuItem, MenuList, Popper, SearchInput} from "@patternfly/react-core";
-import {LineId, Lines} from "../utils/line.ts";
+import {Lines} from "../utils/line.ts";
+import {JourneyPart} from "../utils/journey.ts";
 
 type StationSearchProps = {
-  onUpdate: (selected: [StationId, LineId]) => void;
+  stations?: StationId[];
+  exclude?: StationId[];
+  onUpdate?: (selected: JourneyPart) => void;
   maxAutocompleteOptions?: number;
 };
 
-export function StationSearch({onUpdate, maxAutocompleteOptions = 10}: StationSearchProps) {
+export function StationSearch({
+  stations = stationIds,
+  exclude = [],
+  onUpdate = () => undefined,
+  maxAutocompleteOptions = 10
+}: StationSearchProps) {
   const [value, setValue] = useState('');
   const [autocompleteOptions, setAutocompleteOptions] = useState<JSX.Element[]>([]);
 
@@ -33,11 +41,15 @@ export function StationSearch({onUpdate, maxAutocompleteOptions = 10}: StationSe
       // When the value of the search input changes, build a list of no more than 10 autocomplete options.
       // Options which start with the search input value are listed first, followed by options which contain
       // the search input value.
-      let options = stationIds
+      let options = stations
+        .filter((stationId) => !exclude.includes(stationId))
         .flatMap((stationId) => Stations[stationId].lines.map((lineId) => [stationId, lineId] as const))
         .filter(([stationId, _lineId]) => Stations[stationId].displayName.toLowerCase().startsWith(newValue.toLowerCase()))
         .map(([stationId, lineId]) => (
-          <MenuItem itemId={[stationId, lineId]} key={stationId + "." + lineId}>
+          <MenuItem itemId={{
+            station: stationId,
+            line: lineId
+          } satisfies JourneyPart} key={stationId + "." + lineId}>
             <div style={{ borderLeft: `4px solid ${Lines[lineId].colour}`, padding: "4px" }}>
               <Content>
                 <h5>{Stations[stationId].displayName}</h5>
@@ -61,7 +73,7 @@ export function StationSearch({onUpdate, maxAutocompleteOptions = 10}: StationSe
 
   // Whenever an autocomplete option is selected, set the search input value, close the menu, and put the browser
   // focus back on the search input
-  const onSelect = (e: any, itemId: [StationId, LineId]) => {
+  const onSelect = (e: any, itemId: JourneyPart) => {
     e.stopPropagation();
     onUpdate(itemId)
     setValue("");
@@ -124,8 +136,9 @@ export function StationSearch({onUpdate, maxAutocompleteOptions = 10}: StationSe
       onChange={onChange}
       onClear={onClear}
       ref={searchInputRef}
-      id="autocomplete-search"
-      aria-label='Search with autocomplete'
+      id="station-search"
+      aria-label="Search for a station"
+      placeholder="Search for a station"
     />
   );
 
@@ -146,7 +159,7 @@ export function StationSearch({onUpdate, maxAutocompleteOptions = 10}: StationSe
       isVisible={isAutocompleteOpen}
       enableFlip={false}
       // append the autocomplete menu to the search input in the DOM for the sake of the keyboard navigation experience
-      appendTo={() => document.querySelector('#autocomplete-search')!}
+      appendTo={() => document.querySelector('#station-search')!}
     />
   );
 }

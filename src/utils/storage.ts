@@ -19,7 +19,14 @@ export class Storage {
     if (!Array.isArray(raw)) return [];
 
     return raw
-      .filter(isJourneyData)
+      .filter((e) => {
+        if (!isJourneyData(e)) {
+          console.error("Invalid journey data found: " + JSON.stringify(e))
+          return false;
+        }
+
+        return true;
+      })
       .map(toJourney);
   }
 

@@ -1,10 +1,16 @@
 import {StationId} from "./station.ts";
 import {v4} from "uuid";
 import {storage} from "./storage.ts";
+import {LineId} from "./line.ts";
+
+export type JourneyPart = {
+  station: StationId;
+  line: LineId;
+};
 
 export type JourneyData = {
   timestamp: number;
-  stations: StationId[];
+  parts: JourneyPart[];
   uuid?: string;
 };
 
@@ -12,13 +18,18 @@ export function isJourneyData(data: any): data is JourneyData {
   return (
     data !== null && typeof data === "object" &&
     typeof data.timestamp === "number" &&
-    Array.isArray(data.stations) && data.stations.every((s: any) => typeof s === "string") &&
+    Array.isArray(data.parts) && data.parts.every((p: any) => {
+      return p !== null &&
+      typeof p === "object" &&
+      typeof p.station === "string" &&
+      typeof p.line === "string";
+    }) &&
     (data.uuid === undefined || typeof data.uuid === "string")
   );
 }
 
 export function toJourney(data: JourneyData) {
-  const journey = new Journey(data.timestamp, data.stations);
+  const journey = new Journey(data.timestamp, data.parts);
   journey.uuid = data.uuid;
 
   return journey;
@@ -26,14 +37,14 @@ export function toJourney(data: JourneyData) {
 
 export class Journey {
   public readonly timestamp: number;
-  public stations: StationId[];
+  public parts: JourneyPart[];
 
   // UUID will only be set once save() is called
   public uuid?: string;
 
-  constructor(timestamp: number, stations: StationId[]) {
+  constructor(timestamp: number, parts: JourneyPart[]) {
     this.timestamp = timestamp;
-    this.stations = stations;
+    this.parts = parts;
   }
 
   public async save() {
