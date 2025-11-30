@@ -72,7 +72,6 @@ jobs:
           args: ${{ matrix.args }}
 
       - uses: actions/upload-artifact@v4
-        if: matrix.platform == 'ubuntu-22.04'
         with:
-          name: bin-linux
+          name: '${{ matrix.platform }}-bin'
           path: ${{ matrix.artifacts }}
