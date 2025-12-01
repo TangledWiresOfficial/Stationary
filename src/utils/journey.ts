@@ -50,7 +50,7 @@ export class Journey {
   public async save() {
     this.uuid = v4();
 
-    let journeys = (await storage.getJourneys()) as Journey[];
+    let journeys = await storage.getJourneys();
 
     journeys.push(this);
 
