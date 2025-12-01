@@ -19,8 +19,8 @@ export function JourneyHistory() {
       <PageSection>
         <List isPlain>
           {journeys.map((j) => (
-            <ListItem>
-              <Card key={j.uuid}>
+            <ListItem key={j.uuid}>
+              <Card>
                 <CardTitle>
                   {Stations[j.parts[0].station].displayName} <Icon><AngleRightIcon /></Icon> {Stations[j.parts[j.parts.length - 1].station].displayName}
                 </CardTitle>
