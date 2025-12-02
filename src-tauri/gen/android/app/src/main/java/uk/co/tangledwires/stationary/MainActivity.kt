@@ -1,4 +1,4 @@
-package xyz.tangledwires.stationary
+package uk.co.tangledwires.stationary
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge

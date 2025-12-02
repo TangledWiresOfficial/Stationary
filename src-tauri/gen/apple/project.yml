@@ -1,6 +1,6 @@
 name: stationary
 options:
-  bundleIdPrefix: xyz.tangledwires.stationary
+  bundleIdPrefix: uk.co.tangledwires.stationary
   deploymentTarget:
     iOS: 14.0
 fileGroups: [../../src]
@@ -11,7 +11,7 @@ settingGroups:
   app:
     base:
       PRODUCT_NAME: stationary
-      PRODUCT_BUNDLE_IDENTIFIER: xyz.tangledwires.stationary
+      PRODUCT_BUNDLE_IDENTIFIER: uk.co.tangledwires.stationary
 targetTemplates:
   app:
     type: application
