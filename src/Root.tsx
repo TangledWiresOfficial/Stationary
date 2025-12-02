@@ -38,7 +38,7 @@ export function Root() {
   const sidebar = (
     <PageSidebar isSidebarOpen={isSidebarOpen}>
       <PageSidebarBody>
-        <Nav>
+        <Nav onSelect={() => setIsSidebarOpen(false)}>
           <NavList>
             <NavLink to="/">Home</NavLink>
             <NavLink to="/addjourney">Add journey</NavLink>
