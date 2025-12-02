@@ -58,9 +58,9 @@ jobs:
             mobile: 'android'
             artifacts: []
 
-          - platform: 'macos-latest' # for Arm based macs (M1 and above).
+          - platform: 'macos-latest'
             name: 'ios'
-            args: '--target aarch64-apple-darwin'
+            args: ''
             mobile: 'ios'
             artifacts: []
 
