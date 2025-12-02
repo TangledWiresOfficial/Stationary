@@ -1,17 +1,11 @@
 import {PageHeader} from "../components/PageHeader.tsx";
 import {Card, CardBody, CardFooter, CardTitle, Icon, List, ListItem, PageSection} from "@patternfly/react-core";
 import AngleRightIcon from '@patternfly/react-icons/dist/esm/icons/angle-right-icon';
-import {storage} from "../utils/storage.ts";
 import {Stations} from "../utils/station.ts";
-import {useEffect, useState} from "react";
-import {Journey} from "../utils/journey.ts";
+import {useJourneys} from "../hooks/useJourneys.ts";
 
 export function JourneyHistory() {
-  const [journeys, setJourneys] = useState<Journey[]>([]);
-
-  useEffect(() => {
-    storage.getJourneys().then(setJourneys);
-  }, []);
+  const journeys = useJourneys();
 
   return (
     <>

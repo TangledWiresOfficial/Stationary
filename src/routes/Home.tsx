@@ -2,8 +2,8 @@ import {PageHeader} from "../components/PageHeader.tsx";
 import {PageSection} from "@patternfly/react-core";
 import {ChartDonut, ChartLabel} from "@patternfly/react-charts/victory";
 import {VictoryStyleInterface} from "victory-core";
-import {getVisitsPerLine, LineId, Lines, VisitsPerLine} from "../utils/line.ts";
-import {useEffect, useState} from "react";
+import {LineId, Lines} from "../utils/line.ts";
+import {useVisitsPerLine} from "../hooks/useVisitsPerLine.ts";
 
 const stationChartStyle: VictoryStyleInterface = {
   data: {
@@ -12,11 +12,7 @@ const stationChartStyle: VictoryStyleInterface = {
 };
 
 export function Home() {
-  const [visitsPerLine, setVisitsPerLine] = useState<VisitsPerLine>();
-
-  useEffect(() => {
-    getVisitsPerLine().then(setVisitsPerLine);
-  }, []);
+  const visitsPerLine = useVisitsPerLine();
 
   return (
     <>
