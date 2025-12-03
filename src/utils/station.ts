@@ -24,7 +24,7 @@ export const Stations = {
   archway: { displayName: "Archway", lines: ["northern"] },
   arnosGrove: { displayName: "Arnos Grove", lines: ["piccadilly"] },
   arsenal: { displayName: "Arsenal", lines: ["piccadilly"] },
-  avenueRoad: { displayName: "Avenue Road", lines: ["northern"] },
+  avenueRoad: { displayName: "Avenue Road", lines: ["trams"] },
 
   bakerStreet: { displayName: "Baker Street", lines: ["metropolitan", "bakerloo", "circle", "jubilee", "hammersmithAndCity"] },
   balham: { displayName: "Balham", lines: ["northern"] },
