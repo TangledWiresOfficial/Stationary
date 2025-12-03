@@ -1,4 +1,5 @@
 import {LineId} from "./line.ts";
+import {storage} from "./storage.ts";
 
 export type Station = {
   displayName: string;
@@ -348,7 +349,7 @@ export const Stations = {
   southActon: { displayName: "South Acton", lines: ["mildmay"] },
   southall: { displayName: "Southall", lines: ["elizabeth"] },
   southEaling: { displayName: "South Ealing", lines: ["piccadilly"] },
-  southHampstead: { displayName: "South Hampstead", lines: ["Lioness"] },
+  southHampstead: { displayName: "South Hampstead", lines: ["lioness"] },
   southHarrow: { displayName: "South Harrow", lines: ["piccadilly"] },
   southKensington: { displayName: "South Kensington", lines: ["district", "circle", "piccadilly"] },
   southKenton: { displayName: "South Kenton", lines: ["bakerloo", "lioness"] },
@@ -448,4 +449,23 @@ export const Stations = {
 } as const satisfies Record<string, Station>;
 
 export type StationId = keyof typeof Stations;
-export const StationIds = Object.keys(Stations) as StationId[];
+export const stationIds = Object.keys(Stations) as StationId[];
+
+// Returned from `getVisitsPerStation`
+export type VisitsPerStation = {
+  [K in StationId]: number;
+};
+
+// Get how many times each station has been visited
+export async function getVisitsPerStation() {
+  const journeys = await storage.getJourneys();
+  const visitsPerStation = Object.fromEntries(Object.keys(Stations).map((id) => [id, 0])) as VisitsPerStation;
+
+  for (const journey of journeys) {
+    for (const part of journey.parts) {
+      visitsPerStation[part.station] += 1;
+    }
+  }
+
+  return visitsPerStation;
+}
