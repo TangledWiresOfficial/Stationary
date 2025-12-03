@@ -56,7 +56,7 @@ jobs:
             name: 'android'
             args: ''
             mobile: 'android'
-            artifacts: []
+            artifacts: src-tauri/gen/android/app/build/outputs/apk/universal/release/*.apk
 
 #          - platform: 'macos-latest'
 #            name: 'ios'
