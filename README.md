@@ -21,7 +21,6 @@ First, make sure you install the following dependencies: (or use the `shell.nix`
 - `atkmm`
 - `cairo`
 - `cargo`
-- `cargo-tauri`
 - `gdk-pixbuf`
 - `glib`
 - `gobject-introspection`

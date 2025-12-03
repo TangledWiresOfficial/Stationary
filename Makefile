@@ -1,4 +1,4 @@
-TAURI=cargo tauri
+TAURI=npm run tauri
 
 .PHONY: build
 build:

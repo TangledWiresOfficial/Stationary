@@ -15,7 +15,6 @@ in
 pkgs.mkShell {
   nativeBuildInputs = with pkgs; [
     cargo
-    cargo-tauri
     gnumake
     gobject-introspection
     jdk21
