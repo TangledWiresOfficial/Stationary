@@ -100,7 +100,7 @@ export function Home() {
                               .sort(([_stationA, visitsA], [_stationB, visitsB]) => visitsB - visitsA)
                               .slice(0, 10)
                               .map(([station, visits]) => (
-                                <ListItem>
+                                <ListItem key={station}>
                                   <Flex>
                                     <FlexItem grow={{ default: 'grow' }}>
                                       {Stations[station as StationId].displayName}
