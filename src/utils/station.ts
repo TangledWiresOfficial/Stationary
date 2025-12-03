@@ -316,7 +316,7 @@ export const Stations = {
   southActon: { displayName: "South Acton", lines: ["mildmay"] },
   southall: { displayName: "Southall", lines: ["elizabeth"] },
   southEaling: { displayName: "South Ealing", lines: ["piccadilly"] },
-  southHampstead: { displayName: "South Hampstead", lines: ["Lioness"] },
+  southHampstead: { displayName: "South Hampstead", lines: ["lioness"] },
   southHarrow: { displayName: "South Harrow", lines: ["piccadilly"] },
   southKensington: { displayName: "South Kensington", lines: ["district", "circle", "piccadilly"] },
   southKenton: { displayName: "South Kenton", lines: ["bakerloo", "lioness"] },
@@ -411,3 +411,4 @@ export const Stations = {
 } as const satisfies Record<string, Station>;
 
 export type StationId = keyof typeof Stations;
+export const stationIds = Object.keys(Stations) as StationId[];
