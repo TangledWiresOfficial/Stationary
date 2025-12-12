@@ -49,6 +49,8 @@ export const Lines = {
     displayName: "Waterloo & City",
     colour: "#6eceb2"
   },
+
+//TFL services
   elizabeth: {
     displayName: "Elizabeth Line",
     colour: "#6950a1"
@@ -61,6 +63,12 @@ export const Lines = {
     displayName: "Trams",
     colour: "#5fb526"
   },
+  cablecar: {
+    displayName: "IFS Cloud Cable Car",
+    colour: "#734fa0"
+  },
+
+// Overground lines
   liberty: {
     displayName: "Liberty Line",
     colour: "#5d6061"
