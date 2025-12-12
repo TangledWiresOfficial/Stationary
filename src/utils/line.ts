@@ -1,4 +1,4 @@
-import {useStorage} from "../hooks/useStorage.ts";
+import {getStorage} from "./storage.ts";
 
 export type Line = {
   displayName: string;
@@ -105,7 +105,7 @@ export type VisitsPerLine = {
 
 // Get how many times each line has been visited
 export async function getVisitsPerLine() {
-  const journeys = await useStorage().getJourneys();
+  const journeys = await getStorage().getJourneys();
   const visitsPerLine = Object.fromEntries(Object.keys(Lines).map((id) => [id, 0])) as VisitsPerLine;
 
   for (const journey of journeys) {

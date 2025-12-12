@@ -1,6 +1,7 @@
 import {LazyStore} from "@tauri-apps/plugin-store";
 import {isJourneyData, Journey, toJourney} from "./journey.ts";
 import LZString from "lz-string";
+import {isTauri} from "@tauri-apps/api/core";
 
 const JOURNEYS_KEY = "journeys";
 
@@ -89,4 +90,12 @@ function parseRawJourneys(raw: unknown) {
       return true;
     })
     .map(toJourney);
+}
+
+let storage: DataStorage;
+
+export function getStorage() {
+  if (!storage) storage = isTauri() ? new TauriStorage() : new BrowserStorage();
+
+  return storage;
 }
