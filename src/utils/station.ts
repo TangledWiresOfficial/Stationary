@@ -181,6 +181,7 @@ export const Stations = {
   greenford: { displayName: "Greenford", lines: ["central"] },
   greenPark: { displayName: "Green Park", lines: ["piccadilly", "victoria", "jubilee"] },
   greenwich: { displayName: "Greenwich", lines: ["dlr"] },
+  greenwichPeninsula: { displayName: "IFS Cloud Greenwich Peninsula", lines: ["cableCar"] },
   gospelOak: { displayName: "Gospel Oak", lines: ["mildmay", "suffragette"] },
   gunnersbury: { displayName: "Gunnersbury", lines: ["mildmay", "district"] },
 
@@ -352,6 +353,7 @@ export const Stations = {
   romford: { displayName: "Romford", lines: ["liberty", "elizabeth"] },
   rotherhithe: { displayName: "Rotherhithe", lines: ["windrush"] },
   royalAlbert: { displayName: "Royal Albert", lines: ["dlr"] },
+  royalDocks: { displayName: "IFS Cloud Royal Docks", lines: ["cableCar"] },
   royalOak: { displayName: "Royal Oak", lines: ["hammersmithAndCity", "circle"] },
   royalVictoria: { displayName: "Royal Victoria", lines: ["dlr"] },
   ruislip: { displayName: "Ruislip", lines: ["metropolitan", "piccadilly"] },
