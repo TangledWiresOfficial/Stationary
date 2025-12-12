@@ -1,7 +1,6 @@
 import {StationId} from "./station.ts";
 import {v4} from "uuid";
 import {LineId} from "./line.ts";
-
 import {getStorage} from "./storage.ts";
 
 export type JourneyPart = {

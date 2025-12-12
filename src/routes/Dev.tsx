@@ -3,7 +3,6 @@ import {Button, Content, ExpandableSection, PageSection} from "@patternfly/react
 import {Journey} from "../utils/journey.ts";
 import {stationIds, Stations} from "../utils/station.ts";
 import {lineIds, Lines} from "../utils/line.ts";
-
 import {getStorage} from "../utils/storage.ts";
 
 export function Dev() {

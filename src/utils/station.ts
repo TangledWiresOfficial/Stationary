@@ -1,5 +1,4 @@
 import {LineId} from "./line.ts";
-
 import {getStorage} from "./storage.ts";
 
 export type Station = {

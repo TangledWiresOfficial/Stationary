@@ -1,6 +1,5 @@
 import {useEffect, useState} from "react";
 import {Journey} from "../utils/journey.ts";
-
 import {getStorage} from "../utils/storage.ts";
 
 export function useJourneys() {
