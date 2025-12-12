@@ -6,12 +6,14 @@ export function useJourneys() {
   const [journeys, setJourneys] = useState<Journey[]>([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    getStorage().getJourneys().then((data) => {
-      setJourneys(data);
-      setLoading(false);
-    });
-  }, []);
+  const load = async () => {
+    setLoading(true);
+    const data = await getStorage().getJourneys();
+    setJourneys(data);
+    setLoading(false);
+  };
 
-  return { journeys, loading };
+  useEffect(() => { load(); }, []);
+
+  return { journeys, loading, refresh: load };
 }
