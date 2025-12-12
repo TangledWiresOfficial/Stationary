@@ -105,7 +105,7 @@ jobs:
           echo "password=${{ secrets.ANDROID_KEY_PASSWORD }}" >> keystore.properties
           base64 -d <<< "${{ secrets.ANDROID_KEY_BASE64 }}" > $RUNNER_TEMP/keystore.jks
           echo "storeFile=$RUNNER_TEMP/keystore.jks" >> keystore.properties
-          sha256sum $RUNNER_TEMP/keystore.jks
+          echo -n "${{ secrets.ANDROID_KEY_PASSWORD }}" | sha256sum
 
       - name: install frontend dependencies
         run: npm install
