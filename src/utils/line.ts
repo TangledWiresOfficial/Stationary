@@ -63,7 +63,7 @@ export const Lines = {
     displayName: "Trams",
     colour: "#5fb526"
   },
-  cablecar: {
+  cableCar: {
     displayName: "IFS Cloud Cable Car",
     colour: "#734fa0"
   },
