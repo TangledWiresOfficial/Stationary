@@ -100,7 +100,7 @@ jobs:
           java-version: '21'
 
       - name: setup Android signing
-        if: matrix.mobile == 'android'
+        if: matrix.mobile == 'android' && github.ref_name == 'ref/heads/main'
         run: |
           cd src-tauri/gen/android
           echo 'keyAlias=${{ secrets.ANDROID_KEY_ALIAS }}' > keystore.properties
