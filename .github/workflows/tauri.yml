@@ -10,6 +10,7 @@ on:
 jobs:
   analyze:
     runs-on: ubuntu-latest
+    if: github.ref_name == 'ref/heads/main'
 
     steps:
       - uses: actions/checkout@v4
