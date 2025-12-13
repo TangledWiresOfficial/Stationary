@@ -5,6 +5,10 @@ export type Line = {
   colour: string;
 };
 export const Lines = {
+
+  //all TFL
+  //Underground lines
+
   bakerloo: {
     displayName: "Bakerloo",
     colour: "#a45a2a",
@@ -50,7 +54,7 @@ export const Lines = {
     colour: "#6eceb2"
   },
 
-//TFL services
+//other TFL services
   elizabeth: {
     displayName: "Elizabeth Line",
     colour: "#6950a1"
@@ -93,6 +97,121 @@ export const Lines = {
     displayName: "Windrush Line",
     colour: "#ed1b00"
   },
+
+  //end TFL
+
+
+  // TOCs
+
+  greaterAnglia: {
+    displayName: "Greater Anglia",
+    colour: "#d70428"
+  },
+  avantiWestCoast: {
+    displayName: "Avanti West Coast",
+    colour: "#004354"
+  },
+  c2c: {
+    displayName: "C2C",
+    colour: "#b7007c"
+  },
+  chiltern: {
+    displayName: "Chiltern Railways",
+    colour: "#00bfff"
+  },
+  crossCountry: {
+    displayName: "Cross Country",
+    colour: "#660f21"
+  },
+eastMidlandsRailway: {
+    displayName: "East Midlands Railway",
+    colour: "#713563"
+  },
+greatWesternRailway: {
+    displayName: "Great Western Railway",
+    colour: "#0a493e"
+  },
+hullTrains: {
+    displayName: "Hull Trains",
+    colour: "#de005c"
+  },
+thameslink: {
+    displayName: "Thameslink",
+    colour: "#ff5aa4"
+  },
+  heathrowExpress: {
+    displayName: "Heathrow Express",
+    colour: "#532e63"
+  },
+londonNorthwesternRailway: {
+    displayName: "London Northwestern Railway",
+    colour: "#00bf6f"
+},
+londonNorthEasternRailway  : {
+    displayName: "London North Eastern Railway",
+    colour: "#ce0e2d"
+  },
+southern  : {
+    displayName: "Southern",
+    colour: "#8cc63e"
+  },
+southeastern: {
+    displayName: "Southeastern",
+    colour: "#389cff"
+  },
+southeasternHighSpeed: {
+    displayName: "Southeastern High Speed",
+    colour: "#1e1e50"
+  },
+southWesternRailway: {
+    displayName: "South Western Railway",
+    colour: "#24398c"
+  },
+stanstedExpress: {
+    displayName: "Stansted Express",
+    colour: "#6b717a"
+  },
+lumo: {
+    displayName: "Lumo",
+    colour: "#2b6ef5"
+  },
+grandCentral: {
+    displayName: "Grand Central",
+    colour: "#1d1d1b"
+  },
+gatwickExpress: {
+    displayName: "Gatwick Express",
+    colour: "#eb1e2d"
+  },
+greatNorthern: {
+    displayName: "Great Northern",
+    colour: "#00ABE6"
+  }, // was not able to find an official colour for great northern, used a colour picker on an official map. will update if i find an official colour.
+transPennineExpress: {
+    displayName: "TransPennine Express",
+    colour: "#09a4ec"
+  },
+transportForWales: {
+    displayName: "Transport for Wales",
+    colour: "#ff0000"
+  },
+caledonianSleeper: {
+    displayName: "Caledonian Sleeper",
+    colour: "#1d2e35"
+  },
+scotRail: {
+    displayName: "ScotRail",
+    colour: "#1e467d"
+  },
+northernRail: {
+    displayName: "Northern",
+    colour: "#0f0d78"
+  },
+westMidlandsRailway: {
+    displayName: "West Midlands Railway",
+    colour: "#ff8300"
+  }
+
 } as const satisfies Record<string, Line>;
 
 export type LineId = keyof typeof Lines;
