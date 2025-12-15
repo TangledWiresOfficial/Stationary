@@ -50,7 +50,7 @@ jobs:
               src-tauri/target/release/bundle/**/*.AppImage
 
           - platform: 'ubuntu-22.04-arm' # for Tauri v1 you could replace this with ubuntu-20.04.
-            name: 'linux'
+            name: 'linux-arm'
             args: ''
             mobile: ''
             artifacts: |
