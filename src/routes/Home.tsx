@@ -16,7 +16,7 @@ import {
   PanelMainBody
 } from "@patternfly/react-core";
 import {ChartDonut, ChartLabel} from "@patternfly/react-charts/victory";
-import {getJourneysPerLine, LineId, Lines} from "../utils/line.ts";
+import {LineId, Lines} from "../utils/line.ts";
 import {useVisitsPerLine} from "../hooks/useVisitsPerLine.ts";
 import {useJourneys} from "../hooks/useJourneys.ts";
 import CubesIcon from '@patternfly/react-icons/dist/esm/icons/cubes-icon';
