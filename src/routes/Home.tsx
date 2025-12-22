@@ -16,18 +16,20 @@ import {
   PanelMainBody
 } from "@patternfly/react-core";
 import {ChartDonut, ChartLabel} from "@patternfly/react-charts/victory";
-import {LineId, Lines} from "../utils/line.ts";
+import {getJourneysPerLine, LineId, Lines} from "../utils/line.ts";
 import {useVisitsPerLine} from "../hooks/useVisitsPerLine.ts";
 import {useJourneys} from "../hooks/useJourneys.ts";
 import CubesIcon from '@patternfly/react-icons/dist/esm/icons/cubes-icon';
 import BarsIcon from '@patternfly/react-icons/dist/esm/icons/bars-icon';
 import {useVisitsPerStation} from "../hooks/useVisitsPerStation.ts";
 import {StationId, Stations} from "../utils/station.ts";
+import {useJourneysPerLine} from "../hooks/useJourneysPerLine.ts";
 
 export function Home() {
   const { journeys, loading } = useJourneys();
   const visitsPerLine = useVisitsPerLine();
   const visitsPerStation = useVisitsPerStation();
+  const journeysPerLine = useJourneysPerLine();
 
   return (
     <>
@@ -38,6 +40,33 @@ export function Home() {
             <Content component={ContentVariants.h4}>Total journeys: {journeys.length}</Content>
             <Flex direction={{ default: 'column' }}>
               <Flex>
+                {journeysPerLine && (
+                  <FlexItem style={{ height: '150px', width: '150px' }}>
+                    <ChartDonut
+                      constrainToVisibleArea
+                      style={{
+                        data: {
+                          fill: ({ datum }) => Lines[datum.x as LineId].colour,
+                        },
+                      }}
+                      labels={({ datum }) => `${Lines[datum.x as LineId].displayName}: ${datum.y}`}
+                      height={150}
+                      width={150}
+                      title={`Journeys\nper line`}
+                      titleComponent={
+                        <ChartLabel style={[{
+                          fontSize: 16
+                        }]} />
+                      }
+                      data={Object.entries(journeysPerLine).map(([line, visits]) => {
+                        return {
+                          x: line,
+                          y: visits
+                        };
+                      })}
+                    />
+                  </FlexItem>
+                )}
                 {visitsPerLine && (
                   <>
                     <FlexItem style={{ height: '150px', width: '150px' }}>
@@ -51,7 +80,7 @@ export function Home() {
                         labels={({ datum }) => `${Lines[datum.x as LineId].displayName}: ${datum.y}`}
                         height={150}
                         width={150}
-                        title={`Journeys\nper line`}
+                        title={`Station\nvisits\nper line`}
                         titleComponent={
                           <ChartLabel style={[{
                             fontSize: 16

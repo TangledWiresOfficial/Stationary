@@ -110,9 +110,28 @@ export async function getVisitsPerLine() {
 
   for (const journey of journeys) {
     for (const part of journey.parts) {
-      visitsPerLine[part.line] += 1;
+      visitsPerLine[part.line]++;
     }
   }
 
   return visitsPerLine;
+}
+
+// Returned from `getJourneysPerLine`
+export type JourneysPerLine = {
+  [K in LineId]: number;
+};
+
+// Get how many journeys each line appears in
+export async function getJourneysPerLine() {
+  const journeys = await getStorage().getJourneys();
+  const journeysPerLine = Object.fromEntries(Object.keys(Lines).map((id) => [id, 0])) as JourneysPerLine;
+
+  for (const journey of journeys) {
+    for (const line of new Set(journey.parts.map((p) => p.line))) {
+      journeysPerLine[line]++;
+    }
+  }
+
+  return journeysPerLine;
 }
