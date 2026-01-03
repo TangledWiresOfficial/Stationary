@@ -1,7 +1,7 @@
 import {createBrowserRouter, RouterProvider} from "react-router";
 import {Root} from "./Root.tsx";
 import {Home} from "./routes/Home.tsx";
-import {AddJourney} from "./routes/AddJourney.tsx";
+import {NewJourney} from "./routes/NewJourney.tsx";
 import {Dev} from "./routes/Dev.tsx";
 import {JourneyHistory} from "./routes/JourneyHistory.tsx";
 
@@ -15,8 +15,8 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "/addjourney",
-        element: <AddJourney />,
+        path: "/newjourney",
+        element: <NewJourney />,
       },
       {
         path: "/journeyhistory",

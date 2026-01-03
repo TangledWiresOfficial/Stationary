@@ -49,6 +49,15 @@ jobs:
               src-tauri/target/release/bundle/**/*.rpm
               src-tauri/target/release/bundle/**/*.AppImage
 
+          - platform: 'ubuntu-22.04-arm' # for Tauri v1 you could replace this with ubuntu-20.04.
+            name: 'linux-arm'
+            args: ''
+            mobile: ''
+            artifacts: |
+              src-tauri/target/release/bundle/**/*.deb
+              src-tauri/target/release/bundle/**/*.rpm
+              src-tauri/target/release/bundle/**/*.AppImage
+
           - platform: 'windows-latest'
             name: 'windows'
             args: ''
@@ -88,10 +97,10 @@ jobs:
           workspaces: "./src-tauri -> target"
 
       - name: install dependencies (ubuntu only)
-        if: matrix.platform == 'ubuntu-22.04' # This must match the platform value defined above.
+        if: matrix.platform == 'ubuntu-22.04' || matrix.platform == 'ubuntu-22.04-arm' # This must match the platform value defined above.
         run: |
           sudo apt-get update
-          sudo apt-get install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
+          sudo apt-get install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf xdg-utils
 
       - name: install Java 21 (android only)
         if: matrix.mobile == 'android'
@@ -126,7 +135,7 @@ jobs:
           path: '${{ github.workspace }}/${{ matrix.artifacts }}'
 
   release:
-    if: github.event_name == 'schedule'
+    if: github.event_name == 'schedule' && github.ref_name == 'main'
     needs: build-tauri
     runs-on: ubuntu-latest
     permissions:
@@ -141,7 +150,7 @@ jobs:
       - name: create nightly release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: "nightly-${{ github.run_id }}"
+          tag_name: nightly
           name: "Nightly Build ${{ github.run_id }}"
           prerelease: true
           files: release-artifacts/**/*

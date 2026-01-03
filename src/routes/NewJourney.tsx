@@ -16,7 +16,7 @@ import {Lines} from "../utils/line.ts";
 import {useNavigate} from "react-router";
 import TimesIcon from '@patternfly/react-icons/dist/esm/icons/times-icon';
 
-export function AddJourney() {
+export function NewJourney() {
   const navigate = useNavigate();
 
   const [journeyParts, setJourneyParts] = useState<JourneyPart[]>([]);
@@ -45,7 +45,7 @@ export function AddJourney() {
 
   return (
     <>
-      <PageHeader title="Add journey" />
+      <PageHeader title="New journey" />
       <PageSection isFilled hasBodyWrapper={false} type={PageSectionTypes.wizard}>
         <Wizard
           height="75vh"

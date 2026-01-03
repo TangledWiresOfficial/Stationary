@@ -1,6 +1,6 @@
-import {StationId} from "./station.ts";
+import {StationId, Stations} from "./station.ts";
 import {v4} from "uuid";
-import {LineId} from "./line.ts";
+import {LineId, Lines} from "./line.ts";
 import {getStorage} from "./storage.ts";
 
 export type JourneyPart = {
@@ -54,5 +54,52 @@ export class Journey {
     let journeys = await storage.getJourneys();
     journeys.push(this);
     await storage.setJourneys(journeys);
+  }
+
+  // Encode the journey in a shorter way so that it can be easily shared to other users and then reimported
+  //
+  // The journey will be encoded like this:
+  //
+  // `timestamp as hex|line,station|line,station|line,station`
+  public toShareable() {
+    return `${this.timestamp.toString(16)}|${this.parts.map((p) => `${p.line},${p.station}`).join("|")}`
+  }
+
+  // The opposite of toShareable()
+  //
+  // Returns a `Journey` if the shareable code was valid, or `null` if not
+  public static fromShareable(shareable: string) {
+    if (!shareable.includes("|")) return null;
+
+    const sections = shareable.split("|");
+
+    // The first "section" of a shareable code is the timestamp in hex
+    const timestamp = parseInt(sections[0], 16);
+    if (isNaN(timestamp)) return null;
+
+    sections.shift();
+
+    const parts = sections.map((s) => {
+      if (!s.includes(",")) {
+        return;
+      }
+
+      const split = s.split(",");
+
+      if (!Object.keys(Lines).includes(split[0]) || !Object.keys(Stations).includes(split[1])) {
+        return;
+      }
+
+      return {
+        line: split[0] as LineId,
+        station: split[1] as StationId,
+      } satisfies JourneyPart;
+    }).filter((s) => s !== undefined);
+
+    if (parts.length < 1) {
+      return null;
+    }
+
+    return new Journey(timestamp, parts);
   }
 }

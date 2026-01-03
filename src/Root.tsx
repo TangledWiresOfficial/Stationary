@@ -41,7 +41,7 @@ export function Root() {
         <Nav onSelect={() => setIsSidebarOpen(false)}>
           <NavList>
             <NavLink to="/">Home</NavLink>
-            <NavLink to="/addjourney">Add journey</NavLink>
+            <NavLink to="/newjourney">New journey</NavLink>
             <NavLink to="/journeyhistory">Journey history</NavLink>
 
             {import.meta.env.DEV && (
