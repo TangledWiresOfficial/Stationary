@@ -1,7 +1,6 @@
-import {StationId, Stations} from "./station.ts";
 import {v4} from "uuid";
-import {LineId, Lines} from "./line.ts";
 import {getStorage} from "./storage.ts";
+import {LineId, Lines, StationId, Stations} from "@tangledwires/uk-station-data";
 
 export type JourneyPart = {
   station: StationId;

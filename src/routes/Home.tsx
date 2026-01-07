@@ -16,14 +16,13 @@ import {
   PanelMainBody
 } from "@patternfly/react-core";
 import {ChartDonut, ChartLabel} from "@patternfly/react-charts/victory";
-import {LineId, Lines} from "../utils/line.ts";
 import {useVisitsPerLine} from "../hooks/useVisitsPerLine.ts";
 import {useJourneys} from "../hooks/useJourneys.ts";
 import CubesIcon from '@patternfly/react-icons/dist/esm/icons/cubes-icon';
 import BarsIcon from '@patternfly/react-icons/dist/esm/icons/bars-icon';
 import {useVisitsPerStation} from "../hooks/useVisitsPerStation.ts";
-import {StationId, Stations} from "../utils/station.ts";
 import {useJourneysPerLine} from "../hooks/useJourneysPerLine.ts";
+import {LineId, Lines, StationId, Stations} from "@tangledwires/uk-station-data";
 
 export function Home() {
   const { journeys, loading } = useJourneys();

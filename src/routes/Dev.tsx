@@ -1,10 +1,9 @@
 import {PageHeader} from "../components/PageHeader.tsx";
 import {Button, Content, ContentVariants, ExpandableSection, PageSection} from "@patternfly/react-core";
 import {Journey} from "../utils/journey.ts";
-import {stationIds, Stations} from "../utils/station.ts";
-import {lineIds, Lines} from "../utils/line.ts";
 import {getStorage} from "../utils/storage.ts";
 import {isTauri} from "@tauri-apps/api/core";
+import {lineIds, Lines, stationIds, Stations} from "@tangledwires/uk-station-data";
 
 export function Dev() {
   const storage = getStorage();

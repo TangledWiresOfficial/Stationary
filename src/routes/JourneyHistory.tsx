@@ -30,7 +30,6 @@ import {
   TextInput
 } from "@patternfly/react-core";
 import AngleRightIcon from '@patternfly/react-icons/dist/esm/icons/angle-right-icon';
-import {Stations} from "../utils/station.ts";
 import {useJourneys} from "../hooks/useJourneys.ts";
 import CubesIcon from "@patternfly/react-icons/dist/esm/icons/cubes-icon";
 import BarsIcon from "@patternfly/react-icons/dist/esm/icons/bars-icon";
@@ -38,6 +37,7 @@ import {useState} from "react";
 import {getStorage} from "../utils/storage.ts";
 import {Journey} from "../utils/journey.ts";
 import {KebabDropdown} from "../components/KebabDropdown.tsx";
+import {Stations} from "@tangledwires/uk-station-data";
 
 export function JourneyHistory() {
   const { journeys, loading, refresh } = useJourneys();

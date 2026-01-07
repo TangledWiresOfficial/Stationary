@@ -11,10 +11,9 @@ import {PageHeader} from "../components/PageHeader.tsx";
 import {useMemo, useState} from "react";
 import {StationSearch} from "../components/StationSearch.tsx";
 import {Journey, JourneyPart} from "../utils/journey.ts";
-import {Stations} from "../utils/station.ts";
-import {Lines} from "../utils/line.ts";
 import {useNavigate} from "react-router";
 import TimesIcon from '@patternfly/react-icons/dist/esm/icons/times-icon';
+import {Lines, Stations} from "@tangledwires/uk-station-data";
 
 export function NewJourney() {
   const navigate = useNavigate();
