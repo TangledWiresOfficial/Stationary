@@ -17,7 +17,7 @@
     "@tangledwires/uk-station-data": "^1.2.0",
     "@tauri-apps/api": "^2",
     "@tauri-apps/plugin-opener": "^2",
-    "@tauri-apps/plugin-store": "^2.4.1",
+    "@tauri-apps/plugin-store": "^2.4.2",
     "@types/uuid": "^11.0.0",
     "lz-string": "^1.5.0",
     "react": "^19.1.0",
