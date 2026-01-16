@@ -2,7 +2,9 @@ import {LazyStore} from "@tauri-apps/plugin-store";
 import {isJourneyData, Journey, toJourney} from "./journey.ts";
 import LZString from "lz-string";
 import {isTauri} from "@tauri-apps/api/core";
+import {VERSION as STATION_DATA_VERSION} from "@tangledwires/uk-station-data";
 
+const STATION_DATA_VERSION_KEY = "stationDataVersion";
 const JOURNEYS_KEY = "journeys";
 
 export interface DataStorage {
@@ -17,6 +19,9 @@ export interface DataStorage {
 
   // Clear the list of journeys
   clearJourneys: () => Promise<void>;
+
+  // Get the last version of `@tangledwires/uk-station-data` used to store journey data
+  getStationDataVersion: () => Promise<string>;
 }
 
 const TAURI_STORE_PATH = "userdata.json";
@@ -40,10 +45,15 @@ export class TauriStorage implements DataStorage {
 
   public async setJourneys(journeys: Journey[]) {
     await this.store.set(JOURNEYS_KEY, journeys);
+    await this.store.set(STATION_DATA_VERSION_KEY, STATION_DATA_VERSION);
   }
 
   public async clearJourneys() {
     await this.setJourneys([]);
+  }
+
+  public async getStationDataVersion() {
+    return await this.store.get(STATION_DATA_VERSION_KEY) as string;
   }
 }
 
@@ -64,12 +74,17 @@ export class BrowserStorage implements DataStorage {
     const data = this.getData();
 
     data[JOURNEYS_KEY] = journeys;
+    data[STATION_DATA_VERSION_KEY] = STATION_DATA_VERSION;
 
     this.setData(data);
   }
 
   public async clearJourneys() {
     await this.setJourneys([]);
+  }
+
+  public async getStationDataVersion() {
+    return this.getData()[STATION_DATA_VERSION_KEY].toString();
   }
 
   private getData() {

@@ -4,9 +4,12 @@ import {Journey} from "../utils/journey.ts";
 import {getStorage} from "../utils/storage.ts";
 import {isTauri} from "@tauri-apps/api/core";
 import {lineIds, Lines, stationIds, Stations} from "@tangledwires/uk-station-data";
+import {useStationDataVersion} from "../hooks/useStationDataVersion.ts";
 
 export function Dev() {
   const storage = getStorage();
+
+  const stationDataVersion = useStationDataVersion();
 
   const visitAllStations = async (times: number) => {
     for (let i = 0; i < times; i++) {
@@ -39,6 +42,8 @@ export function Dev() {
           Is Tauri: {isTauri().toString()}
           <br />
           Storage backend: {storage.getBackendName()}
+          <br />
+          Station data version: {stationDataVersion}
         </Content>
       </PageSection>
       <PageSection>
