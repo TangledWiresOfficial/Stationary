@@ -14,7 +14,7 @@ export function StationSearch({
   stations = stationIds,
   exclude = [],
   onUpdate = () => undefined,
-  maxAutocompleteOptions = 10
+  maxAutocompleteOptions = 15
 }: StationSearchProps) {
   const [value, setValue] = useState('');
   const [autocompleteOptions, setAutocompleteOptions] = useState<JSX.Element[]>([]);
@@ -37,7 +37,7 @@ export function StationSearch({
     ) {
       setIsAutocompleteOpen(true);
 
-      // When the value of the search input changes, build a list of no more than 10 autocomplete options.
+      // When the value of the search input changes, build a list of autocomplete options.
       // Options which start with the search input value are listed first, followed by options which contain
       // the search input value.
       let options = stations
