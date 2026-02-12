@@ -43,7 +43,12 @@ export function StationSearch({
       let options = stations
         .filter((stationId) => !exclude.includes(stationId))
         .flatMap((stationId) => Stations[stationId].lines.map((lineId) => [stationId, lineId] as const))
-        .filter(([stationId, _lineId]) => Stations[stationId].displayName.toLowerCase().startsWith(newValue.toLowerCase()))
+        .filter(([stationId, _lineId]) => Stations[stationId]
+          .displayName
+          // Remove apostrophes so that stations like "King's Cross" can be searched for with "Kings Cross" or "King's Cross"
+          .replace(/\'/g, "")
+          .toLowerCase()
+          .startsWith(newValue.replace(/\'/g, "").toLowerCase()))
         .map(([stationId, lineId]) => (
           <MenuItem itemId={{
             station: stationId,
@@ -57,6 +62,7 @@ export function StationSearch({
             </div>
           </MenuItem>
         ));
+
       if (options.length > maxAutocompleteOptions) {
         options = options.slice(0, maxAutocompleteOptions);
       }
