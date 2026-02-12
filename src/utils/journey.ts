@@ -47,11 +47,18 @@ export class Journey {
   }
 
   public async save() {
-    this.uuid = v4();
-
     const storage = getStorage();
-    let journeys = await storage.getJourneys();
-    journeys.push(this);
+    const journeys = await storage.getJourneys();
+
+    // If this journey already exists in storage, update it, otherwise add a new one
+    let existingJourneyIdx = journeys.findIndex((j) => j.uuid === this.uuid);
+    if (existingJourneyIdx > -1) {
+      journeys[existingJourneyIdx] = this;
+    } else {
+      this.uuid = v4();
+      journeys.push(this);
+    }
+
     await storage.setJourneys(journeys);
   }
 

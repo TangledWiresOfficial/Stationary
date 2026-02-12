@@ -37,8 +37,11 @@ import {getStorage} from "../utils/storage.ts";
 import {Journey} from "../utils/journey.ts";
 import {KebabDropdown} from "../components/KebabDropdown.tsx";
 import {Stations} from "@tangledwires/uk-station-data";
+import {useNavigate} from "react-router";
 
 export function JourneyHistory() {
+  const navigate = useNavigate();
+
   const { journeys, loading, refresh } = useJourneys();
   const storage = getStorage();
 
@@ -151,6 +154,9 @@ export function JourneyHistory() {
                 <CardHeader actions={{ actions: (
                   <KebabDropdown>
                     <DropdownList>
+                      <DropdownItem onClick={() => navigate(`/editjourney/${j.uuid}`)}>
+                        Edit
+                      </DropdownItem>
                       <DropdownItem onClick={() => shareJourney(j)}>
                         Share
                       </DropdownItem>
