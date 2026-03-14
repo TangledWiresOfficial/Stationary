@@ -1,6 +1,6 @@
 # Stationary
 
-Stationary is an app for tracking which UK train stations you've visited.
+Stationary is an app for tracking which train and metro stations you have visited in Great Britain.
 
 ## Get the app
 
