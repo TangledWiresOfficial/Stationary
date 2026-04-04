@@ -1,4 +1,4 @@
-import {Button, Content, DatePicker, Wizard, WizardStep} from "@patternfly/react-core";
+import {Button, Content, DatePicker, Popover, Wizard, WizardStep} from "@patternfly/react-core";
 import {StationSearch} from "./StationSearch.tsx";
 import {Lines, Stations} from "@tangledwires/uk-station-data";
 import TimesIcon from "@patternfly/react-icons/dist/esm/icons/times-icon";
@@ -47,14 +47,20 @@ export function JourneyWizard({ initialJourney } : { initialJourney?: Journey })
           <div key={idx}>
             <Content>
               {idx > 0 && (
-                <div style={{
-                  marginLeft: "4px",
-                  width: "25px",
-                  height: "50px",
-                  borderLeftStyle: "solid",
-                  borderWidth: "6px",
-                  borderColor: Lines[p.line].colour
-                }}></div>
+                <Popover
+                  triggerAction="hover"
+                  position="right"
+                  bodyContent={Lines[p.line].displayName}
+                >
+                  <div style={{
+                    marginLeft: "4px",
+                    width: "6px",
+                    height: "50px",
+                    borderLeftStyle: "solid",
+                    borderWidth: "6px",
+                    borderColor: Lines[p.line].colour
+                  }}></div>
+                </Popover>
               )}
               <span style={{
                 display: "inline-block",
