@@ -3,7 +3,7 @@ import {Button, Content, ExpandableSection, PageSection} from "@patternfly/react
 import {Journey} from "../utils/journey.ts";
 import {getStorage} from "../utils/storage.ts";
 import {isTauri} from "@tauri-apps/api/core";
-import {lineIds, Lines, stationIds, Stations} from "@tangledwires/uk-station-data";
+import {lineIds, Lines, stationIds, Stations, tocIds} from "@tangledwires/uk-station-data";
 import {useStationDataVersion} from "../hooks/useStationDataVersion.ts";
 import {dismissedWebKitWarning, isWebKit, wasLaunchedFromHomeScreen} from "../utils/webkit.ts";
 import {Table, Tbody, Td, Tr} from "@patternfly/react-table";
@@ -43,6 +43,7 @@ export function Dev() {
             <Tr><Td>Version</Td><Td>{VERSION}</Td></Tr>
             <Tr><Td>Number of lines</Td><Td>{lineIds.length}</Td></Tr>
             <Tr><Td>Number of stations</Td><Td>{stationIds.length}</Td></Tr>
+            <Tr><Td>Number of TOCs</Td><Td>{tocIds.length}</Td></Tr>
             <Tr><Td>Is Tauri</Td><Td>{isTauri().toString()}</Td></Tr>
             <Tr><Td>Storage backend</Td><Td>{storage.getBackendName()}</Td></Tr>
             <Tr><Td>Station data version</Td><Td>{stationDataVersion}</Td></Tr>
