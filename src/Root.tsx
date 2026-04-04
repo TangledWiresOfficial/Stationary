@@ -21,6 +21,7 @@ import {
   setDismissedWebKitWarning,
   wasLaunchedFromHomeScreen
 } from "./utils/webkit.ts";
+import {getDevModeEnabled} from "./utils/devMode.ts";
 
 export function Root() {
   const webkitWarningBanner = (
@@ -53,15 +54,22 @@ export function Root() {
   const sidebar = (
     <PageSidebar isSidebarOpen={isSidebarOpen}>
       <PageSidebarBody>
-        <Nav onSelect={() => setIsSidebarOpen(false)}>
-          <NavList>
-            <NavLink to="/">Home</NavLink>
-            <NavLink to="/newjourney">New journey</NavLink>
-            <NavLink to="/journeyhistory">Journey history</NavLink>
+        <Nav style={{ height: "100%" }} onSelect={() => setIsSidebarOpen(false)}>
+          <NavList style={{ gridTemplateRows: "1fr auto" }}>
+            <div>
+              <NavLink to="/">Home</NavLink>
+              <NavLink to="/newjourney">New journey</NavLink>
+              <NavLink to="/journeyhistory">Journey history</NavLink>
+            </div>
 
-            {import.meta.env.DEV && (
-              <NavLink to="/dev">Dev tools</NavLink>
-            )}
+            {/* Footer */}
+            <div>
+              <NavLink to="/about">About Stationary</NavLink>
+
+              {getDevModeEnabled() && (
+                <NavLink to="/dev">Dev tools</NavLink>
+              )}
+            </div>
           </NavList>
         </Nav>
       </PageSidebarBody>

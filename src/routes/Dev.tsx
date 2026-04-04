@@ -7,6 +7,8 @@ import {lineIds, Lines, stationIds, Stations} from "@tangledwires/uk-station-dat
 import {useStationDataVersion} from "../hooks/useStationDataVersion.ts";
 import {dismissedWebKitWarning, isWebKit, wasLaunchedFromHomeScreen} from "../utils/webkit.ts";
 import {Table, Tbody, Td, Tr} from "@patternfly/react-table";
+import {VERSION} from "../version.ts";
+import {getDevModeEnabled} from "../utils/devMode.ts";
 
 export function Dev() {
   const storage = getStorage();
@@ -28,7 +30,7 @@ export function Dev() {
 
   return (
     <>
-      <PageHeader title="Dev tools" description="This page can cause damage to your Stationary data that cannot be undone. Be careful." />
+      <PageHeader title="Dev tools" description="This page can cause damage to your Stationary data that cannot be undone. Be careful. You can hide this page by tapping the TangledWires logo in 'About Stationary'." />
       <PageSection>
         <Button onClick={async () => visitAllStations(1)} variant="primary">Visit all stations</Button>
         <Button onClick={async () => visitAllStations(100)} variant="primary">Visit all stations 100 times</Button>
@@ -38,6 +40,7 @@ export function Dev() {
       <PageSection>
         <Table variant="compact">
           <Tbody>
+            <Tr><Td>Version</Td><Td>{VERSION}</Td></Tr>
             <Tr><Td>Number of lines</Td><Td>{lineIds.length}</Td></Tr>
             <Tr><Td>Number of stations</Td><Td>{stationIds.length}</Td></Tr>
             <Tr><Td>Is Tauri</Td><Td>{isTauri().toString()}</Td></Tr>
@@ -46,6 +49,7 @@ export function Dev() {
             <Tr><Td>Is WebKit</Td><Td>{isWebKit().toString()}</Td></Tr>
             <Tr><Td>Was launched from Home Screen</Td><Td>{wasLaunchedFromHomeScreen().toString()}</Td></Tr>
             <Tr><Td>Has dismissed WebKit warning</Td><Td>{dismissedWebKitWarning().toString()}</Td></Tr>
+            <Tr><Td>Dev mode activated</Td><Td>{getDevModeEnabled().toString()}</Td></Tr>
           </Tbody>
         </Table>
       </PageSection>

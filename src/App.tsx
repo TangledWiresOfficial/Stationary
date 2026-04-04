@@ -5,6 +5,7 @@ import {NewJourney} from "./routes/NewJourney.tsx";
 import {Dev} from "./routes/Dev.tsx";
 import {JourneyHistory} from "./routes/JourneyHistory.tsx";
 import {EditJourney} from "./routes/EditJourney.tsx";
+import {About} from "./routes/About.tsx";
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
       {
         path: "/editjourney/:uuid",
         element: <EditJourney />
+      },
+      {
+        path: "/about",
+        element: <About />
       },
 
       {
