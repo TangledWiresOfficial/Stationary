@@ -1,5 +1,5 @@
 import {PageHeader} from "../components/PageHeader.tsx";
-import {Button, Content, ContentVariants, ExpandableSection, PageSection} from "@patternfly/react-core";
+import {Button, Content, ExpandableSection, PageSection} from "@patternfly/react-core";
 import {Journey} from "../utils/journey.ts";
 import {getStorage} from "../utils/storage.ts";
 import {isTauri} from "@tauri-apps/api/core";
