@@ -148,39 +148,41 @@ export function JourneyHistory() {
       </PageSection>
       <PageSection>
         <List isPlain>
-          {journeys.length > 0 ? journeys.map((j) => (
-            <ListItem key={j.uuid}>
-              <Card>
-                <CardHeader actions={{ actions: (
-                  <KebabDropdown>
-                    <DropdownList>
-                      <DropdownItem onClick={() => navigate(`/editjourney/${j.uuid}`)}>
-                        Edit
-                      </DropdownItem>
-                      <DropdownItem onClick={() => shareJourney(j)}>
-                        Share
-                      </DropdownItem>
-                      <DropdownItem isDanger onClick={() => {
-                        setToBeDeleted(j);
-                        setDeleteConfirmationOpen(true);
-                      }}>
-                        Delete
-                      </DropdownItem>
-                    </DropdownList>
-                  </KebabDropdown>
-                ) }}>
-                  <CardTitle>
-                    {Stations[j.parts[0].station].displayName} <Icon><AngleRightIcon /></Icon> {Stations[j.parts[j.parts.length - 1].station].displayName}
-                  </CardTitle>
-                </CardHeader>
-                <CardBody>
-                  Stations: {j.parts.map((p) => Stations[p.station].displayName).join(", ")}
-                </CardBody>
-                <CardFooter>
-                  {new Date(j.timestamp).toLocaleDateString("en-GB")}
-                </CardFooter>
-              </Card>
-            </ListItem>
+          {journeys.length > 0 ? journeys
+            .sort((a, b) => b.timestamp - a.timestamp)
+            .map((j) => (
+              <ListItem key={j.uuid}>
+                <Card>
+                  <CardHeader actions={{ actions: (
+                    <KebabDropdown>
+                      <DropdownList>
+                        <DropdownItem onClick={() => navigate(`/editjourney/${j.uuid}`)}>
+                          Edit
+                        </DropdownItem>
+                        <DropdownItem onClick={() => shareJourney(j)}>
+                          Share
+                        </DropdownItem>
+                        <DropdownItem isDanger onClick={() => {
+                          setToBeDeleted(j);
+                          setDeleteConfirmationOpen(true);
+                        }}>
+                          Delete
+                        </DropdownItem>
+                      </DropdownList>
+                    </KebabDropdown>
+                  ) }}>
+                    <CardTitle>
+                      {Stations[j.parts[0].station].displayName} <Icon><AngleRightIcon /></Icon> {Stations[j.parts[j.parts.length - 1].station].displayName}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardBody>
+                    Stations: {j.parts.map((p) => Stations[p.station].displayName).join(", ")}
+                  </CardBody>
+                  <CardFooter>
+                    {new Date(j.timestamp).toLocaleDateString("en-GB")}
+                  </CardFooter>
+                </Card>
+              </ListItem>
           )) : !loading && (
             <EmptyState titleText="No journeys" icon={CubesIcon}>
               <EmptyStateBody>
