@@ -1,12 +1,20 @@
-import {Content, PageSection} from "@patternfly/react-core";
+import {Content, Flex, FlexItem, PageSection} from "@patternfly/react-core";
+import React from "react";
 
-export function PageHeader({ title, description }: { title: string, description?: string }) {
+export function PageHeader({ title, description, children }: { title: string, description?: string, children?: React.ReactNode }) {
   return (
     <PageSection>
-      <Content>
-        <h1>{title}</h1>
-        {description && <p>{description}</p>}
-      </Content>
+      <Flex>
+        <FlexItem>
+          <Content>
+            <h1>{title}</h1>
+            {description && <p>{description}</p>}
+          </Content>
+        </FlexItem>
+        <FlexItem align={{ default: "alignRight" }}>
+          {children}
+        </FlexItem>
+      </Flex>
     </PageSection>
   )
 }

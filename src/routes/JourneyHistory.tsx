@@ -48,17 +48,8 @@ export function JourneyHistory() {
   const [deleteConfirmationOpen, setDeleteConfirmationOpen] = useState(false);
   const [toBeDeleted, setToBeDeleted] = useState<Journey>();
 
-  const [journeyImporterOpen, setJourneyImporterOpen] = useState(false);
-  const [toBeImported, setToBeImported] = useState<string>();
-  const [importFailed, setImportFailed] = useState(false);
-
   const [newJourneyCodePopupOpen, setNewJourneyCodePopupOpen] = useState(false);
   const [newJourneyCode, setNewJourneyCode] = useState<string>();
-
-  const closeJourneyImporter = () => {
-    setImportFailed(false);
-    setJourneyImporterOpen(false);
-  };
 
   const deleteJourney = async () => {
     await storage.setJourneys(journeys.filter((j) => j.uuid !== toBeDeleted!.uuid));
@@ -71,18 +62,6 @@ export function JourneyHistory() {
     setNewJourneyCodePopupOpen(true);
   };
 
-  const importJourney = async () => {
-    const journey = Journey.fromShareable(toBeImported!);
-
-    if (!journey) {
-      setImportFailed(true);
-    } else {
-      await journey.save();
-      closeJourneyImporter();
-      await refresh();
-    }
-  };
-
   const deleteConfirmation = (
     <Modal isOpen={deleteConfirmationOpen} variant={ModalVariant.small}>
       <ModalHeader title="Delete this journey?" />
@@ -90,35 +69,6 @@ export function JourneyHistory() {
       <ModalFooter>
         <Button key="confirm" variant="danger" onClick={() => deleteJourney()}>Confirm</Button>
         <Button key="cancel" variant="link" onClick={() => setDeleteConfirmationOpen(false)}>Cancel</Button>
-      </ModalFooter>
-    </Modal>
-  );
-
-  const journeyImporter = (
-    <Modal isOpen={journeyImporterOpen} variant={ModalVariant.small}>
-      <ModalHeader title="Import journey" />
-      <ModalBody>
-        <Form>
-          {importFailed && (
-            <FormAlert>
-              <Alert variant="danger" title="That code is invalid." aria-live="polite" isInline />
-            </FormAlert>
-          )}
-          <FormGroup label="Journey code" isRequired>
-            <TextInput
-              isRequired
-              type="text"
-              onChange={(_, value) => {
-                setImportFailed(false);
-                setToBeImported(value);
-              }}
-            />
-          </FormGroup>
-        </Form>
-      </ModalBody>
-      <ModalFooter>
-        <Button key="confirm" isDisabled={!toBeImported} onClick={importJourney}>Import</Button>
-        <Button key="cancel" variant="link" onClick={closeJourneyImporter}>Cancel</Button>
       </ModalFooter>
     </Modal>
   );
@@ -144,7 +94,7 @@ export function JourneyHistory() {
     <>
       <PageHeader title="Journey history" />
       <PageSection>
-        <Button variant="secondary" onClick={() => setJourneyImporterOpen(true)}>Import journey</Button>
+        <Content component={ContentVariants.h4}>Total journeys: {journeys.length}</Content>
       </PageSection>
       <PageSection>
         <List isPlain>
@@ -192,7 +142,6 @@ export function JourneyHistory() {
           )}
         </List>
         {deleteConfirmation}
-        {journeyImporter}
         {newJourneyCodePopup}
       </PageSection>
     </>
