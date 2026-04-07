@@ -73,7 +73,7 @@ export function JourneyHistory() {
       <ModalHeader title="Share journey" />
       <ModalBody>
         <Content component={ContentVariants.p}>
-          This code can be imported by other users using the 'Import journey' button on the 'Journey history' page.
+          This code can be imported by other users using the 'Import journey' button on the 'New journey' page.
         </Content>
         <ClipboardCopy copyAriaLabel="Copy journey code" isReadOnly hoverTip="Copy" clickTip="Copied">
           {newJourneyCode!}
