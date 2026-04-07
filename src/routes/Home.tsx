@@ -2,18 +2,11 @@ import {PageHeader} from "../components/PageHeader.tsx";
 import {
   Content,
   ContentVariants,
-  Divider,
   EmptyState,
   EmptyStateBody,
   Flex,
   FlexItem,
-  List,
-  ListItem,
-  PageSection,
-  Panel,
-  PanelHeader,
-  PanelMain,
-  PanelMainBody
+  PageSection
 } from "@patternfly/react-core";
 import {ChartDonut, ChartLabel} from "@patternfly/react-charts/victory";
 import {useVisitsPerLine} from "../hooks/useVisitsPerLine.ts";
@@ -22,7 +15,7 @@ import CubesIcon from '@patternfly/react-icons/dist/esm/icons/cubes-icon';
 import BarsIcon from '@patternfly/react-icons/dist/esm/icons/bars-icon';
 import {useVisitsPerStation} from "../hooks/useVisitsPerStation.ts";
 import {useJourneysPerLine} from "../hooks/useJourneysPerLine.ts";
-import {LineId, Lines, StationId, Stations, TOCId, TOCs} from "@tangledwires/uk-station-data";
+import {LineId, Lines, Stations, TOCs} from "@tangledwires/uk-station-data";
 import {useVisitsPerToc} from "../hooks/useVisitsPerToc.ts";
 import {TopVisitedList} from "../components/TopVisitedList.tsx";
 
