@@ -22,24 +22,27 @@ import CubesIcon from '@patternfly/react-icons/dist/esm/icons/cubes-icon';
 import BarsIcon from '@patternfly/react-icons/dist/esm/icons/bars-icon';
 import {useVisitsPerStation} from "../hooks/useVisitsPerStation.ts";
 import {useJourneysPerLine} from "../hooks/useJourneysPerLine.ts";
-import {LineId, Lines, StationId, Stations} from "@tangledwires/uk-station-data";
+import {LineId, Lines, StationId, Stations, TOCId, TOCs} from "@tangledwires/uk-station-data";
+import {useVisitsPerToc} from "../hooks/useVisitsPerToc.ts";
+import {TopVisitedList} from "../components/TopVisitedList.tsx";
 
 export function Home() {
-  const { journeys, loading } = useJourneys();
+  const journeys = useJourneys();
   const visitsPerLine = useVisitsPerLine();
   const visitsPerStation = useVisitsPerStation();
   const journeysPerLine = useJourneysPerLine();
+  const visitsPerToc = useVisitsPerToc();
 
   return (
     <>
       <PageHeader title="Home" />
       <PageSection>
-        {journeys.length > 0 ? (
+        {!journeys.loading && journeys.data!.length > 0 ? (
           <>
-            <Content component={ContentVariants.h4}>Total journeys: {journeys.length}</Content>
+            <Content component={ContentVariants.h4}>Total journeys: {journeys.data!.length}</Content>
             <Flex direction={{ default: 'column' }}>
               <Flex>
-                {journeysPerLine && (
+                {!journeysPerLine.loading && (
                   <FlexItem style={{ height: '150px', width: '150px' }}>
                     <ChartDonut
                       constrainToVisibleArea
@@ -57,7 +60,7 @@ export function Home() {
                           fontSize: 16
                         }]} />
                       }
-                      data={Object.entries(journeysPerLine).map(([line, visits]) => {
+                      data={Object.entries(journeysPerLine.data!).map(([line, visits]) => {
                         return {
                           x: line,
                           y: visits
@@ -66,7 +69,7 @@ export function Home() {
                     />
                   </FlexItem>
                 )}
-                {visitsPerLine && (
+                {!visitsPerLine.loading && (
                   <>
                     <FlexItem style={{ height: '150px', width: '150px' }}>
                       <ChartDonut
@@ -85,7 +88,7 @@ export function Home() {
                             fontSize: 16
                           }]} />
                         }
-                        data={Object.entries(visitsPerLine).map(([line, visits]) => {
+                        data={Object.entries(visitsPerLine.data!).map(([line, visits]) => {
                           return {
                             x: line,
                             y: visits
@@ -110,7 +113,7 @@ export function Home() {
                             fontSize: 16
                           }]} />
                         }
-                        data={Object.entries(visitsPerLine).map(([line, visits]) => {
+                        data={Object.entries(visitsPerLine.data!).map(([line, visits]) => {
                           return {
                             x: line,
                             y: 1,
@@ -123,38 +126,25 @@ export function Home() {
                 )}
               </Flex>
               <Flex>
-                <FlexItem style={{ height: '400px', width: '400px' }}>
-                  <Panel isScrollable variant="bordered">
-                    <PanelHeader>Top 10 most visited stations</PanelHeader>
-                    <Divider />
-                    <PanelMain>
-                      <PanelMainBody>
-                        <List isPlain isBordered>
-                          {visitsPerStation && Object.entries(visitsPerStation)
-                            .filter(([_station, visits]) => visits > 0)
-                            .sort(([_stationA, visitsA], [_stationB, visitsB]) => visitsB - visitsA)
-                            .slice(0, 10)
-                            .map(([station, visits]) => (
-                              <ListItem key={station}>
-                                <Flex>
-                                  <FlexItem grow={{ default: 'grow' }}>
-                                    {Stations[station as StationId].displayName}
-                                  </FlexItem>
-                                  <FlexItem>
-                                    {visits}
-                                  </FlexItem>
-                                </Flex>
-                              </ListItem>
-                            ))}
-                        </List>
-                      </PanelMainBody>
-                    </PanelMain>
-                  </Panel>
-                </FlexItem>
+                {!visitsPerStation.loading && (
+                  <FlexItem style={{ maxHeight: '400px', width: '400px' }}>
+                    <TopVisitedList header="Top 10 most visited stations" data={visitsPerStation.data!} getDisplayName={(key) => Stations[key].displayName} />
+                  </FlexItem>
+                )}
+                {!visitsPerLine.loading && (
+                  <FlexItem style={{ maxHeight: '400px', width: '400px' }}>
+                    <TopVisitedList header="Top 10 most visited lines" data={visitsPerLine.data!} getDisplayName={(key) => Lines[key].displayName} />
+                  </FlexItem>
+                )}
+                {!visitsPerToc.loading && (
+                  <FlexItem style={{ maxHeight: '400px', width: '400px' }}>
+                    <TopVisitedList header="Top 10 most visited TOCs" data={visitsPerToc.data!} getDisplayName={(key) => TOCs[key].displayName} />
+                  </FlexItem>
+                )}
               </Flex>
             </Flex>
           </>
-        ) : !loading && (
+        ) : (
           <EmptyState titleText="Welcome to Stationary" icon={CubesIcon}>
             <EmptyStateBody>
               You haven't added any journeys yet. Go to <BarsIcon /> then 'New journey' to begin.

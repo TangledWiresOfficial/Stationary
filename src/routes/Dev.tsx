@@ -46,7 +46,7 @@ export function Dev() {
             <Tr><Td>Number of TOCs</Td><Td>{tocIds.length}</Td></Tr>
             <Tr><Td>Is Tauri</Td><Td>{isTauri().toString()}</Td></Tr>
             <Tr><Td>Storage backend</Td><Td>{storage.getBackendName()}</Td></Tr>
-            <Tr><Td>Station data version</Td><Td>{stationDataVersion}</Td></Tr>
+            <Tr><Td>Station data version</Td><Td>{stationDataVersion.data}</Td></Tr>
             <Tr><Td>Is WebKit</Td><Td>{isWebKit().toString()}</Td></Tr>
             <Tr><Td>Was launched from Home Screen</Td><Td>{wasLaunchedFromHomeScreen().toString()}</Td></Tr>
             <Tr><Td>Has dismissed WebKit warning</Td><Td>{dismissedWebKitWarning().toString()}</Td></Tr>

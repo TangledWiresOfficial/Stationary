@@ -8,11 +8,11 @@ export function EditJourney() {
   const navigate = useNavigate();
   const params = useParams();
 
-  const { journeys, loading } = useJourneys();
+  const { data: journeys, loading } = useJourneys();
   let journey: Journey | undefined;
 
   if (!loading) {
-    journey = journeys.find((j) => j.uuid === params.uuid);
+    journey = journeys!.find((j) => j.uuid === params.uuid);
     if (!journey) navigate("/journeyhistory")
   }
 

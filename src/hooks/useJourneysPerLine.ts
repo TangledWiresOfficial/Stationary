@@ -1,12 +1,6 @@
-import {useEffect, useState} from "react";
-import {getJourneysPerLine, JourneysPerLine} from "../utils/line.ts";
+import {getJourneysPerLine} from "../utils/line.ts";
+import {useData} from "./useData.ts";
 
 export function useJourneysPerLine() {
-  const [journeysPerLine, setJourneysPerLine] = useState<JourneysPerLine>();
-
-  useEffect(() => {
-    getJourneysPerLine().then(setJourneysPerLine);
-  }, []);
-
-  return journeysPerLine;
+  return useData(getJourneysPerLine);
 }

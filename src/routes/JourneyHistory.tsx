@@ -37,7 +37,7 @@ import {useNavigate} from "react-router";
 export function JourneyHistory() {
   const navigate = useNavigate();
 
-  const { journeys, loading, refresh } = useJourneys();
+  const { data: journeys, loading, refresh } = useJourneys();
   const storage = getStorage();
 
   const [deleteConfirmationOpen, setDeleteConfirmationOpen] = useState(false);
@@ -47,7 +47,7 @@ export function JourneyHistory() {
   const [newJourneyCode, setNewJourneyCode] = useState<string>();
 
   const deleteJourney = async () => {
-    await storage.setJourneys(journeys.filter((j) => j.uuid !== toBeDeleted!.uuid));
+    await storage.setJourneys(journeys!.filter((j) => j.uuid !== toBeDeleted!.uuid));
     await refresh();
     setDeleteConfirmationOpen(false);
   };
@@ -89,11 +89,11 @@ export function JourneyHistory() {
     <>
       <PageHeader title="Journey history" />
       <PageSection>
-        <Content component={ContentVariants.h4}>Total journeys: {journeys.length}</Content>
+        <Content component={ContentVariants.h4}>Total journeys: {!loading && journeys!.length}</Content>
       </PageSection>
       <PageSection>
         <List isPlain>
-          {journeys.length > 0 ? journeys
+          {!loading && journeys!.length > 0 ? journeys!
             .sort((a, b) => b.timestamp - a.timestamp)
             .map((j) => (
               <ListItem key={j.uuid}>
