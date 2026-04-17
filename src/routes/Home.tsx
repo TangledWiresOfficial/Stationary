@@ -121,7 +121,11 @@ export function Home() {
               <Flex>
                 {!visitsPerStation.loading && (
                   <FlexItem style={{ maxHeight: '400px', width: '400px' }}>
-                    <TopVisitedList header="Top 10 most visited stations" data={visitsPerStation.data!} getDisplayName={(key) => Stations[key].displayName} />
+                    <TopVisitedList
+                      header="Top 10 most visited stations"
+                      data={Object.fromEntries(Object.entries(visitsPerStation.data!).map(([station, data]) => [station, data.total]))}
+                      getDisplayName={(key) => Stations[key as keyof typeof Stations].displayName}
+                    />
                   </FlexItem>
                 )}
                 {!visitsPerLine.loading && (

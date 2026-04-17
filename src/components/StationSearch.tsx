@@ -46,9 +46,9 @@ export function StationSearch({
         .filter(([stationId, _lineId]) => Stations[stationId]
           .displayName
           // Remove apostrophes so that stations like "King's Cross" can be searched for with "Kings Cross" or "King's Cross"
-          .replace(/\'/g, "")
+          .replace(/'/g, "")
           .toLowerCase()
-          .startsWith(newValue.replace(/\'/g, "").toLowerCase()))
+          .startsWith(newValue.replace(/'/g, "").toLowerCase()))
         .map(([stationId, lineId]) => (
           <MenuItem itemId={{
             station: stationId,
