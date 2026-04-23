@@ -9,6 +9,7 @@ import {dismissedWebKitWarning, isWebKit, wasLaunchedFromHomeScreen} from "../ut
 import {Table, Tbody, Td, Tr} from "@patternfly/react-table";
 import {VERSION} from "../version.ts";
 import {getDevModeEnabled} from "../utils/devMode.ts";
+import {getRedirectURI, SYNC_URL} from "../utils/sync.ts";
 
 export function Dev() {
   const storage = getStorage();
@@ -35,6 +36,7 @@ export function Dev() {
         <Button onClick={async () => visitAllStations(1)} variant="primary">Visit all stations</Button>
         <Button onClick={async () => visitAllStations(100)} variant="primary">Visit all stations 100 times</Button>
         <Button onClick={async () => console.log(await storage.getJourneys())} variant="primary">Log journeys to console</Button>
+        <Button onClick={async () => console.log(await storage.getUser())} variant="primary">Log user to console</Button>
         <Button onClick={async () => await storage.clearJourneys()} variant="danger">Clear journeys</Button>
       </PageSection>
       <PageSection>
@@ -51,6 +53,8 @@ export function Dev() {
             <Tr><Td>Was launched from Home Screen</Td><Td>{wasLaunchedFromHomeScreen().toString()}</Td></Tr>
             <Tr><Td>Has dismissed WebKit warning</Td><Td>{dismissedWebKitWarning().toString()}</Td></Tr>
             <Tr><Td>Dev mode activated</Td><Td>{getDevModeEnabled().toString()}</Td></Tr>
+            <Tr><Td>Sync URL</Td><Td>{SYNC_URL}</Td></Tr>
+            <Tr><Td>Sync redirect URI</Td><Td>{getRedirectURI()}</Td></Tr>
           </Tbody>
         </Table>
       </PageSection>

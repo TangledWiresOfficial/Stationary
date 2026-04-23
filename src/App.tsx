@@ -7,6 +7,7 @@ import {JourneyHistory} from "./routes/JourneyHistory.tsx";
 import {EditJourney} from "./routes/EditJourney.tsx";
 import {About} from "./routes/About.tsx";
 import {StationList} from "./routes/StationList.tsx";
+import {Callback} from "./routes/auth/Callback.tsx";
 
 const router = createBrowserRouter([
   {
@@ -41,6 +42,11 @@ const router = createBrowserRouter([
       {
         path: "/dev",
         element: <Dev />,
+      },
+
+      {
+        path: "/auth/callback",
+        element: <Callback />,
       },
     ],
   }
