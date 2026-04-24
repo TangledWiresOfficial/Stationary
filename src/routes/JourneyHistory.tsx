@@ -31,7 +31,7 @@ import {useState} from "react";
 import {getStorage} from "../utils/storage.ts";
 import {Journey} from "../utils/journey.ts";
 import {KebabDropdown} from "../components/KebabDropdown.tsx";
-import {Stations} from "@tangledwires/uk-station-data";
+import {Stations} from "@tangledwires/gb-station-data";
 import {useNavigate} from "react-router";
 
 export function JourneyHistory() {

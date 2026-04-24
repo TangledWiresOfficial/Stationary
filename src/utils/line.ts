@@ -1,5 +1,5 @@
 import {getStorage} from "./storage.ts";
-import {LineId, lineIds} from "@tangledwires/uk-station-data";
+import {LineId, lineIds} from "@tangledwires/gb-station-data";
 
 export type NumberPerLine = {
   [K in LineId]: number;

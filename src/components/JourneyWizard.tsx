@@ -1,6 +1,6 @@
 import {Button, Content, DatePicker, Popover, Wizard, WizardStep} from "@patternfly/react-core";
 import {StationSearch} from "./StationSearch.tsx";
-import {Lines, Stations} from "@tangledwires/uk-station-data";
+import {Lines, Stations} from "@tangledwires/gb-station-data";
 import TimesIcon from "@patternfly/react-icons/dist/esm/icons/times-icon";
 import {useNavigate} from "react-router";
 import {useMemo, useState} from "react";

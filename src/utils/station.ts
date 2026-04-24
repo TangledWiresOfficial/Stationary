@@ -1,5 +1,5 @@
 import {getStorage} from "./storage.ts";
-import {LineId, Lines, StationId, Stations} from "@tangledwires/uk-station-data";
+import {LineId, Lines, StationId, Stations} from "@tangledwires/gb-station-data";
 
 export type VisitsPerStation = {
   [K in StationId]: {

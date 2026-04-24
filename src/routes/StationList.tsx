@@ -10,7 +10,7 @@ import {
 } from "@patternfly/react-core";
 import {CheckCircleIcon} from "@patternfly/react-icons";
 import {useVisitsPerStation} from "../hooks/useVisitsPerStation.ts";
-import {Lines, stationIds, Stations} from "@tangledwires/uk-station-data";
+import {Lines, stationIds, Stations} from "@tangledwires/gb-station-data";
 import React, {useMemo, useState} from "react";
 
 type ListVisibility = "all" | "visited" | "notVisited";

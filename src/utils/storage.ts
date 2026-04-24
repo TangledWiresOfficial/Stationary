@@ -2,7 +2,7 @@ import {LazyStore} from "@tauri-apps/plugin-store";
 import {isJourneyData, Journey, toJourney} from "./journey.ts";
 import LZString from "lz-string";
 import {isTauri} from "@tauri-apps/api/core";
-import {VERSION as STATION_DATA_VERSION} from "@tangledwires/uk-station-data";
+import {VERSION as STATION_DATA_VERSION} from "@tangledwires/gb-station-data";
 import {User} from "oidc-client-ts";
 
 const STATION_DATA_VERSION_KEY = "stationDataVersion";
@@ -22,7 +22,7 @@ export interface DataStorage {
   // Clear the list of journeys
   clearJourneys: () => Promise<void>;
 
-  // Get the last version of `@tangledwires/uk-station-data` used to store journey data
+  // Get the last version of `@tangledwires/gb-station-data` used to store journey data
   getStationDataVersion: () => Promise<string>;
 
   // Get the Stationary Sync user data
