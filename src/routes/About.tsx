@@ -8,7 +8,7 @@ export function About() {
     <>
       <PageHeader title="About Stationary" />
       <PageSection>
-        <p>Stationary is an app for tracking which UK train stations you've visited.</p>
+        <p>Stationary is an app for tracking which train and metro stations you've visited in Great Britain.</p>
         <p>You are currently running version {VERSION} on {navigator.platform}.</p>
         <br />
         <p>Stationary is open source software. You can find the code at <a target="_blank" href="https://github.com/TangledWiresOfficial/Stationary">https://github.com/TangledWiresOfficial/Stationary</a></p>
