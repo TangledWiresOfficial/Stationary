@@ -9,6 +9,7 @@
     "core:default",
     "opener:default",
     "store:default",
-    "safe-area-insets-css:default"
+    "safe-area-insets-css:default",
+    "deep-link:default"
   ]
 }
