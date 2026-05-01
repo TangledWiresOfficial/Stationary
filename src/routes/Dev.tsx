@@ -3,7 +3,7 @@ import {Button, Content, ExpandableSection, PageSection} from "@patternfly/react
 import {Journey} from "../utils/journey.ts";
 import {getStorage} from "../utils/storage.ts";
 import {isTauri} from "@tauri-apps/api/core";
-import {lineIds, Lines, stationIds, Stations, tocIds} from "@tangledwires/uk-station-data";
+import {lineIds, Lines, stationIds, Stations, tocIds} from "@tangledwires/gb-station-data";
 import {useStationDataVersion} from "../hooks/useStationDataVersion.ts";
 import {dismissedWebKitWarning, isWebKit, wasLaunchedFromHomeScreen} from "../utils/webkit.ts";
 import {Table, Tbody, Td, Tr} from "@patternfly/react-table";

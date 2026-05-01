@@ -1,7 +1,7 @@
 import {JSX, useEffect, useRef, useState} from "react";
 import {Content, Menu, MenuContent, MenuItem, MenuList, Popper, SearchInput} from "@patternfly/react-core";
 import {JourneyPart} from "../utils/journey.ts";
-import {Lines, StationId, stationIds, Stations} from "@tangledwires/uk-station-data";
+import {Lines, StationId, stationIds, Stations} from "@tangledwires/gb-station-data";
 
 type StationSearchProps = {
   stations?: StationId[];

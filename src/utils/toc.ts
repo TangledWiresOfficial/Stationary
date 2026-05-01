@@ -1,4 +1,4 @@
-import {Lines, TOCId, tocIds} from "@tangledwires/uk-station-data";
+import {Lines, TOCId, tocIds} from "@tangledwires/gb-station-data";
 import {getStorage} from "./storage.ts";
 
 export type NumberPerToc = {

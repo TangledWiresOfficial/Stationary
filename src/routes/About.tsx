@@ -13,7 +13,7 @@ export function About() {
         <br />
         <p>Stationary is open source software. You can find the code at <a target="_blank" href="https://github.com/TangledWiresOfficial/Stationary">https://github.com/TangledWiresOfficial/Stationary</a></p>
         <p>Found a bug? Report it at <a target="_blank" href="https://github.com/TangledWiresOfficial/Stationary/issues">https://github.com/TangledWiresOfficial/Stationary/issues</a></p>
-        <p>Missing stations/lines should be reported at <a target="_blank" href="https://github.com/TangledWiresOfficial/uk-station-data/issues">https://github.com/TangledWiresOfficial/uk-station-data/issues</a></p>
+        <p>Missing stations/lines should be reported at <a target="_blank" href="https://github.com/TangledWiresOfficial/gb-station-data/issues">https://github.com/TangledWiresOfficial/gb-station-data/issues</a></p>
         <br />
         <p>&copy; 2026 TangledWires Ltd</p>
         <br />

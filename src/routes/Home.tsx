@@ -15,7 +15,7 @@ import CubesIcon from '@patternfly/react-icons/dist/esm/icons/cubes-icon';
 import BarsIcon from '@patternfly/react-icons/dist/esm/icons/bars-icon';
 import {useVisitsPerStation} from "../hooks/useVisitsPerStation.ts";
 import {useJourneysPerLine} from "../hooks/useJourneysPerLine.ts";
-import {LineId, Lines, Stations, TOCs} from "@tangledwires/uk-station-data";
+import {LineId, Lines, Stations, TOCs} from "@tangledwires/gb-station-data";
 import {useVisitsPerToc} from "../hooks/useVisitsPerToc.ts";
 import {TopVisitedList} from "../components/TopVisitedList.tsx";
 
