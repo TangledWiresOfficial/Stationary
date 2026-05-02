@@ -22,7 +22,7 @@ export async function handleCallback(url: string) {
 }
 
 export function getRedirectURI() {
-  if (!isTauri() || (type() === "ios" || type() === "android")) {
+  if (!isTauri()) {
     return window.location.origin + "/auth/callback";
   } else {
     return "stationary://auth/callback";
