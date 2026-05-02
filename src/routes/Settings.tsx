@@ -1,17 +1,31 @@
 import {PageHeader} from "../components/PageHeader.tsx";
-import {Button, PageSection} from "@patternfly/react-core";
+import {
+  Button,
+  FileUpload,
+  Modal,
+  ModalBody,
+  ModalFooter,
+  ModalHeader,
+  ModalVariant,
+  PageSection
+} from "@patternfly/react-core";
 import {useJourneys} from "../hooks/useJourneys.ts";
 import {isTauri} from "@tauri-apps/api/core";
-import {open as openDialog, save as saveDialog} from "@tauri-apps/plugin-dialog";
-import {create, readTextFile} from "@tauri-apps/plugin-fs";
+import {save as saveDialog} from "@tauri-apps/plugin-dialog";
+import {create} from "@tauri-apps/plugin-fs";
 import {downloadText} from "../utils/download.ts";
 import {useStationDataVersion} from "../hooks/useStationDataVersion.ts";
 import {getStorage, parseRawJourneys} from "../utils/storage.ts";
 import {v4} from "uuid";
+import {useState} from "react";
 
 export function Settings() {
   const journeys = useJourneys();
   const stationDataVersion = useStationDataVersion();
+
+  const [journeysImporterOpen, setJourneysImporterOpen] = useState(false);
+  const [fileToImport, setFileToImport] = useState<File | null>();
+  const [dataToImport, setDataToImport] = useState<any>();
 
   const journeysToJson = () => {
     return JSON.stringify({
@@ -47,30 +61,61 @@ export function Settings() {
   };
 
   const importJourneys = async () => {
-    if (isTauri()) {
-      const path = await openDialog({
-        multiple: false,
-        directory: false,
-      });
-
-      if (!path) return;
-
-      const data = JSON.parse(await readTextFile(path));
-
-      if (data.stationDataVersion !== stationDataVersion.data) {
-        alert("The selected journey file is incompatible with the current version of Stationary.");
-        return;
-      }
-
-      await getStorage().setJourneys(parseRawJourneys(data.journeys.map((j: any) => {
-        return {
-          timestamp: j.timestamp,
-          parts: j.parts,
-          uuid: v4(),
-        };
-      })).concat(journeys.data!));
+    if (dataToImport.stationDataVersion !== stationDataVersion.data) {
+      alert("The selected journey file is incompatible with the current version of Stationary.");
+      return;
     }
+
+    await getStorage().setJourneys(parseRawJourneys(dataToImport.journeys.map((j: any) => {
+      return {
+        timestamp: j.timestamp,
+        parts: j.parts,
+        uuid: v4(),
+      };
+    })).concat(journeys.data!));
+
+    closeImporter();
+  };
+
+  const closeImporter = () => {
+    setFileToImport(null);
+    setDataToImport(null);
+    setJourneysImporterOpen(false);
   }
+
+  const journeysImporter = (
+    <Modal isOpen={journeysImporterOpen} variant={ModalVariant.small}>
+      <ModalHeader title="Import journeys from file" />
+      <ModalBody>
+        <FileUpload
+          id="journeys-importer"
+          filenamePlaceholder="Select a file"
+          filename={fileToImport?.name}
+          onFileInputChange={async (_, file) => {
+            setFileToImport(file);
+            setDataToImport(JSON.parse(await file.text()));
+          }}
+          onClearClick={() => {
+            setFileToImport(null);
+            setDataToImport(null);
+          }}
+          hideDefaultPreview
+          dropzoneProps={{
+            accept: {
+              "application/json": [".json"]
+            },
+            maxFiles: 1,
+          }}
+        >
+          {dataToImport?.journeys.length ?? 0} journeys to import.
+        </FileUpload>
+      </ModalBody>
+      <ModalFooter>
+        <Button key="confirm" isDisabled={!dataToImport} onClick={importJourneys}>Import</Button>
+        <Button key="cancel" variant="link" onClick={closeImporter}>Cancel</Button>
+      </ModalFooter>
+    </Modal>
+  );
 
   return (
     <>
@@ -81,10 +126,11 @@ export function Settings() {
             <Button onClick={exportJourneys}>Export journeys to file</Button>
             <br />
             <br />
-            <Button onClick={importJourneys}>Import journeys from file</Button>
+            <Button onClick={() => setJourneysImporterOpen(true)}>Import journeys from file</Button>
           </>
         )}
       </PageSection>
+      {journeysImporter}
     </>
   );
 }
