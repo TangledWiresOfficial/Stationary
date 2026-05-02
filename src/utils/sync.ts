@@ -1,6 +1,5 @@
 import {UserManager} from "oidc-client-ts";
 import {isTauri} from "@tauri-apps/api/core";
-import {type} from "@tauri-apps/plugin-os";
 import {getStorage} from "./storage.ts";
 
 export const SYNC_URL = "https://stationary-sync.tangledwires.co.uk";
