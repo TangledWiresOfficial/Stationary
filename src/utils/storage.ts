@@ -103,7 +103,7 @@ export class BrowserStorage implements DataStorage {
   }
 }
 
-function parseRawJourneys(raw: unknown) {
+export function parseRawJourneys(raw: unknown) {
   if (!Array.isArray(raw)) return [];
 
   return raw

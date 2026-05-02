@@ -7,6 +7,7 @@ import {JourneyHistory} from "./routes/JourneyHistory.tsx";
 import {EditJourney} from "./routes/EditJourney.tsx";
 import {About} from "./routes/About.tsx";
 import {StationList} from "./routes/StationList.tsx";
+import {Settings} from "./routes/Settings.tsx";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,11 @@ const router = createBrowserRouter([
       {
         path: "/stationlist",
         element: <StationList />,
+      },
+
+      {
+        path: "/settings",
+        element: <Settings />,
       },
       {
         path: "/about",
