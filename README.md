@@ -1,4 +1,4 @@
-# Stationary
+# Stationary test
 
 Stationary is an app for tracking which train and metro stations you have visited in Great Britain.
 
