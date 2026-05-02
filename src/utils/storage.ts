@@ -65,11 +65,15 @@ export class TauriStorage implements DataStorage {
   }
 
   public async getUser() {
-    return await this.store.get(USER_KEY) as User;
+    const storageString = await this.store.get(USER_KEY) as string;
+
+    if (!storageString) return undefined;
+
+    return User.fromStorageString(storageString);
   }
 
   public async setUser(user: User | undefined) {
-    await this.store.set(USER_KEY, user);
+    await this.store.set(USER_KEY, user?.toStorageString());
   }
 }
 
@@ -104,13 +108,17 @@ export class BrowserStorage implements DataStorage {
   }
 
   public async getUser() {
-    return this.getData()[USER_KEY] as User;
+    const storageString = this.getData()[USER_KEY];
+
+    if (!storageString) return undefined;
+
+    return User.fromStorageString(storageString);
   }
 
   public async setUser(user: User | undefined) {
     const data = this.getData();
 
-    data[USER_KEY] = user;
+    data[USER_KEY] = user?.toStorageString();
 
     this.setData(data);
   }
