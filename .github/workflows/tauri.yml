@@ -135,7 +135,7 @@ jobs:
           path: '${{ github.workspace }}/${{ matrix.artifacts }}'
 
   release:
-    if: github.event_name == 'schedule' && github.event_name == 'push'
+    if: github.event_name == 'schedule' && github.ref_name == 'main'
     needs: build-tauri
     runs-on: ubuntu-latest
     permissions:
