@@ -19,11 +19,6 @@ export async function login() {
 
 export async function handleCallback(url: string) {
   await getStorage().setUser(await userManager.signinCallback(url));
-  console.log(await fetch("http://localhost:3000/api/v1/journeys", {
-    headers: {
-      Authorization: "Bearer " +(await getStorage().getUser())!.access_token
-    }
-  }));
 }
 
 export function getRedirectURI() {
