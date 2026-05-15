@@ -41,5 +41,6 @@ pkgs.mkShell {
   shellHook = ''
     export ANDROID_HOME="${androidComposition.androidsdk}/libexec/android-sdk"
     export NDK_HOME="$ANDROID_HOME/ndk/$(ls -1 $ANDROID_HOME/ndk)"
+    export XDG_DATA_DIRS=${pkgs.gsettings-desktop-schemas}/share/gsettings-schemas/${pkgs.gsettings-desktop-schemas.name}:${pkgs.gtk3}/share/gsettings-schemas/${pkgs.gtk3.name}:$XDG_DATA_DIRS
   '';
 }

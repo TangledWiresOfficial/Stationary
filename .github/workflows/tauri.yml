@@ -2,7 +2,6 @@ name: 'build'
 
 on:
   workflow_dispatch:
-  pull_request:
   push:
     branches: ["**"]
   schedule:
@@ -35,11 +34,11 @@ jobs:
             mobile: ''
             artifacts: src-tauri/target/aarch64-apple-darwin/release/bundle/**/*.dmg
 
-          - platform: 'macos-latest' # for Intel based macs.
-            name: "macos-x86_64"
-            args: '--target x86_64-apple-darwin'
-            mobile: ''
-            artifacts: src-tauri/target/x86_64-apple-darwin/release/bundle/**/*.dmg
+          # - platform: 'macos-latest' # for Intel based macs.
+          #   name: "macos-x86_64"
+          #   args: '--target x86_64-apple-darwin'
+          #   mobile: ''
+          #   artifacts: src-tauri/target/x86_64-apple-darwin/release/bundle/**/*.dmg
 
           - platform: 'ubuntu-22.04' # for Tauri v1 you could replace this with ubuntu-20.04.
             name: 'linux'
@@ -111,7 +110,7 @@ jobs:
           java-version: '21'
 
       - name: setup Android signing
-        if: matrix.mobile == 'android' && github.event_name == 'push'
+        if: matrix.mobile == 'android' && (github.event_name == 'push' || github.event_name == 'schedule')
         run: |
           cd src-tauri/gen/android
           echo 'keyAlias=${{ secrets.ANDROID_KEY_ALIAS }}' > keystore.properties
@@ -136,7 +135,7 @@ jobs:
           path: '${{ github.workspace }}/${{ matrix.artifacts }}'
 
   release:
-    if: github.event_name == 'schedule' && github.event_name == 'push'
+    if: github.event_name == 'schedule' && github.ref_name == 'main'
     needs: build-tauri
     runs-on: ubuntu-latest
     permissions:

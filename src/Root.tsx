@@ -116,6 +116,7 @@ export function Root() {
 
             {/* Footer */}
             <div>
+              <NavLink to="/settings">Settings</NavLink>
               <NavLink to="/about">About Stationary</NavLink>
 
               {getDevModeEnabled() && (
