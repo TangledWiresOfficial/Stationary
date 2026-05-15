@@ -34,11 +34,11 @@ jobs:
             mobile: ''
             artifacts: src-tauri/target/aarch64-apple-darwin/release/bundle/**/*.dmg
 
-          - platform: 'macos-latest' # for Intel based macs.
-            name: "macos-x86_64"
-            args: '--target x86_64-apple-darwin'
-            mobile: ''
-            artifacts: src-tauri/target/x86_64-apple-darwin/release/bundle/**/*.dmg
+          # - platform: 'macos-latest' # for Intel based macs.
+          #   name: "macos-x86_64"
+          #   args: '--target x86_64-apple-darwin'
+          #   mobile: ''
+          #   artifacts: src-tauri/target/x86_64-apple-darwin/release/bundle/**/*.dmg
 
           - platform: 'ubuntu-22.04' # for Tauri v1 you could replace this with ubuntu-20.04.
             name: 'linux'

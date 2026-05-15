@@ -52,6 +52,8 @@ export function Settings() {
 
       if (!path) return;
 
+      console.debug(path);
+
       const file = await create(path);
       await file.write(new TextEncoder().encode(journeysToJson()));
       await file.close();
