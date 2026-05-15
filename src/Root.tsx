@@ -1,19 +1,20 @@
 import {
   Alert,
-  AlertActionCloseButton,
-  Masthead,
+  AlertActionCloseButton, Avatar, Dropdown, DropdownItem, DropdownList,
+  Masthead, MastheadContent,
   MastheadMain,
-  MastheadToggle,
+  MastheadToggle, MenuToggle, MenuToggleElement,
   Nav,
   NavList,
   Page,
   PageBody,
   PageSidebar,
   PageSidebarBody,
-  PageToggleButton
+  PageToggleButton, Toolbar, ToolbarContent, ToolbarGroup, ToolbarItem
 } from "@patternfly/react-core";
+import avatarImg from '@patternfly/react-core/src/components/assets/avatarImg.svg';
 import {Outlet} from "react-router";
-import {useState} from "react";
+import React, {useState} from "react";
 import {NavLink} from "./components/NavLink.tsx";
 import {
   dismissedWebKitWarning,
@@ -22,8 +23,13 @@ import {
   wasLaunchedFromHomeScreen
 } from "./utils/webkit.ts";
 import {getDevModeEnabled} from "./utils/devMode.ts";
+import {useUser} from "./hooks/useUser.ts";
+import {getStorage} from "./utils/storage.ts";
+import {login} from "./utils/sync.ts";
 
 export function Root() {
+  const user = useUser();
+
   const webkitWarningBanner = (
     <p>
       A feature in iOS means that if you don't use Stationary for 7 days, your journeys will be deleted.
@@ -32,9 +38,15 @@ export function Root() {
   );
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
 
   const onSidebarToggle = () => {
     setIsSidebarOpen(!isSidebarOpen);
+  };
+
+  const logout = async () => {
+    await getStorage().setUser(undefined);
+    await user.refresh();
   };
 
   const masthead = (
@@ -48,6 +60,45 @@ export function Root() {
           />
         </MastheadToggle>
       </MastheadMain>
+      <MastheadContent>
+        <Toolbar>
+          <ToolbarContent>
+            <ToolbarGroup className="pf-m-align-end pf-m-spacer-none pf-m-spacer-md-on-md pf-m-action-group-plain">
+              <ToolbarItem>
+                <Dropdown
+                  isOpen={isUserDropdownOpen}
+                  onSelect={() => setIsUserDropdownOpen(false)}
+                  onOpenChange={setIsUserDropdownOpen}
+                  toggle={(toggleRef: React.Ref<MenuToggleElement>) => (
+                    <MenuToggle
+                      ref={toggleRef}
+                      onClick={() => setIsUserDropdownOpen(!isUserDropdownOpen)}
+                      isExpanded={isUserDropdownOpen}
+                      icon={<Avatar src={avatarImg} size="sm" alt="Avatar" />}
+                      aria-label="User"
+                    >
+                      {!user.loading && user.data && user.data.profile.name}
+                    </MenuToggle>
+                  )}
+                  shouldFocusToggleOnSelect
+                >
+                  <DropdownList>
+                    {!user.loading && user.data ? (
+                      <DropdownItem onClick={logout}>
+                        Logout
+                      </DropdownItem>
+                    ) : (
+                      <DropdownItem onClick={login}>
+                        Login
+                      </DropdownItem>
+                    )}
+                  </DropdownList>
+                </Dropdown>
+              </ToolbarItem>
+            </ToolbarGroup>
+          </ToolbarContent>
+        </Toolbar>
+      </MastheadContent>
     </Masthead>
   );
 

@@ -10,6 +10,8 @@
     "opener:default",
     "store:default",
     "safe-area-insets-css:default",
+    "deep-link:default",
+    "safe-area-insets-css:default",
     "dialog:default",
     "fs:default",
     "fs:allow-create",

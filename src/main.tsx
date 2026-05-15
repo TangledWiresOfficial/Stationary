@@ -7,6 +7,16 @@ import "@patternfly/react-core/dist/styles/base.css";
 import "@saurl/tauri-plugin-safe-area-insets-css-api";
 import "./App.css";
 
+import {isTauri} from "@tauri-apps/api/core";
+import {getCurrent} from "@tauri-apps/plugin-deep-link";
+
+if (isTauri()) {
+  const startUrls = await getCurrent();
+  if (startUrls) {
+    window.location.href = startUrls[0].replace(/stationary:\/$/, "")
+  }
+}
+
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <App />

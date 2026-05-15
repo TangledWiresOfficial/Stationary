@@ -3,9 +3,11 @@ import {isJourneyData, Journey, toJourney} from "./journey.ts";
 import LZString from "lz-string";
 import {isTauri} from "@tauri-apps/api/core";
 import {VERSION as STATION_DATA_VERSION} from "@tangledwires/gb-station-data";
+import {User} from "oidc-client-ts";
 
 const STATION_DATA_VERSION_KEY = "stationDataVersion";
 const JOURNEYS_KEY = "journeys";
+const USER_KEY = "user";
 
 export interface DataStorage {
   // Get the name of the storage backend
@@ -22,6 +24,12 @@ export interface DataStorage {
 
   // Get the last version of `@tangledwires/gb-station-data` used to store journey data
   getStationDataVersion: () => Promise<string>;
+
+  // Get the Stationary Sync user data
+  getUser: () => Promise<User | undefined>;
+
+  // Set the Stationary Sync user data
+  setUser: (user: User | undefined) => Promise<void>;
 }
 
 const TAURI_STORE_PATH = "userdata.json";
@@ -55,6 +63,18 @@ export class TauriStorage implements DataStorage {
   public async getStationDataVersion() {
     return await this.store.get(STATION_DATA_VERSION_KEY) as string;
   }
+
+  public async getUser() {
+    const storageString = await this.store.get(USER_KEY) as string;
+
+    if (!storageString) return undefined;
+
+    return User.fromStorageString(storageString);
+  }
+
+  public async setUser(user: User | undefined) {
+    await this.store.set(USER_KEY, user?.toStorageString());
+  }
 }
 
 const BROWSER_DATA_KEY = "data";
@@ -85,6 +105,22 @@ export class BrowserStorage implements DataStorage {
 
   public async getStationDataVersion() {
     return this.getData()[STATION_DATA_VERSION_KEY].toString();
+  }
+
+  public async getUser() {
+    const storageString = this.getData()[USER_KEY];
+
+    if (!storageString) return undefined;
+
+    return User.fromStorageString(storageString);
+  }
+
+  public async setUser(user: User | undefined) {
+    const data = this.getData();
+
+    data[USER_KEY] = user?.toStorageString();
+
+    this.setData(data);
   }
 
   private getData() {
