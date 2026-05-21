@@ -28,14 +28,6 @@ pub fn run() {
         .plugin(tauri_plugin_safe_area_insets_css::init())
         .plugin(tauri_plugin_os::init())
         .invoke_handler(tauri::generate_handler![greet])
-        .setup(|app| {
-            #[cfg(desktop)]
-            {
-                use tauri_plugin_deep_link::DeepLinkExt;
-                app.deep_link().register("stationary")?;
-                Ok(())
-            }
-        })
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
