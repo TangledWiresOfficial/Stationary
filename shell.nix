@@ -15,6 +15,7 @@ in
 pkgs.mkShell {
   nativeBuildInputs = with pkgs; [
     cargo
+    desktop-file-utils
     gnumake
     gobject-introspection
     nodejs

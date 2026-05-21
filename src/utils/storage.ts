@@ -73,7 +73,11 @@ export class TauriStorage implements DataStorage {
   }
 
   public async setUser(user: User | undefined) {
-    await this.store.set(USER_KEY, user?.toStorageString());
+    if (user === undefined) {
+      this.store.delete(USER_KEY);
+    } else {
+      await this.store.set(USER_KEY, user?.toStorageString());
+    }
   }
 }
 

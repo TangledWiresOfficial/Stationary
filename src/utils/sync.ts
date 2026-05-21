@@ -1,8 +1,11 @@
 import {UserManager} from "oidc-client-ts";
 import {isTauri} from "@tauri-apps/api/core";
 import {getStorage} from "./storage.ts";
+import {TauriNavigator} from "./tauriNavigator.ts";
 
 export const SYNC_URL = "https://stationary-sync.tangledwires.co.uk";
+
+const redirectNavigator = isTauri() ? new TauriNavigator() : undefined;
 
 export const userManager = new UserManager({
   authority: "https://accounts.tangledwires.co.uk/application/o/stationary-sync/",
@@ -10,7 +13,7 @@ export const userManager = new UserManager({
   redirect_uri: getRedirectURI(),
   response_type: "code",
   scope: "openid profile offline_access",
-});
+}, redirectNavigator);
 
 export async function login() {
   await userManager.signinRedirect();
