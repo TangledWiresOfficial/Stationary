@@ -10,7 +10,7 @@
     "tauri": "tauri"
   },
   "dependencies": {
-    "@patternfly/patternfly": "^6.4.0",
+    "@patternfly/patternfly": "^6.5.2",
     "@patternfly/react-charts": "^8.4.1",
     "@patternfly/react-core": "^6.4.3",
     "@patternfly/react-table": "^6.4.3",
