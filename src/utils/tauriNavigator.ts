@@ -1,5 +1,6 @@
 import {INavigator, Logger, NavigateParams, NavigateResponse} from "oidc-client-ts";
 import {openUrl} from "@tauri-apps/plugin-opener";
+import {type} from "@tauri-apps/plugin-os";
 
 export class TauriNavigator implements INavigator {
   private readonly _logger = new Logger("TauriNavigator");
@@ -11,7 +12,9 @@ export class TauriNavigator implements INavigator {
       navigate: async (params: NavigateParams): Promise<NavigateResponse> => {
         this._logger.create("navigate");
         return new Promise(async (resolve, reject) => {
-          await openUrl(params.url).then(() => resolve({ url: params.url })).catch(reject);
+          const openWith = type() === "android" || type() === "ios" ? "inAppBrowser" : undefined;
+
+          await openUrl(params.url, openWith).then(() => resolve({ url: params.url })).catch(reject);
         });
       },
       close: () => {
