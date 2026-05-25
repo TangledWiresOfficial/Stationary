@@ -11,10 +11,10 @@ export class TauriNavigator implements INavigator {
     return {
       navigate: async (params: NavigateParams): Promise<NavigateResponse> => {
         this._logger.create("navigate");
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve, reject) => {
           const openWith = type() === "android" || type() === "ios" ? "inAppBrowser" : undefined;
 
-          await openUrl(params.url, openWith).then(() => resolve({ url: params.url })).catch(reject);
+          openUrl(params.url, openWith).then(() => resolve({ url: params.url })).catch(reject);
         });
       },
       close: () => {
