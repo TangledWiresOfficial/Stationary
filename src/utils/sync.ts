@@ -3,7 +3,6 @@ import {isTauri} from "@tauri-apps/api/core";
 import {getStorage, parseRawJourneys} from "./storage.ts";
 import {TauriNavigator} from "./tauriNavigator.ts";
 import axios, {AxiosInstance} from "axios";
-import {Journey} from "./journey.ts";
 
 export const SYNC_URL = import.meta.env.VITE_STATIONARY_SYNC_URL ?? "https://stationary-sync.tangledwires.co.uk";
 
