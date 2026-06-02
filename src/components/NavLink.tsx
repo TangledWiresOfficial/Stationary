@@ -6,7 +6,7 @@ type NavLinkProps = {
   readonly to: string
   readonly isActive?: boolean
   readonly children: React.ReactNode
-} & Omit<NavItemProps, "component">;
+} & Omit<NavItemProps, "component" | "ref">;
 
 type LinkComponentProps = {
   href: string
