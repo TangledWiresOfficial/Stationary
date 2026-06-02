@@ -131,6 +131,9 @@ export function Root() {
 
   return (
     <Page
+      // Temporary workaround for https://github.com/patternfly/patternfly-react/issues/12439
+      onPageResize={() => {}}
+
       masthead={masthead}
       sidebar={sidebar}
       isContentFilled
