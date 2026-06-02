@@ -13,7 +13,7 @@
     "@patternfly/patternfly": "^6.5.2",
     "@patternfly/react-charts": "^8.4.1",
     "@patternfly/react-core": "^6.5.1",
-    "@patternfly/react-table": "^6.4.3",
+    "@patternfly/react-table": "^6.5.1",
     "@saurl/tauri-plugin-safe-area-insets-css-api": "^0.1.0",
     "@tangledwires/gb-station-data": "^8.0.0",
     "@tauri-apps/api": "^2",
