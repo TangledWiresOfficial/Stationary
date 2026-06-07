@@ -77,7 +77,7 @@ export function Root() {
                       icon={<Avatar src={avatarImg} size="sm" alt="Avatar" />}
                       aria-label="User"
                     >
-                      {!user.loading && user.data && user.data.profile.name}
+                      {!user.loading && user.data?.profile.name}
                     </MenuToggle>
                   )}
                   shouldFocusToggleOnSelect
