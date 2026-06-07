@@ -39,10 +39,11 @@ export async function getVisitsPerStation() {
 
         // Add 1 to the number of times that the previous station ("bank") has been visited on the current line ("waterlooAndCity")
         visitsPerStation[previous.station].perLine[part.line]++;
+        visitsPerStation[previous.station].total++;
       }
 
-      visitsPerStation[part.station].total++;
       visitsPerStation[part.station].perLine[part.line]++;
+      visitsPerStation[part.station].total++;
     }
   }
 
