@@ -4,6 +4,10 @@ import {LineId, Lines, StationId, Stations} from "@tangledwires/gb-station-data"
 
 export type JourneyPart = {
   station: StationId;
+
+  /**
+   * The line used to enter {@link station}
+   */
   line: LineId;
 };
 

@@ -19,9 +19,30 @@ export async function getVisitsPerStation() {
   }])) as VisitsPerStation;
 
   for (const journey of journeys) {
-    for (const part of journey.parts) {
-      visitsPerStation[part.station].total += 1;
-      visitsPerStation[part.station].perLine[part.line] += 1;
+    for (const [idx, part] of journey.parts.entries()) {
+      // In this example, Bank has been visited on both the Central Line (entering), and the Waterloo & City Line (exiting).
+      // Without the next section, the app will only record Bank as being visited on the Central Line,
+      // because JourneyPart only contains the station and the line used to enter the station
+      //
+      // () Ealing Broadway
+      // |
+      // |  Central
+      // |
+      // () Bank
+      // |
+      // |  Waterloo & City
+      // |
+      // () Waterloo
+      if (journey.parts[idx - 1]) {
+        // Get the previous part of the journey (in the example, this is `{ station: "bank", line: "central" }` and `part` is `{ station: "waterloo", line: "waterlooAndCity" }`)
+        const previous = journey.parts[idx - 1];
+
+        // Add 1 to the number of times that the previous station ("bank") has been visited on the current line ("waterlooAndCity")
+        visitsPerStation[previous.station].perLine[part.line]++;
+      }
+
+      visitsPerStation[part.station].total++;
+      visitsPerStation[part.station].perLine[part.line]++;
     }
   }
 
