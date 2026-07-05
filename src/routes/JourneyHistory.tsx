@@ -12,7 +12,7 @@ import {
   DropdownItem,
   DropdownList,
   EmptyState,
-  EmptyStateBody,
+  EmptyStateBody, ExpandableSection, Flex, FlexItem,
   Icon,
   List,
   ListItem,
@@ -33,6 +33,7 @@ import {Journey} from "../utils/journey.ts";
 import {KebabDropdown} from "../components/KebabDropdown.tsx";
 import {Stations} from "@tangledwires/gb-station-data";
 import {useNavigate} from "react-router";
+import {JourneyRoute} from "../components/JourneyRoute.tsx";
 
 export function JourneyHistory() {
   const navigate = useNavigate();
@@ -121,7 +122,16 @@ export function JourneyHistory() {
                     </CardTitle>
                   </CardHeader>
                   <CardBody>
-                    Stations: {j.parts.map((p) => Stations[p.station].displayName).join(", ")}
+                    <Flex direction={{ default: "column" }}>
+                      <FlexItem>
+                        Stations: {j.parts.map((p) => Stations[p.station].displayName).join(", ")}
+                      </FlexItem>
+                      <FlexItem>
+                        <ExpandableSection toggleText="Route">
+                          <JourneyRoute parts={j.parts} />
+                        </ExpandableSection>
+                      </FlexItem>
+                    </Flex>
                   </CardBody>
                   <CardFooter>
                     {new Date(j.timestamp).toLocaleDateString("en-GB")}
