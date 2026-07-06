@@ -123,6 +123,7 @@ export function Home() {
                   <FlexItem style={{ maxHeight: '400px', width: '400px' }}>
                     <TopVisitedList
                       header="Top 10 most visited stations"
+                      modalHeader="Most visited stations"
                       data={Object.fromEntries(Object.entries(visitsPerStation.data!).map(([station, data]) => [station, data.total]))}
                       getDisplayName={(key) => Stations[key as keyof typeof Stations].displayName}
                     />
@@ -130,12 +131,24 @@ export function Home() {
                 )}
                 {!visitsPerLine.loading && (
                   <FlexItem style={{ maxHeight: '400px', width: '400px' }}>
-                    <TopVisitedList header="Top 10 most visited lines" data={visitsPerLine.data!} getDisplayName={(key) => Lines[key].displayName} />
+                    <TopVisitedList
+                      header="Top 10 most visited lines"
+                      modalHeader="Most visited lines"
+                      data={visitsPerLine.data!}
+                      getDisplayName={(key) => Lines[key].displayName}
+                      getColour={(key) => Lines[key].colour}
+                    />
                   </FlexItem>
                 )}
                 {!visitsPerToc.loading && (
                   <FlexItem style={{ maxHeight: '400px', width: '400px' }}>
-                    <TopVisitedList header="Top 10 most visited TOCs" data={visitsPerToc.data!} getDisplayName={(key) => TOCs[key].displayName} />
+                    <TopVisitedList
+                      header="Top 10 most visited TOCs"
+                      modalHeader="Most visited TOCs"
+                      data={visitsPerToc.data!}
+                      getDisplayName={(key) => TOCs[key].displayName}
+                      getColour={(key) => TOCs[key].colour}
+                    />
                   </FlexItem>
                 )}
               </Flex>
