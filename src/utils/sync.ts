@@ -9,8 +9,8 @@ export const SYNC_URL = import.meta.env.VITE_STATIONARY_SYNC_URL ?? "https://sta
 const redirectNavigator = isTauri() ? new TauriNavigator() : undefined;
 
 export const userManager = new UserManager({
-  authority: "https://accounts.tangledwires.co.uk/application/o/stationary-sync/",
-  client_id: "OdZvDUTEsD7mArYdKAQbW2MbzyNtghk7pqEY26TA",
+  authority: "https://auth.tangledwires.co.uk/realms/master",
+  client_id: "stationary-sync",
   redirect_uri: getRedirectURI(),
   response_type: "code",
   scope: "openid profile offline_access",
