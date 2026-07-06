@@ -20,35 +20,35 @@ export type TopVisitedListProps<K extends PropertyKey> = {
   readonly getColour?: (key: K) => string;
 };
 
-function TopVisitedListItem<K extends PropertyKey>({
+function TopVisitedListItem({
   idx,
   itemKey,
   visits,
-  getDisplayName,
-  getColour
+  displayName,
+  colour
 }: {
   idx: number,
   itemKey: string,
   visits: number,
-  getDisplayName: TopVisitedListProps<K>["getDisplayName"],
-  getColour: TopVisitedListProps<K>["getColour"]
+  displayName: string,
+  colour?: string
 }) {
   return (
     <ListItem key={itemKey}>
       <Flex>
-        {getColour && (
+        {colour && (
           <FlexItem style={{ width: "6px", height: "100%" }}>
             <span style={{
               marginLeft: "4px",
               width: "6px",
               borderLeftStyle: "solid",
               borderWidth: "6px",
-              borderColor: getColour(itemKey as K)
+              borderColor: colour
             }}></span>
           </FlexItem>
         )}
         <FlexItem grow={{ default: 'grow' }}>
-          {idx + 1}. {getDisplayName(itemKey as K)}
+          {idx + 1}. {displayName}
         </FlexItem>
         <FlexItem>
           {visits.toString()}
@@ -73,8 +73,8 @@ export function TopVisitedList<K extends PropertyKey>({ header, modalHeader, dat
             idx={idx}
             itemKey={key}
             visits={visits as number}
-            getDisplayName={getDisplayName}
-            getColour={getColour}
+            displayName={getDisplayName(key as K)}
+            colour={getColour?.(key as K)}
           />
         ))}
     </List>
@@ -89,8 +89,8 @@ export function TopVisitedList<K extends PropertyKey>({ header, modalHeader, dat
             idx={idx}
             itemKey={key}
             visits={visits as number}
-            getDisplayName={getDisplayName}
-            getColour={getColour}
+            displayName={getDisplayName(key as K)}
+            colour={getColour?.(key as K)}
           />
         ))}
     </List>
