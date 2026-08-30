@@ -11,8 +11,12 @@ import "./9-10.ts";
 export async function migrateAll() {
   const storage = getStorage();
   const journeys = await storage.getJourneys();
+  const lastUsedMajorStationDataVersion = await storage.getLastUsedStationDataVersion();
 
-  const migrated = await migrate(journeys, await storage.getLastUsedStationDataVersion());
+  // If lastUsedMajorStationDataVersion is null, then no journeys have been saved before and there's nothing to migrate
+  if (!lastUsedMajorStationDataVersion) return;
+
+  const migrated = await migrate(journeys, lastUsedMajorStationDataVersion);
 
   await storage.setJourneys(migrated);
 }

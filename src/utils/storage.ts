@@ -23,7 +23,7 @@ export interface DataStorage {
   clearJourneys: () => Promise<void>;
 
   // Get the last version of `@tangledwires/gb-station-data` used to store journey data
-  getLastUsedStationDataVersion: () => Promise<string>;
+  getLastUsedStationDataVersion: () => Promise<string | undefined>;
 
   // Get the Stationary Sync user data
   getUser: () => Promise<User | undefined>;
