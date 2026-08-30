@@ -14,15 +14,16 @@ import {isTauri} from "@tauri-apps/api/core";
 import {save as saveDialog} from "@tauri-apps/plugin-dialog";
 import {create} from "@tauri-apps/plugin-fs";
 import {downloadText} from "../utils/download.ts";
-import {useStationDataVersion} from "../hooks/useStationDataVersion.ts";
+import {useLastUsedStationDataVersion} from "../hooks/useLastUsedStationDataVersion.ts";
 import {getStorage, parseRawJourneys} from "../utils/storage.ts";
 import {v4} from "uuid";
 import {useState} from "react";
 import {AndroidFs, isAndroid} from "tauri-plugin-android-fs-api";
+import {migrate} from "../utils/migrations";
 
 export function Settings() {
   const journeys = useJourneys();
-  const stationDataVersion = useStationDataVersion();
+  const stationDataVersion = useLastUsedStationDataVersion();
 
   const [journeysImporterOpen, setJourneysImporterOpen] = useState(false);
   const [fileToImport, setFileToImport] = useState<File | null>();
@@ -68,18 +69,17 @@ export function Settings() {
   };
 
   const importJourneys = async () => {
-    if (dataToImport.stationDataVersion !== stationDataVersion.data) {
-      alert("The selected journey file is incompatible with the current version of Stationary.");
-      return;
-    }
-
-    await getStorage().setJourneys(parseRawJourneys(dataToImport.journeys.map((j: any) => {
+    const parsed = parseRawJourneys(dataToImport.journeys.map((j: any) => {
       return {
         timestamp: j.timestamp,
         parts: j.parts,
         uuid: v4(),
       };
-    })).concat(journeys.data!));
+    }));
+
+    const migrated = await migrate(parsed, dataToImport.stationDataVersion);
+
+    await getStorage().setJourneys(migrated.concat(journeys.data!));
 
     closeImporter();
   };

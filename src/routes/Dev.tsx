@@ -4,7 +4,7 @@ import {Journey} from "../utils/journey.ts";
 import {getStorage} from "../utils/storage.ts";
 import {isTauri} from "@tauri-apps/api/core";
 import {lineIds, Lines, stationIds, Stations, tocIds} from "@tangledwires/gb-station-data";
-import {useStationDataVersion} from "../hooks/useStationDataVersion.ts";
+import {useLastUsedStationDataVersion} from "../hooks/useLastUsedStationDataVersion.ts";
 import {dismissedWebKitWarning, isWebKit, wasLaunchedFromHomeScreen} from "../utils/webkit.ts";
 import {Table, Tbody, Td, Tr} from "@patternfly/react-table";
 import {VERSION} from "../version.ts";
@@ -14,7 +14,7 @@ import {getRedirectURI, SYNC_URL} from "../utils/sync.ts";
 export function Dev() {
   const storage = getStorage();
 
-  const stationDataVersion = useStationDataVersion();
+  const stationDataVersion = useLastUsedStationDataVersion();
 
   const visitAllStations = async (times: number) => {
     for (let i = 0; i < times; i++) {
@@ -48,7 +48,7 @@ export function Dev() {
             <Tr><Td>Number of TOCs</Td><Td>{tocIds.length}</Td></Tr>
             <Tr><Td>Is Tauri</Td><Td>{isTauri().toString()}</Td></Tr>
             <Tr><Td>Storage backend</Td><Td>{storage.getBackendName()}</Td></Tr>
-            <Tr><Td>Station data version</Td><Td>{stationDataVersion.data}</Td></Tr>
+            <Tr><Td>Last used station data version</Td><Td>{stationDataVersion.data}</Td></Tr>
             <Tr><Td>Is WebKit</Td><Td>{isWebKit().toString()}</Td></Tr>
             <Tr><Td>Was launched from Home Screen</Td><Td>{wasLaunchedFromHomeScreen().toString()}</Td></Tr>
             <Tr><Td>Has dismissed WebKit warning</Td><Td>{dismissedWebKitWarning().toString()}</Td></Tr>

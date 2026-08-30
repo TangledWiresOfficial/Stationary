@@ -7,7 +7,7 @@ let
       "35"
       "36"
     ];
-    platformToolsVersion = "35.0.2";
+    platformToolsVersion = "37.0.1";
     buildToolsVersions = ["35.0.0"];
     includeNDK = true;
   };

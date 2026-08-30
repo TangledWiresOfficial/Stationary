@@ -23,7 +23,7 @@ export interface DataStorage {
   clearJourneys: () => Promise<void>;
 
   // Get the last version of `@tangledwires/gb-station-data` used to store journey data
-  getStationDataVersion: () => Promise<string>;
+  getLastUsedStationDataVersion: () => Promise<string>;
 
   // Get the Stationary Sync user data
   getUser: () => Promise<User | undefined>;
@@ -60,7 +60,7 @@ export class TauriStorage implements DataStorage {
     await this.setJourneys([]);
   }
 
-  public async getStationDataVersion() {
+  public async getLastUsedStationDataVersion() {
     return await this.store.get(STATION_DATA_VERSION_KEY) as string;
   }
 
@@ -107,7 +107,7 @@ export class BrowserStorage implements DataStorage {
     await this.setJourneys([]);
   }
 
-  public async getStationDataVersion() {
+  public async getLastUsedStationDataVersion() {
     return this.getData()[STATION_DATA_VERSION_KEY].toString();
   }
 
