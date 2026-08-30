@@ -18,7 +18,7 @@ import {useLastUsedStationDataVersion} from "../hooks/useLastUsedStationDataVers
 import {getStorage, parseRawJourneys} from "../utils/storage.ts";
 import {v4} from "uuid";
 import {useState} from "react";
-import {AndroidFs, isAndroid} from "tauri-plugin-android-fs-api";
+import * as AndroidFs from "tauri-plugin-android-fs-api";
 import {migrate} from "../utils/migrations";
 
 export function Settings() {
@@ -43,7 +43,7 @@ export function Settings() {
 
   const exportJourneys = async () => {
     if (isTauri()) {
-      if (isAndroid()) {
+      if (AndroidFs.isAndroid()) {
         const uri = await AndroidFs.showSaveFilePicker("journeys.json", null);
         if (!uri) return;
         await AndroidFs.writeTextFile(uri, journeysToJson());
