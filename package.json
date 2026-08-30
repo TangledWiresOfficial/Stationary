@@ -29,7 +29,7 @@
     "oidc-client-ts": "^3.5.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.7",
-    "react-router": "^8.1.0",
+    "react-router": "^8.3.0",
     "tauri-plugin-android-fs-api": "^28.4.0",
     "uuid": "^14.0.2",
     "victory": "^37.3.6"
