@@ -12,7 +12,7 @@
   "dependencies": {
     "@patternfly/patternfly": "^6.6.0",
     "@patternfly/react-charts": "^8.6.0",
-    "@patternfly/react-core": "^6.5.1",
+    "@patternfly/react-core": "^6.6.1",
     "@patternfly/react-table": "^6.6.0",
     "@saurl/tauri-plugin-safe-area-insets-css-api": "^0.1.0",
     "@tangledwires/gb-station-data": "^10.1.0",
