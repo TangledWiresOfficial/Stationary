@@ -33,26 +33,33 @@ export function getRedirectURI() {
 }
 
 export class StationarySync {
-  private static axios: AxiosInstance;
-
-  static {
-    getStorage().getUser().then((user) => {
-      this.axios = axios.create({
-        headers: {
-          Authorization: "Bearer " + user?.access_token
-        }
-      });
-    });
-  }
+  private static axiosPromise?: Promise<AxiosInstance>;
 
   public static async getJourneys() {
-    const response = await this.axios.get(SYNC_URL + "/api/v1/journeys");
+    const axios = await this.getAxios();
 
+    const response = await axios.get(SYNC_URL + "/api/v1/journeys");
+
+    // If we get a 401, it means that the user's token has expired, so just log them out
     if (response.status === 401) {
       await getStorage().setUser(undefined);
       return null;
     } else {
       return parseRawJourneys(response.data);
     }
+  }
+
+  private static getAxios() {
+    if (!this.axiosPromise) {
+      this.axiosPromise = getStorage().getUser().then((user) => {
+        return axios.create({
+          headers: {
+            Authorization: "Bearer " + user?.access_token
+          }
+        });
+      });
+    }
+
+    return this.axiosPromise;
   }
 }
