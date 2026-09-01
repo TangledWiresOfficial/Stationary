@@ -12,7 +12,7 @@
       "identifier": "opener:allow-open-url",
       "allow": [
         {
-          "url": "https://accounts.tangledwires.co.uk/*",
+          "url": "https://auth.tangledwires.co.uk/*",
           "app": "inAppBrowser"
         }
       ]
