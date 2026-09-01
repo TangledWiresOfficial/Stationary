@@ -123,7 +123,7 @@ export class BrowserStorage implements DataStorage {
   }
 
   public async getLastUsedStationDataVersion() {
-    return this.getData()[STATION_DATA_VERSION_KEY].toString();
+    return this.getData()[STATION_DATA_VERSION_KEY];
   }
 
   public async getUser() {
