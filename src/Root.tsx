@@ -25,7 +25,7 @@ import {
 import {getDevModeEnabled} from "./utils/devMode.ts";
 import {useUser} from "./hooks/useUser.ts";
 import {getStorage} from "./utils/storage.ts";
-import {login} from "./utils/sync.ts";
+import {login, StationarySync} from "./utils/sync.ts";
 
 export function Root() {
   const user = useUser();
@@ -84,9 +84,13 @@ export function Root() {
                 >
                   <DropdownList>
                     {!user.loading && user.data ? (
-                      <DropdownItem onClick={logout}>
-                        Logout
-                      </DropdownItem>
+                      <>
+                        <DropdownItem onClick={StationarySync.sync}>
+                          Sync now
+                        </DropdownItem><DropdownItem onClick={logout}>
+                          Logout
+                        </DropdownItem>
+                      </>
                     ) : (
                       <DropdownItem onClick={login}>
                         Login

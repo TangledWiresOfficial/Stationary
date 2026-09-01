@@ -8,6 +8,7 @@ import {User} from "oidc-client-ts";
 const STATION_DATA_VERSION_KEY = "stationDataVersion";
 const JOURNEYS_KEY = "journeys";
 const USER_KEY = "user";
+const DELETED_JOURNEY_UUIDS_KEY = "deletedJourneyUuids";
 
 export interface DataStorage {
   // Get the name of the storage backend
@@ -30,6 +31,12 @@ export interface DataStorage {
 
   // Set the Stationary Sync user data
   setUser: (user: User | undefined) => Promise<void>;
+
+  // Get the list of deleted journey UUIDs to be deleted from Stationary Sync later
+  getDeletedJourneyUuids: () => Promise<string[]>;
+
+  // Set the list of deleted journey UUIDs to be deleted from Stationary Sync later
+  setDeletedJourneyUuids: (uuids: string[]) => Promise<void>;
 }
 
 const TAURI_STORE_PATH = "userdata.json";
@@ -79,6 +86,14 @@ export class TauriStorage implements DataStorage {
       await this.store.set(USER_KEY, user?.toStorageString());
     }
   }
+
+  public async getDeletedJourneyUuids() {
+    return await this.store.get(DELETED_JOURNEY_UUIDS_KEY) as string[] ?? [];
+  }
+
+  public async setDeletedJourneyUuids(uuids: string[]) {
+    await this.store.set(DELETED_JOURNEY_UUIDS_KEY, uuids);
+  }
 }
 
 const BROWSER_DATA_KEY = "data";
@@ -123,6 +138,18 @@ export class BrowserStorage implements DataStorage {
     const data = this.getData();
 
     data[USER_KEY] = user?.toStorageString();
+
+    this.setData(data);
+  }
+
+  public async getDeletedJourneyUuids() {
+    return this.getData()[DELETED_JOURNEY_UUIDS_KEY] ?? [];
+  }
+
+  public async setDeletedJourneyUuids(uuids: string[]) {
+    const data = this.getData();
+
+    data[DELETED_JOURNEY_UUIDS_KEY] = uuids;
 
     this.setData(data);
   }

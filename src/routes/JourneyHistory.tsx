@@ -49,6 +49,8 @@ export function JourneyHistory() {
 
   const deleteJourney = async () => {
     await storage.setJourneys(journeys!.filter((j) => j.uuid !== toBeDeleted!.uuid));
+    await storage.setDeletedJourneyUuids([...(await storage.getDeletedJourneyUuids()), toBeDeleted!.uuid!]);
+
     await refresh();
     setDeleteConfirmationOpen(false);
   };
@@ -118,7 +120,7 @@ export function JourneyHistory() {
                     </KebabDropdown>
                   ) }}>
                     <CardTitle>
-                      {Stations[j.parts[0].station].displayName} <Icon><AngleRightIcon /></Icon> {Stations[j.parts[j.parts.length - 1].station].displayName}
+                      {Stations[j.parts[0]?.station]?.displayName} <Icon><AngleRightIcon /></Icon> {Stations[j.parts[j.parts.length - 1]?.station]?.displayName}
                     </CardTitle>
                   </CardHeader>
                   <CardBody>
