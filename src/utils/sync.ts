@@ -20,7 +20,11 @@ export const userManager = new UserManager({
 }, redirectNavigator);
 
 export async function login() {
-  await userManager.signinRedirect();
+  try {
+    await userManager.signinRedirect();
+  } catch (e) {
+    alert(`Error during login: ${e}`);
+  }
 }
 
 export async function handleCallback(url: string) {
