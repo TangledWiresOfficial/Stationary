@@ -71,12 +71,13 @@ export class StationarySync {
     }
 
     if (!response) {
-      alert(`Failed to sync after ${MAX_SYNC_ATTEMPTS} attempts. Try logging out and back in.`);
+      alert(`Failed to sync after ${MAX_SYNC_ATTEMPTS} attempts. Try logging out and back in and check status.tangledwires.co.uk for service status.`);
       throw new Error(`Failed to sync after ${MAX_SYNC_ATTEMPTS} attempts`);
     }
 
     await getStorage().setDeletedJourneyUuids([]);
     await getStorage().setJourneys(parseRawJourneys(response.data));
+    alert("Synced successfully");
   }
 
   private static async getAxios() {

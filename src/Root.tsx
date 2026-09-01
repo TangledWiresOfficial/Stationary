@@ -49,6 +49,14 @@ export function Root() {
     await user.refresh();
   };
 
+  const sync = async () => {
+    await StationarySync.sync();
+
+    if (!window.location.pathname.startsWith("/editjourney")) {
+      window.location.reload();
+    }
+  };
+
   const masthead = (
     <Masthead>
       <MastheadMain>
@@ -85,7 +93,7 @@ export function Root() {
                   <DropdownList>
                     {!user.loading && user.data ? (
                       <>
-                        <DropdownItem onClick={StationarySync.sync}>
+                        <DropdownItem onClick={sync}>
                           Sync now
                         </DropdownItem><DropdownItem onClick={logout}>
                           Logout
