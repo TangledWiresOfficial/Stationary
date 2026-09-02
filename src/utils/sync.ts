@@ -3,7 +3,7 @@ import {isTauri} from "@tauri-apps/api/core";
 import {getStorage, parseRawJourneys} from "./storage.ts";
 import {TauriNavigator} from "./tauriNavigator.ts";
 import axios, {AxiosError} from "axios";
-import {Journey} from "./journey.ts";
+import {Journey, JourneyData} from "./journey.ts";
 
 export const SYNC_URL = import.meta.env.VITE_STATIONARY_SYNC_URL ?? "https://stationary-sync.tangledwires.co.uk";
 
@@ -79,8 +79,14 @@ export class StationarySync {
       throw new Error(`Failed to sync after ${MAX_SYNC_ATTEMPTS} attempts`);
     }
 
+    console.log(response.data);
+
     await getStorage().setDeletedJourneyUuids([]);
-    await getStorage().setJourneys(parseRawJourneys(response.data));
+    await getStorage().setJourneys(parseRawJourneys(response.data.map((j: JourneyData) => {
+      if (j.description === null) j.description = undefined; // Rails will return null for the description if there isn't one
+
+      return j;
+    })));
     alert("Synced successfully");
   }
 
