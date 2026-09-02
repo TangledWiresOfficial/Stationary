@@ -15,7 +15,7 @@ import CubesIcon from '@patternfly/react-icons/dist/esm/icons/cubes-icon';
 import BarsIcon from '@patternfly/react-icons/dist/esm/icons/bars-icon';
 import {useVisitsPerStation} from "../hooks/useVisitsPerStation.ts";
 import {useJourneysPerLine} from "../hooks/useJourneysPerLine.ts";
-import {LineId, Lines, Stations, TOCs} from "@tangledwires/gb-station-data";
+import {LineId, Lines, Stations, TOCId, TOCs} from "@tangledwires/gb-station-data";
 import {useVisitsPerToc} from "../hooks/useVisitsPerToc.ts";
 import {TopVisitedList} from "../components/TopVisitedList.tsx";
 
@@ -116,6 +116,34 @@ export function Home() {
                       />
                     </FlexItem>
                   </>
+                )}
+                {!visitsPerToc.loading && (
+                  <FlexItem style={{ height: '150px', width: '150px' }}>
+                    <ChartDonut
+                      constrainToVisibleArea
+                      style={{
+                        data: {
+                          fill: ({ datum }) => datum.visits > 0 ? TOCs[datum.x as TOCId].colour : "var(--pf-t--color--gray--20)",
+                        },
+                      }}
+                      labels={({ datum }) => TOCs[datum.x as TOCId].displayName}
+                      height={150}
+                      width={150}
+                      title={`TOCs\nvisited`}
+                      titleComponent={
+                        <ChartLabel style={[{
+                          fontSize: 16
+                        }]} />
+                      }
+                      data={Object.entries(visitsPerToc.data!).map(([toc, visits]) => {
+                        return {
+                          x: toc,
+                          y: 1,
+                          visits: visits
+                        };
+                      })}
+                    />
+                  </FlexItem>
                 )}
               </Flex>
               <Flex>
