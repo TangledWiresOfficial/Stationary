@@ -125,6 +125,13 @@ export function JourneyHistory() {
                   </CardHeader>
                   <CardBody>
                     <Flex direction={{ default: "column" }}>
+                      {j.description && (
+                        <FlexItem>
+                          <Content>
+                            <blockquote>{j.description}</blockquote>
+                          </Content>
+                        </FlexItem>
+                      )}
                       <FlexItem>
                         Stations: {j.parts.map((p) => Stations[p.station].displayName).join(", ")}
                       </FlexItem>

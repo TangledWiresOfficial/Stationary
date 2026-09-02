@@ -60,7 +60,7 @@ export class StationarySync {
       try {
         response = await axios.post(SYNC_URL + "/api/v1/journeys/sync", {
           deleted_uuids: deletedUuids,
-          journeys: journeys.map((journey) => ({ uuid: journey.uuid, timestamp: journey.timestamp, parts_attributes: journey.parts })),
+          journeys: journeys.map((journey) => ({ uuid: journey.uuid, timestamp: journey.timestamp, description: journey.description, parts_attributes: journey.parts })),
         });
 
         break;

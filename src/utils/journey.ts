@@ -14,6 +14,7 @@ export type JourneyPart = {
 export type JourneyData = {
   timestamp: number;
   parts: JourneyPart[];
+  description?: string;
   uuid?: string;
 };
 
@@ -27,12 +28,13 @@ export function isJourneyData(data: any): data is JourneyData {
       typeof p.station === "string" &&
       typeof p.line === "string";
     }) &&
-    (data.uuid === undefined || typeof data.uuid === "string")
+    (data.uuid === undefined || typeof data.uuid === "string") &&
+    (data.description === undefined || typeof data.description === "string")
   );
 }
 
 export function toJourney(data: JourneyData) {
-  const journey = new Journey(data.timestamp, data.parts);
+  const journey = new Journey(data.timestamp, data.parts, data.description);
   journey.uuid = data.uuid;
 
   return journey;
@@ -41,13 +43,15 @@ export function toJourney(data: JourneyData) {
 export class Journey {
   public readonly timestamp: number;
   public parts: JourneyPart[];
+  public description?: string;
 
   // UUID will only be set once save() is called
   public uuid?: string;
 
-  constructor(timestamp: number, parts: JourneyPart[]) {
+  constructor(timestamp: number, parts: JourneyPart[], description?: string) {
     this.timestamp = timestamp;
     this.parts = parts;
+    this.description = description;
   }
 
   public async save() {
@@ -72,7 +76,7 @@ export class Journey {
   //
   // `timestamp as hex|line,station|line,station|line,station`
   public toShareable() {
-    return `${this.timestamp.toString(16)}|${this.parts.map((p) => `${p.line},${p.station}`).join("|")}`
+    return `${this.timestamp.toString(16)}|${this.parts.map((p) => `${p.line},${p.station}`).join("|")}`;
   }
 
   // The opposite of toShareable()
