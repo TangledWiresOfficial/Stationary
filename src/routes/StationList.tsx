@@ -8,7 +8,7 @@ import {
   MenuToggleElement,
   PageSection
 } from "@patternfly/react-core";
-import {CheckCircleIcon} from "@patternfly/react-icons";
+import {CheckCircleIcon, MinusCircleIcon} from "@patternfly/react-icons";
 import {useVisitsPerStation} from "../hooks/useVisitsPerStation.ts";
 import {Lines, stationIds, Stations} from "@tangledwires/gb-station-data";
 import React, {useMemo, useState} from "react";
@@ -19,15 +19,6 @@ export function StationList() {
   const visitsPerStation = useVisitsPerStation();
 
   const stationsVisited = useMemo(() => {
-    // const stations = [];
-    //
-    // if (!visitsPerStation.loading) {
-    //   for (const [station, data] of Object.entries(visitsPerStation.data!)) {
-    //     if (data.total > 0) stations.push(station);
-    //   }
-    // }
-    //
-    // return stations;
     if (!visitsPerStation.loading) {
       return Object.fromEntries(Object.entries(visitsPerStation.data!).filter(([_station, data]) => data.total > 0));
     }
@@ -93,9 +84,13 @@ export function StationList() {
                 <h2>
                   {station.displayName}
                   {" "}
-                  {stationsVisited[key] && (
+                  {station.lines.every((v) => stationsVisited[key]?.perLine[v] > 0) ? (
                     <Icon status="success" isInline>
                       <CheckCircleIcon />
+                    </Icon>
+                  ) : stationsVisited[key]?.total > 0 && (
+                    <Icon status="warning" isInline>
+                      <MinusCircleIcon />
                     </Icon>
                   )}
                 </h2>
