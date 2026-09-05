@@ -2,7 +2,7 @@ import {useEffect} from "react";
 import {handleCallback} from "../../utils/sync.ts";
 import {PageHeader} from "../../components/PageHeader.tsx";
 
-export function Callback() {
+export function CallbackPage() {
   useEffect(() => {
     handleCallback(window.location.href)
       .then(() => {

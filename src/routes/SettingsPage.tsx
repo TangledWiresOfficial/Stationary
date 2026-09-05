@@ -21,7 +21,7 @@ import {useState} from "react";
 import * as AndroidFs from "tauri-plugin-android-fs-api";
 import {migrate} from "../utils/migrations";
 
-export function Settings() {
+export function SettingsPage() {
   const journeys = useJourneys();
   const stationDataVersion = useLastUsedStationDataVersion();
 

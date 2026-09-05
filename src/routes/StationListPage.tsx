@@ -15,7 +15,7 @@ import React, {useMemo, useState} from "react";
 
 type ListVisibility = "all" | "visited" | "notVisited";
 
-export function StationList() {
+export function StationListPage() {
   const visitsPerStation = useVisitsPerStation();
 
   const stationsVisited = useMemo(() => {

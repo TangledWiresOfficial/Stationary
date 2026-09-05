@@ -4,7 +4,7 @@ import {useJourneys} from "../hooks/useJourneys.ts";
 import {JourneyWizard} from "../components/JourneyWizard.tsx";
 import {Journey} from "../utils/journey.ts";
 
-export function EditJourney() {
+export function EditJourneyPage() {
   const navigate = useNavigate();
   const params = useParams();
 

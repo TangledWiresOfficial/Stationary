@@ -123,6 +123,7 @@ export function Root() {
               <NavLink to="/">Home</NavLink>
               <NavLink to="/newjourney">New journey</NavLink>
               <NavLink to="/journeyhistory">Journey history</NavLink>
+              <NavLink to="/achievements">Achievements</NavLink>
               <NavLink to="/stationlist">Station list</NavLink>
             </div>
 

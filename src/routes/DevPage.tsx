@@ -10,8 +10,9 @@ import {Table, Tbody, Td, Tr} from "@patternfly/react-table";
 import {VERSION} from "../version.ts";
 import {getDevModeEnabled} from "../utils/devMode.ts";
 import {getRedirectURI, SYNC_URL} from "../utils/sync.ts";
+import {achievementIds, Achievements} from "../utils/achievements.tsx";
 
-export function Dev() {
+export function DevPage() {
   const storage = getStorage();
 
   const stationDataVersion = useLastUsedStationDataVersion();
@@ -29,6 +30,15 @@ export function Dev() {
     }
   };
 
+  const grantAllAchievements = async () => {
+    const existingAchievements = await storage.getObtainedAchievements();
+    const newAchievements = Object.keys(Achievements)
+      .filter((a) => !existingAchievements.some((ea) => ea.id === a))
+      .map((a) => ({ id: a, obtainedAt: new Date() }));
+
+    await storage.setObtainedAchievements([...existingAchievements, ...newAchievements]);
+  };
+
   return (
     <>
       <PageHeader title="Dev tools" description="This page can cause damage to your Stationary data that cannot be undone. Be careful. You can hide this page by tapping the TangledWires logo in 'About Stationary'." />
@@ -37,7 +47,8 @@ export function Dev() {
         <Button onClick={async () => visitAllStations(100)} variant="primary">Visit all stations 100 times</Button>
         <Button onClick={async () => console.log(await storage.getJourneys())} variant="primary">Log journeys to console</Button>
         <Button onClick={async () => console.log(await storage.getUser())} variant="primary">Log user to console</Button>
-        <Button onClick={async () => await storage.clearJourneys()} variant="danger">Clear journeys</Button>
+        <Button onClick={storage.clearJourneys} variant="danger">Clear journeys</Button>
+        <Button onClick={grantAllAchievements} variant="primary">Grant all achievements</Button>
       </PageSection>
       <PageSection>
         <Table variant="compact">
@@ -46,6 +57,7 @@ export function Dev() {
             <Tr><Td>Number of lines</Td><Td>{lineIds.length}</Td></Tr>
             <Tr><Td>Number of stations</Td><Td>{stationIds.length}</Td></Tr>
             <Tr><Td>Number of TOCs</Td><Td>{tocIds.length}</Td></Tr>
+            <Tr><Td>Number of Achievements</Td><Td>{achievementIds.length}</Td></Tr>
             <Tr><Td>Is Tauri</Td><Td>{isTauri().toString()}</Td></Tr>
             <Tr><Td>Storage backend</Td><Td>{storage.getBackendName()}</Td></Tr>
             <Tr><Td>Last used station data version</Td><Td>{stationDataVersion.data}</Td></Tr>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="68.037994mm"
+   height="67.499992mm"
+   viewBox="0 0 68.037994 67.499992"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4.4 (dcaf3e7d9e, 2026-05-05)"
+   sodipodi:docname="journeySameStartAndEnd.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#999999"
+     borderopacity="1"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="false"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="2.0000001"
+     inkscape:cx="81.999996"
+     inkscape:cy="120.74999"
+     inkscape:window-width="3440"
+     inkscape:window-height="1366"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1">
+    <marker
+       style="overflow:visible"
+       id="Triangle"
+       refX="0"
+       refY="0"
+       orient="0.00"
+       inkscape:stockid="Triangle arrow"
+       markerWidth="1"
+       markerHeight="1"
+       viewBox="0 0 1 1"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid"
+       markerUnits="userSpaceOnUse">
+      <path
+         transform="scale(0.5)"
+         style="fill:#e5e5e5;fill-rule:evenodd;stroke:none;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path135" />
+    </marker>
+    <rect
+       x="0"
+       y="0"
+       width="257.15147"
+       height="255.11808"
+       id="rect1" />
+  </defs>
+  <g
+     inkscape:label="Base"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-74.436052,-112.43972)">
+    <ellipse
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:3.49999;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:0.10498"
+       id="path1-1"
+       cx="108.45505"
+       cy="146.18971"
+       rx="32.269001"
+       ry="32" />
+    <circle
+       style="fill:#e5e5e5;stroke:none;stroke-width:2.382;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       id="path1"
+       cx="89.119843"
+       cy="146.18971"
+       r="2" />
+    <path
+       style="fill:none;stroke:#e5e5e5;stroke-width:2.382;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Triangle)"
+       id="path2"
+       sodipodi:type="arc"
+       sodipodi:cx="108.80551"
+       sodipodi:cy="146.18971"
+       sodipodi:rx="19.793751"
+       sodipodi:ry="19.793751"
+       sodipodi:start="3.6651914"
+       sodipodi:end="2.6179939"
+       sodipodi:arc-type="arc"
+       d="m 91.66362,136.29284 a 19.793751,19.793751 0 0 1 22.26489,-9.22242 19.793751,19.793751 0 0 1 14.67075,19.11929 19.793751,19.793751 0 0 1 -14.67075,19.1193 19.793751,19.793751 0 0 1 -22.26489,-9.22242"
+       sodipodi:open="true" />
+  </g>
+</svg>

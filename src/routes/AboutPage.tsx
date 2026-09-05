@@ -3,7 +3,7 @@ import {PageSection} from "@patternfly/react-core";
 import {VERSION} from "../version.ts";
 import {getDevModeEnabled, setDevModeEnabled} from "../utils/devMode.ts";
 
-export function About() {
+export function AboutPage() {
   return (
     <>
       <PageHeader title="About Stationary" />

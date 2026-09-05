@@ -19,7 +19,7 @@ import {useState} from "react";
 import {Journey} from "../utils/journey.ts";
 import {useNavigate} from "react-router";
 
-export function NewJourney() {
+export function NewJourneyPage() {
   const navigate = useNavigate();
 
   const [journeyImporterOpen, setJourneyImporterOpen] = useState(false);

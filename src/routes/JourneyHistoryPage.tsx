@@ -35,7 +35,7 @@ import {Stations} from "@tangledwires/gb-station-data";
 import {useNavigate} from "react-router";
 import {JourneyRoute} from "../components/JourneyRoute.tsx";
 
-export function JourneyHistory() {
+export function JourneyHistoryPage() {
   const navigate = useNavigate();
 
   const { data: journeys, loading, refresh } = useJourneys();

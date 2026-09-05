@@ -1,14 +1,15 @@
 import {createBrowserRouter, RouterProvider} from "react-router";
 import {Root} from "./Root.tsx";
-import {Home} from "./routes/Home.tsx";
-import {NewJourney} from "./routes/NewJourney.tsx";
-import {Dev} from "./routes/Dev.tsx";
-import {JourneyHistory} from "./routes/JourneyHistory.tsx";
-import {EditJourney} from "./routes/EditJourney.tsx";
-import {About} from "./routes/About.tsx";
-import {StationList} from "./routes/StationList.tsx";
-import {Settings} from "./routes/Settings.tsx";
-import {Callback} from "./routes/auth/Callback.tsx";
+import {HomePage} from "./routes/HomePage.tsx";
+import {NewJourneyPage} from "./routes/NewJourneyPage.tsx";
+import {DevPage} from "./routes/DevPage.tsx";
+import {JourneyHistoryPage} from "./routes/JourneyHistoryPage.tsx";
+import {EditJourneyPage} from "./routes/EditJourneyPage.tsx";
+import {AboutPage} from "./routes/AboutPage.tsx";
+import {StationListPage} from "./routes/StationListPage.tsx";
+import {SettingsPage} from "./routes/SettingsPage.tsx";
+import {CallbackPage} from "./routes/auth/CallbackPage.tsx";
+import {AchievementsPage} from "./routes/AchievementsPage.tsx";
 
 const router = createBrowserRouter([
   {
@@ -17,42 +18,46 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Home />,
+        element: <HomePage />,
       },
       {
         path: "/newjourney",
-        element: <NewJourney />,
+        element: <NewJourneyPage />,
       },
       {
         path: "/journeyhistory",
-        element: <JourneyHistory />,
+        element: <JourneyHistoryPage />,
       },
       {
         path: "/editjourney/:uuid",
-        element: <EditJourney />,
+        element: <EditJourneyPage />,
       },
       {
         path: "/stationlist",
-        element: <StationList />,
+        element: <StationListPage />,
+      },
+      {
+        path: "/achievements",
+        element: <AchievementsPage />,
       },
 
       {
         path: "/settings",
-        element: <Settings />,
+        element: <SettingsPage />,
       },
       {
         path: "/about",
-        element: <About />,
+        element: <AboutPage />,
       },
 
       {
         path: "/dev",
-        element: <Dev />,
+        element: <DevPage />,
       },
 
       {
         path: "/auth/callback",
-        element: <Callback />,
+        element: <CallbackPage />,
       },
     ],
   }

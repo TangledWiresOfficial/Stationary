@@ -19,7 +19,7 @@ import {LineId, Lines, Stations, TOCId, TOCs} from "@tangledwires/gb-station-dat
 import {useVisitsPerToc} from "../hooks/useVisitsPerToc.ts";
 import {TopVisitedList} from "../components/TopVisitedList.tsx";
 
-export function Home() {
+export function HomePage() {
   const journeys = useJourneys();
   const visitsPerLine = useVisitsPerLine();
   const visitsPerStation = useVisitsPerStation();

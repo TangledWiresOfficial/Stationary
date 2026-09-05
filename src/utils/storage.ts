@@ -4,11 +4,13 @@ import LZString from "lz-string";
 import {isTauri} from "@tauri-apps/api/core";
 import {VERSION as STATION_DATA_VERSION} from "@tangledwires/gb-station-data";
 import {User} from "oidc-client-ts";
+import {ObtainedAchievement} from "./achievements.tsx";
 
 const STATION_DATA_VERSION_KEY = "stationDataVersion";
 const JOURNEYS_KEY = "journeys";
 const USER_KEY = "user";
 const DELETED_JOURNEY_UUIDS_KEY = "deletedJourneyUuids";
+const OBTAINED_ACHIEVEMENTS_KEY = "obtainedAchievements";
 
 export interface DataStorage {
   // Get the name of the storage backend
@@ -37,6 +39,12 @@ export interface DataStorage {
 
   // Set the list of deleted journey UUIDs to be deleted from Stationary Sync later
   setDeletedJourneyUuids: (uuids: string[]) => Promise<void>;
+
+  // Get the list of obtained achievements
+  getObtainedAchievements: () => Promise<ObtainedAchievement[]>;
+
+  // Set the list of obtained achievements
+  setObtainedAchievements: (achievements: ObtainedAchievement[]) => Promise<void>;
 }
 
 const TAURI_STORE_PATH = "userdata.json";
@@ -81,7 +89,7 @@ export class TauriStorage implements DataStorage {
 
   public async setUser(user: User | undefined) {
     if (user === undefined) {
-      this.store.delete(USER_KEY);
+      await this.store.delete(USER_KEY);
     } else {
       await this.store.set(USER_KEY, user?.toStorageString());
     }
@@ -93,6 +101,20 @@ export class TauriStorage implements DataStorage {
 
   public async setDeletedJourneyUuids(uuids: string[]) {
     await this.store.set(DELETED_JOURNEY_UUIDS_KEY, uuids);
+  }
+
+  public async getObtainedAchievements() {
+    const obtainedAchievements = await this.store.get(OBTAINED_ACHIEVEMENTS_KEY) as any[] ?? [];
+
+    for (const a of obtainedAchievements) {
+      a.obtainedAt = new Date(a.obtainedAt);
+    }
+
+    return obtainedAchievements as ObtainedAchievement[];
+  }
+
+  public async setObtainedAchievements(achievements: ObtainedAchievement[]) {
+    await this.store.set(OBTAINED_ACHIEVEMENTS_KEY, achievements);
   }
 }
 
@@ -150,6 +172,18 @@ export class BrowserStorage implements DataStorage {
     const data = this.getData();
 
     data[DELETED_JOURNEY_UUIDS_KEY] = uuids;
+
+    this.setData(data);
+  }
+
+  public async getObtainedAchievements() {
+    return this.getData()[OBTAINED_ACHIEVEMENTS_KEY] ?? [];
+  }
+
+  public async setObtainedAchievements(achievements: ObtainedAchievement[]) {
+    const data = this.getData();
+
+    data[OBTAINED_ACHIEVEMENTS_KEY] = achievements;
 
     this.setData(data);
   }
