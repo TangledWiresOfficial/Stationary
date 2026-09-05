@@ -33,8 +33,8 @@ export function DevPage() {
   const grantAllAchievements = async () => {
     const existingAchievements = await storage.getObtainedAchievements();
     const newAchievements = Object.keys(Achievements)
-      .filter((a) => !existingAchievements.some((ea) => ea.id === a))
-      .map((a) => ({ id: a, obtainedAt: new Date() }));
+      .filter((a) => !existingAchievements.some((ea) => ea.achievementId === a))
+      .map((a) => ({ achievementId: a, obtainedAt: new Date() }));
 
     await storage.setObtainedAchievements([...existingAchievements, ...newAchievements]);
   };
