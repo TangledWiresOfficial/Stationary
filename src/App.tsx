@@ -10,11 +10,13 @@ import {StationListPage} from "./routes/StationListPage.tsx";
 import {SettingsPage} from "./routes/SettingsPage.tsx";
 import {CallbackPage} from "./routes/auth/CallbackPage.tsx";
 import {AchievementsPage} from "./routes/AchievementsPage.tsx";
+import {ErrorBoundary} from "./ErrorBoundary.tsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Root />,
+    errorElement: <ErrorBoundary />,
     children: [
       {
         path: "/",
