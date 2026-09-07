@@ -22,9 +22,6 @@ export interface DataStorage {
   // Set the list of journeys
   setJourneys: (journeys: Journey[]) => Promise<void>;
 
-  // Clear the list of journeys
-  clearJourneys: () => Promise<void>;
-
   // Get the last version of `@tangledwires/gb-station-data` used to store journey data
   getLastUsedStationDataVersion: () => Promise<string | undefined>;
 
@@ -63,16 +60,12 @@ export class TauriStorage implements DataStorage {
   public async getJourneys() {
     const raw = await this.store.get(JOURNEYS_KEY);
 
-    return parseRawJourneys(raw)
+    return parseRawJourneys(raw);
   }
 
   public async setJourneys(journeys: Journey[]) {
     await this.store.set(JOURNEYS_KEY, journeys);
     await this.store.set(STATION_DATA_VERSION_KEY, STATION_DATA_VERSION);
-  }
-
-  public async clearJourneys() {
-    await this.setJourneys([]);
   }
 
   public async getLastUsedStationDataVersion() {
@@ -138,10 +131,6 @@ export class BrowserStorage implements DataStorage {
     data[STATION_DATA_VERSION_KEY] = STATION_DATA_VERSION;
 
     this.setData(data);
-  }
-
-  public async clearJourneys() {
-    await this.setJourneys([]);
   }
 
   public async getLastUsedStationDataVersion() {

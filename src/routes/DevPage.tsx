@@ -47,7 +47,7 @@ export function DevPage() {
         <Button onClick={async () => visitAllStations(100)} variant="primary">Visit all stations 100 times</Button>
         <Button onClick={async () => console.log(await storage.getJourneys())} variant="primary">Log journeys to console</Button>
         <Button onClick={async () => console.log(await storage.getUser())} variant="primary">Log user to console</Button>
-        <Button onClick={storage.clearJourneys} variant="danger">Clear journeys</Button>
+        <Button onClick={async () => storage.setJourneys([])} variant="danger">Clear journeys</Button>
         <Button onClick={grantAllAchievements} variant="primary">Grant all achievements</Button>
       </PageSection>
       <PageSection>
