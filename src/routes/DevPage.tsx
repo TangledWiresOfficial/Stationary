@@ -11,6 +11,7 @@ import {VERSION} from "../version.ts";
 import {getDevModeEnabled} from "../utils/devMode.ts";
 import {getRedirectURI, SYNC_URL} from "../utils/sync.ts";
 import {achievementIds, Achievements} from "../utils/achievements.tsx";
+import {getStation} from "../utils/station.ts";
 
 export function DevPage() {
   const storage = getStorage();
@@ -20,7 +21,7 @@ export function DevPage() {
   const visitAllStations = async (times: number) => {
     for (let i = 0; i < times; i++) {
       await new Journey(Date.now(), stationIds
-        .flatMap((stationId) => Stations[stationId].lines.map((lineId) => {
+        .flatMap((stationId) => getStation(stationId).lines.map((lineId) => {
           return {
             station: stationId,
             line: lineId,

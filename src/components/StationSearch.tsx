@@ -1,7 +1,8 @@
 import {JSX, useEffect, useRef, useState} from "react";
 import {Content, Menu, MenuContent, MenuItem, MenuList, Popper, SearchInput} from "@patternfly/react-core";
 import {JourneyPart} from "../utils/journey.ts";
-import {Lines, StationId, stationIds, Stations} from "@tangledwires/gb-station-data";
+import {Lines, StationId, stationIds} from "@tangledwires/gb-station-data";
+import {getStation} from "../utils/station.ts";
 
 type StationSearchProps = {
   stations?: StationId[];
@@ -42,8 +43,8 @@ export function StationSearch({
       // the search input value.
       let options = stations
         .filter((stationId) => !exclude.includes(stationId))
-        .flatMap((stationId) => Stations[stationId].lines.map((lineId) => [stationId, lineId] as const))
-        .filter(([stationId, _lineId]) => Stations[stationId]
+        .flatMap((stationId) => getStation(stationId).lines.map((lineId) => [stationId, lineId] as const))
+        .filter(([stationId, _lineId]) => getStation(stationId)
           .displayName
           // Remove apostrophes so that stations like "King's Cross" can be searched for with "Kings Cross" or "King's Cross"
           .replace(/'/g, "")
@@ -56,7 +57,7 @@ export function StationSearch({
           } satisfies JourneyPart} key={stationId + "." + lineId}>
             <div style={{ borderLeft: `4px solid ${Lines[lineId].colour}`, padding: "4px" }}>
               <Content>
-                <h5>{Stations[stationId].displayName}</h5>
+                <h5>{getStation(stationId).displayName}</h5>
                 <p>{Lines[lineId].displayName}</p>
               </Content>
             </div>

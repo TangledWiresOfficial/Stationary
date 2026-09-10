@@ -31,9 +31,9 @@ import {useState} from "react";
 import {getStorage} from "../utils/storage.ts";
 import {Journey} from "../utils/journey.ts";
 import {KebabDropdown} from "../components/KebabDropdown.tsx";
-import {Stations} from "@tangledwires/gb-station-data";
 import {useNavigate} from "react-router";
 import {JourneyRoute} from "../components/JourneyRoute.tsx";
+import {getStation} from "../utils/station.ts";
 
 export function JourneyHistoryPage() {
   const navigate = useNavigate();
@@ -120,7 +120,7 @@ export function JourneyHistoryPage() {
                     </KebabDropdown>
                   ) }}>
                     <CardTitle>
-                      {Stations[j.parts[0]?.station]?.displayName} <Icon><AngleRightIcon /></Icon> {Stations[j.parts[j.parts.length - 1]?.station]?.displayName}
+                      {getStation(j.parts[0]?.station).displayName} <Icon><AngleRightIcon /></Icon> {getStation(j.parts[j.parts.length - 1]?.station).displayName}
                     </CardTitle>
                   </CardHeader>
                   <CardBody>
@@ -133,7 +133,7 @@ export function JourneyHistoryPage() {
                         </FlexItem>
                       )}
                       <FlexItem>
-                        Stations: {j.parts.map((p) => Stations[p.station].displayName).join(", ")}
+                        Stations: {j.parts.map((p) => getStation(p.station).displayName).join(", ")}
                       </FlexItem>
                       <FlexItem>
                         <ExpandableSection toggleText="Route">

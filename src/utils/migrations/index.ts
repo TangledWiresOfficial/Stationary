@@ -4,6 +4,7 @@ import {Journey} from "../journey.ts";
 
 import "./8-9.ts";
 import "./9-10.ts";
+import "./10-11.ts";
 
 /**
  * Migrate all stored journeys to the latest version.

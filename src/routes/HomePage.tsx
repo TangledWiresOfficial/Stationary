@@ -15,9 +15,10 @@ import CubesIcon from '@patternfly/react-icons/dist/esm/icons/cubes-icon';
 import BarsIcon from '@patternfly/react-icons/dist/esm/icons/bars-icon';
 import {useVisitsPerStation} from "../hooks/useVisitsPerStation.ts";
 import {useJourneysPerLine} from "../hooks/useJourneysPerLine.ts";
-import {LineId, Lines, Stations, TOCId, TOCs} from "@tangledwires/gb-station-data";
+import {LineId, Lines, StationId, TOCId, TOCs} from "@tangledwires/gb-station-data";
 import {useVisitsPerToc} from "../hooks/useVisitsPerToc.ts";
 import {TopVisitedList} from "../components/TopVisitedList.tsx";
+import {getStation} from "../utils/station.ts";
 
 export function HomePage() {
   const journeys = useJourneys();
@@ -153,7 +154,7 @@ export function HomePage() {
                       header="Top 10 most visited stations"
                       modalHeader="Most visited stations"
                       data={Object.fromEntries(Object.entries(visitsPerStation.data!).map(([station, data]) => [station, data.total]))}
-                      getDisplayName={(key) => Stations[key as keyof typeof Stations].displayName}
+                      getDisplayName={(key) => getStation(key as StationId).displayName}
                     />
                   </FlexItem>
                 )}

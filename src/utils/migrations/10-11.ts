@@ -1,0 +1,43 @@
+import {migration, renameStation} from "./registry.ts";
+
+migration(10, 11, (journey) => {
+  renameStation(journey, "arrocharandTarbet", "arrocharAndTarbet");
+  renameStation(journey, "berkhamstead", "berkhamsted");
+  renameStation(journey, "berwickuponTweed", "berwickUponTweed");
+  renameStation(journey, "bradfordForesterSquare", "bradfordForsterSquare");
+  renameStation(journey, "brewickupontweed", "berwickUponTweed");
+  renameStation(journey, "carmathen", "carmarthen");
+  renameStation(journey, "cranbrookDevon", "cranbrook");
+  renameStation(journey, "epsomSurrey", "epsom");
+  renameStation(journey, "falkrikGrahamston", "falkirkGrahamston");
+  renameStation(journey, "guilford", "guildford");
+  renameStation(journey, "hamptonLondon", "hampton");
+  renameStation(journey, "harrowonthehill", "harrowOnTheHill");
+  renameStation(journey, "hope", "hopeDerbyshire");
+  renameStation(journey, "kirkSandal", "kirkSandall");
+  renameStation(journey, "marsdenYorks", "marsden");
+  renameStation(journey, "martinHill", "martinMill");
+  renameStation(journey, "mossleyManchester", "mossley");
+  renameStation(journey, "newport", "newportSouthWales");
+  renameStation(journey, "oxenholme", "oxenholmeLakeDistrict");
+  renameStation(journey, "penrith", "penrithNorthLakes");
+  renameStation(journey, "portsmouthandSouthsea", "portsmouthAndSouthsea");
+  renameStation(journey, "portsmouythAndSouthsea", "portsmouthAndSouthsea");
+  renameStation(journey, "poultonlefylde", "poultonLeFylde");
+  renameStation(journey, "prestonLancs", "preston");
+  renameStation(journey, "richmondLondon", "richmond");
+  renameStation(journey, "saandersfoot", "saundersfoot");
+  renameStation(journey, "sailsbury", "salisbury");
+  renameStation(journey, "sellyOk", "sellyOak");
+  renameStation(journey, "shipleyYorks", "shipley");
+  renameStation(journey, "shoreham", "shorehamKent");
+  renameStation(journey, "stokeOnTrent", "stokeontrent");
+  renameStation(journey, "stokeonTrent", "stokeontrent");
+  renameStation(journey, "stratfordLondon", "stratford");
+  renameStation(journey, "stroodKent", "strood");
+  renameStation(journey, "urmstonWakefieldKirkgate", "urmston");
+  renameStation(journey, "westStreet", "westStreetGlasgow");
+  renameStation(journey, "worcesterForegateSt", "worcesterForegateStreet");
+
+  return journey;
+});

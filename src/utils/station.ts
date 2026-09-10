@@ -1,6 +1,13 @@
 import {getStorage} from "./storage.ts";
 import {LineId, Lines, StationId, Stations} from "@tangledwires/gb-station-data";
 
+export function getStation(id: StationId) {
+  if (!Stations[id]) {
+    throw new Error(`Station "${id}" not found. Your data may be corrupted. Please report this problem at https://github.com/TangledWiresOfficial/Stationary/issues`);
+  }
+  return Stations[id];
+}
+
 export type VisitsPerStation = {
   [K in StationId]: {
     total: number;

@@ -1,7 +1,8 @@
 import {Button, Content, Popover} from "@patternfly/react-core";
-import {Lines, Stations} from "@tangledwires/gb-station-data";
+import {Lines} from "@tangledwires/gb-station-data";
 import TimesIcon from "@patternfly/react-icons/dist/esm/icons/times-icon";
 import {JourneyPart} from "../utils/journey.ts";
+import {getStation} from "../utils/station.ts";
 
 export function JourneyRoute({ parts, onRemove }: { parts: JourneyPart[], onRemove?: (removedIdx: number) => void }) {
   return (
@@ -37,7 +38,7 @@ export function JourneyRoute({ parts, onRemove }: { parts: JourneyPart[], onRemo
             }}></span>
             <h2 style={{
               display: "inline"
-            }}> {Stations[p.station].displayName} </h2>
+            }}> {getStation(p.station).displayName} </h2>
             {onRemove && <Button onClick={() => onRemove(idx)} variant="plain" aria-label="Remove" icon={<TimesIcon />} />}
           </Content>
         </div>
