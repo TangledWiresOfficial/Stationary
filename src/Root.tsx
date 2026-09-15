@@ -24,8 +24,7 @@ import {
 } from "./utils/webkit.ts";
 import {getDevModeEnabled} from "./utils/devMode.ts";
 import {useUser} from "./hooks/useUser.ts";
-import {getStorage} from "./utils/storage.ts";
-import {login, StationarySync} from "./utils/sync.ts";
+import {login, logout, StationarySync} from "./utils/sync.ts";
 
 export function Root() {
   const user = useUser();
@@ -42,11 +41,6 @@ export function Root() {
 
   const onSidebarToggle = () => {
     setIsSidebarOpen(!isSidebarOpen);
-  };
-
-  const logout = async () => {
-    await getStorage().setUser(undefined);
-    await user.refresh();
   };
 
   const sync = async () => {
@@ -95,7 +89,11 @@ export function Root() {
                       <>
                         <DropdownItem onClick={sync}>
                           Sync now
-                        </DropdownItem><DropdownItem onClick={logout}>
+                        </DropdownItem>
+                        <DropdownItem onClick={async () => {
+                          await logout();
+                          await user.refresh();
+                        }}>
                           Logout
                         </DropdownItem>
                       </>

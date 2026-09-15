@@ -6,4 +6,5 @@ export function getDevModeEnabled() {
 
 export function setDevModeEnabled(enabled: boolean) {
   devModeEnabled = enabled;
+  console.log(`devModeEnabled set to ${devModeEnabled}`);
 }

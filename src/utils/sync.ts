@@ -20,6 +20,7 @@ export const userManager = new UserManager({
 }, redirectNavigator);
 
 export async function login() {
+  console.log("Logging in...");
   try {
     await userManager.signinRedirect();
   } catch (e) {
@@ -27,8 +28,15 @@ export async function login() {
   }
 }
 
+export async function logout() {
+  console.log("Logging out...");
+  await getStorage().setUser(undefined);
+}
+
 export async function handleCallback(url: string) {
-  await getStorage().setUser(await userManager.signinCallback(url));
+  const user = await userManager.signinCallback(url);
+  console.log(`Logged in as ${user?.profile.name} (${user?.profile.email})`);
+  await getStorage().setUser(user);
 }
 
 export function getRedirectURI() {
@@ -41,6 +49,9 @@ export function getRedirectURI() {
 
 export class StationarySync {
   public static async sync() {
+    const start = new Date();
+    console.log(`Started sync at ${start}`);
+
     const deletedUuids = await getStorage().getDeletedJourneyUuids();
     // Rails will refuse to accept an empty array, so if it's empty, add an empty string
     if (deletedUuids.length === 0) {
@@ -87,6 +98,8 @@ export class StationarySync {
 
       return j;
     })));
+
+    console.log(`Finished sync at ${new Date()}, took ${+new Date() - +start}ms`);
     alert("Synced successfully");
   }
 

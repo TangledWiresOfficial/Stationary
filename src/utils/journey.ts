@@ -61,9 +61,11 @@ export class Journey {
     // If this journey already exists in storage, update it, otherwise add a new one
     let existingJourneyIdx = journeys.findIndex((j) => j.uuid === this.uuid);
     if (existingJourneyIdx > -1) {
+      console.log(`Updating journey ${this.uuid}`);
       journeys[existingJourneyIdx] = this;
     } else {
       this.uuid = v4();
+      console.log(`Saving new journey ${this.uuid}`);
       journeys.push(this);
     }
 

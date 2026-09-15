@@ -26,6 +26,7 @@
     "fs:allow-create",
     "fs:allow-write",
     "android-fs:default",
-    "android-fs:allow-write-text-file"
+    "android-fs:allow-write-text-file",
+    "log:default"
   ]
 }

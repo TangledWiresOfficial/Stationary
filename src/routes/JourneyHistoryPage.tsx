@@ -48,6 +48,8 @@ export function JourneyHistoryPage() {
   const [newJourneyCode, setNewJourneyCode] = useState<string>();
 
   const deleteJourney = async () => {
+    console.log(`Deleting journey ${toBeDeleted!.uuid}`);
+
     await storage.setJourneys(journeys!.filter((j) => j.uuid !== toBeDeleted!.uuid));
     await storage.setDeletedJourneyUuids([...(await storage.getDeletedJourneyUuids()), toBeDeleted!.uuid!]);
 

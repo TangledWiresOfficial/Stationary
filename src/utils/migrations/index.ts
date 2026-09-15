@@ -15,7 +15,10 @@ export async function migrateAll() {
   const lastUsedMajorStationDataVersion = await storage.getLastUsedStationDataVersion();
 
   // If lastUsedMajorStationDataVersion is undefined, then no journeys have been saved before and there's nothing to migrate
-  if (!lastUsedMajorStationDataVersion) return;
+  if (!lastUsedMajorStationDataVersion) {
+    console.log("lastUsedMajorStationDataVersion is undefined, nothing to migrate.");
+    return;
+  }
 
   const migrated = await migrate(journeys, lastUsedMajorStationDataVersion);
 
