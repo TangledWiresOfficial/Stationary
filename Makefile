@@ -15,3 +15,7 @@ web-build:
 .PHONY: web-dev
 web-dev:
 	npm run dev
+
+.PHONY: icon
+icon:
+	$(TAURI) icon ./public/stationary.png
