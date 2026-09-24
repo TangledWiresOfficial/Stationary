@@ -166,7 +166,13 @@ export class BrowserStorage implements DataStorage {
   }
 
   public async getObtainedAchievements() {
-    return this.getData()[OBTAINED_ACHIEVEMENTS_KEY] ?? [];
+    const obtainedAchievements = this.getData()[OBTAINED_ACHIEVEMENTS_KEY] ?? [];
+
+    for (const a of obtainedAchievements) {
+      a.obtainedAt = new Date(a.obtainedAt);
+    }
+
+    return obtainedAchievements;
   }
 
   public async setObtainedAchievements(achievements: ObtainedAchievement[]) {
