@@ -13,8 +13,8 @@ const DELETED_JOURNEY_UUIDS_KEY = "deletedJourneyUuids";
 const OBTAINED_ACHIEVEMENTS_KEY = "obtainedAchievements";
 
 export interface DataStorage {
-  // Get the name of the storage backend
-  getBackendName: () => string;
+  // Get the name of the storage implementation
+  getImplName: () => string;
 
   // Get the list of journeys
   getJourneys: () => Promise<Journey[]>;
@@ -53,7 +53,7 @@ export class TauriStorage implements DataStorage {
     this.store = new LazyStore(TAURI_STORE_PATH);
   }
 
-  public getBackendName() {
+  public getImplName() {
     return "TauriStorage";
 }
 
@@ -114,7 +114,7 @@ export class TauriStorage implements DataStorage {
 const BROWSER_DATA_KEY = "data";
 
 export class BrowserStorage implements DataStorage {
-  public getBackendName() {
+  public getImplName() {
     return "BrowserStorage";
   }
 

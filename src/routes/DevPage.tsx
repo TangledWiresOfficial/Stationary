@@ -42,7 +42,7 @@ export function DevPage() {
 
   return (
     <>
-      <PageHeader title="Dev tools" description="This page can cause damage to your Stationary data that cannot be undone. Be careful. You can hide this page by tapping the TangledWires logo in 'About Stationary'." />
+      <PageHeader title="Dev tools" description="This page can cause damage to your Stationary data that cannot be undone. Be careful. You can hide this page by tapping the TangledWires logo again in 'About Stationary'." />
       <PageSection>
         <Button onClick={async () => visitAllStations(1)} variant="primary">Visit all stations</Button>
         <Button onClick={async () => visitAllStations(100)} variant="primary">Visit all stations 100 times</Button>
@@ -50,6 +50,7 @@ export function DevPage() {
         <Button onClick={async () => console.log(await storage.getUser())} variant="primary">Log user to console</Button>
         <Button onClick={async () => storage.setJourneys([])} variant="danger">Clear journeys</Button>
         <Button onClick={grantAllAchievements} variant="primary">Grant all achievements</Button>
+        <Button onClick={async () => storage.setObtainedAchievements([])} variant="danger">Clear achievements</Button>
       </PageSection>
       <PageSection>
         <Table variant="compact">
@@ -60,7 +61,7 @@ export function DevPage() {
             <Tr><Td>Number of TOCs</Td><Td>{tocIds.length}</Td></Tr>
             <Tr><Td>Number of Achievements</Td><Td>{achievementIds.length}</Td></Tr>
             <Tr><Td>Is Tauri</Td><Td>{isTauri().toString()}</Td></Tr>
-            <Tr><Td>Storage backend</Td><Td>{storage.getBackendName()}</Td></Tr>
+            <Tr><Td>Storage implementation</Td><Td>{storage.getImplName()}</Td></Tr>
             <Tr><Td>Last used station data version</Td><Td>{stationDataVersion.data}</Td></Tr>
             <Tr><Td>Is WebKit</Td><Td>{isWebKit().toString()}</Td></Tr>
             <Tr><Td>Was launched from Home Screen</Td><Td>{wasLaunchedFromHomeScreen().toString()}</Td></Tr>

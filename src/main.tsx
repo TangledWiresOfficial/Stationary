@@ -6,6 +6,7 @@ import {onOpenUrl} from "@tauri-apps/plugin-deep-link";
 import {migrateAll} from "./utils/migrations";
 import {warn, debug, info, error} from '@tauri-apps/plugin-log';
 import {Log} from "oidc-client-ts";
+import {checkAchievements} from "./utils/achievements.tsx";
 
 import '@patternfly/patternfly/patternfly-charts.css';
 import "@patternfly/react-core/dist/styles/base.css";
@@ -56,6 +57,9 @@ if (isTauri()) {
 
 await migrateAll();
 
+// Achievements
+
+await checkAchievements();
 
 // React
 

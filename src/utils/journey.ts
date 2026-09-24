@@ -1,6 +1,7 @@
 import {v4} from "uuid";
 import {getStorage} from "./storage.ts";
 import {LineId, Lines, StationId, Stations} from "@tangledwires/gb-station-data";
+import {checkAchievements} from "./achievements.tsx";
 
 export type JourneyPart = {
   station: StationId;
@@ -70,6 +71,7 @@ export class Journey {
     }
 
     await storage.setJourneys(journeys);
+    await checkAchievements();
   }
 
   // Encode the journey in a shorter way so that it can be easily shared to other users and then reimported
