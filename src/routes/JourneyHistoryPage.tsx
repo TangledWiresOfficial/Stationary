@@ -130,7 +130,7 @@ export function JourneyHistoryPage() {
                       {j.description && (
                         <FlexItem>
                           <Content>
-                            <blockquote>{j.description}</blockquote>
+                            <blockquote style={{ whiteSpace: "pre-line" }}>{j.description}</blockquote>
                           </Content>
                         </FlexItem>
                       )}
