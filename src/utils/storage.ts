@@ -13,6 +13,14 @@ const DELETED_JOURNEY_UUIDS_KEY = "deletedJourneyUuids";
 const OBTAINED_ACHIEVEMENTS_KEY = "obtainedAchievements";
 const VISIBLE_CATEGORIES_KEY = "visibleCategories";
 
+const DEFAULT_CATEGORIES = [
+  "heavyRail",
+  "metro",
+  "lightRail",
+  "trams",
+  "other",
+];
+
 export interface DataStorage {
   // Get the name of the storage implementation
   getImplName: () => string;
@@ -118,7 +126,7 @@ export class TauriStorage implements DataStorage {
   }
 
   public async getVisibleCategories() {
-    return await this.store.get(VISIBLE_CATEGORIES_KEY) as CategoryId[] ?? [];
+    return await this.store.get(VISIBLE_CATEGORIES_KEY) as CategoryId[] ?? DEFAULT_CATEGORIES;
   }
 
   public async setVisibleCategories(categories: CategoryId[]) {
@@ -199,7 +207,7 @@ export class BrowserStorage implements DataStorage {
   }
 
   public async getVisibleCategories() {
-    return this.getData()[VISIBLE_CATEGORIES_KEY] ?? [];
+    return this.getData()[VISIBLE_CATEGORIES_KEY] ?? DEFAULT_CATEGORIES;
   }
 
   public async setVisibleCategories(categories: CategoryId[]) {
