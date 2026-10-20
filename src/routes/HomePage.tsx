@@ -19,6 +19,8 @@ import {LineId, Lines, StationId, TOCId, TOCs} from "@tangledwires/gb-station-da
 import {useVisitsPerToc} from "../hooks/useVisitsPerToc.ts";
 import {TopVisitedList} from "../components/TopVisitedList.tsx";
 import {getStation} from "../utils/station.ts";
+import {useVisibleCategories} from "../hooks/useVisibleCategories.ts";
+import {lineIsVisible, stationIsVisible, tocIsVisible} from "../utils/categories.ts";
 
 export function HomePage() {
   const journeys = useJourneys();
@@ -26,159 +28,116 @@ export function HomePage() {
   const visitsPerStation = useVisitsPerStation();
   const journeysPerLine = useJourneysPerLine();
   const visitsPerToc = useVisitsPerToc();
+  const visibleCategories = useVisibleCategories();
 
   return (
     <>
       <PageHeader title="Home" />
       <PageSection>
-        {!journeys.loading && journeys.data!.length > 0 ? (
+        {!visibleCategories.loading && !journeys.loading && journeys.data!.length > 0 ? (
           <>
             <Content component={ContentVariants.h4}>Total journeys: {journeys.data!.length}</Content>
             <Flex direction={{ default: 'column' }}>
               <Flex>
                 {!journeysPerLine.loading && (
-                  <FlexItem style={{ height: '150px', width: '150px' }}>
-                    <ChartDonut
-                      constrainToVisibleArea
-                      style={{
-                        data: {
-                          fill: ({ datum }) => Lines[datum.x as LineId].colour,
-                        },
-                      }}
-                      labels={({ datum }) => `${Lines[datum.x as LineId].displayName}: ${datum.y}`}
-                      height={150}
-                      width={150}
-                      title={`Journeys\nper line`}
-                      titleComponent={
-                        <ChartLabel style={[{
-                          fontSize: 16
-                        }]} />
-                      }
-                      data={Object.entries(journeysPerLine.data!).map(([line, visits]) => {
+                  <HomePageChartDonut
+                    title={"Journeys\nper line"}
+                    data={Object.entries(journeysPerLine.data!)
+                      .filter(([line, _visits]) => lineIsVisible(line as LineId, visibleCategories.data!))
+                      .map(([line, visits]) => {
                         return {
                           x: line,
                           y: visits
                         };
-                      })}
-                    />
-                  </FlexItem>
+                      })
+                    }
+                    getLabel={(datum) => `${Lines[datum.x as LineId].displayName}: ${datum.y}`}
+                    getColour={(datum) => Lines[datum.x as LineId].colour}
+                  />
                 )}
                 {!visitsPerLine.loading && (
                   <>
-                    <FlexItem style={{ height: '150px', width: '150px' }}>
-                      <ChartDonut
-                        constrainToVisibleArea
-                        style={{
-                          data: {
-                            fill: ({ datum }) => Lines[datum.x as LineId].colour,
-                          },
-                        }}
-                        labels={({ datum }) => `${Lines[datum.x as LineId].displayName}: ${datum.y}`}
-                        height={150}
-                        width={150}
-                        title={`Station\nvisits\nper line`}
-                        titleComponent={
-                          <ChartLabel style={[{
-                            fontSize: 16
-                          }]} />
-                        }
-                        data={Object.entries(visitsPerLine.data!).map(([line, visits]) => {
+                    <HomePageChartDonut
+                      title={"Station\nvisits\nper line"}
+                      data={Object.entries(visitsPerLine.data!)
+                        .filter(([line, _visits]) => lineIsVisible(line as LineId, visibleCategories.data!))
+                        .map(([line, visits]) => {
                           return {
                             x: line,
                             y: visits
                           };
-                        })}
-                      />
-                    </FlexItem>
-                    <FlexItem style={{ height: '150px', width: '150px' }}>
-                      <ChartDonut
-                        constrainToVisibleArea
-                        style={{
-                          data: {
-                            fill: ({ datum }) => datum.visits > 0 ? Lines[datum.x as LineId].colour : "var(--pf-t--color--gray--20)",
-                          },
-                        }}
-                        labels={({ datum }) => Lines[datum.x as LineId].displayName}
-                        height={150}
-                        width={150}
-                        title={`Lines\nvisited`}
-                        titleComponent={
-                          <ChartLabel style={[{
-                            fontSize: 16
-                          }]} />
-                        }
-                        data={Object.entries(visitsPerLine.data!).map(([line, visits]) => {
+                        })
+                      }
+                      getLabel={(datum) => `${Lines[datum.x as LineId].displayName}: ${datum.y}`}
+                      getColour={(datum) => Lines[datum.x as LineId].colour}
+                    />
+                    <HomePageChartDonut
+                      title={"Lines\nvisited"}
+                      data={Object.entries(visitsPerLine.data!)
+                        .filter(([line, _visits]) => lineIsVisible(line as LineId, visibleCategories.data!))
+                        .map(([line, visits]) => {
                           return {
                             x: line,
                             y: 1,
                             visits: visits
                           };
-                        })}
-                      />
-                    </FlexItem>
+                        })
+                      }
+                      getLabel={(datum) => Lines[datum.x as LineId].displayName}
+                      getColour={(datum) => datum.visits > 0 ? Lines[datum.x as LineId].colour : "var(--pf-t--color--gray--20)"}
+                    />
                   </>
                 )}
                 {!visitsPerToc.loading && (
-                  <FlexItem style={{ height: '150px', width: '150px' }}>
-                    <ChartDonut
-                      constrainToVisibleArea
-                      style={{
-                        data: {
-                          fill: ({ datum }) => datum.visits > 0 ? TOCs[datum.x as TOCId].colour : "var(--pf-t--color--gray--20)",
-                        },
-                      }}
-                      labels={({ datum }) => TOCs[datum.x as TOCId].displayName}
-                      height={150}
-                      width={150}
-                      title={`TOCs\nvisited`}
-                      titleComponent={
-                        <ChartLabel style={[{
-                          fontSize: 16
-                        }]} />
-                      }
-                      data={Object.entries(visitsPerToc.data!).map(([toc, visits]) => {
+                  <HomePageChartDonut
+                    title={"TOCs\nvisited"}
+                    data={Object.entries(visitsPerToc.data!)
+                      .filter(([toc, _visits]) => tocIsVisible(toc as TOCId, visibleCategories.data!))
+                      .map(([toc, visits]) => {
                         return {
                           x: toc,
                           y: 1,
                           visits: visits
                         };
-                      })}
-                    />
-                  </FlexItem>
+                      })
+                    }
+                    getLabel={(datum) => TOCs[datum.x as TOCId].displayName}
+                    getColour={(datum) => datum.visits > 0 ? TOCs[datum.x as TOCId].colour : "var(--pf-t--color--gray--20)"}
+                  />
                 )}
               </Flex>
               <Flex>
                 {!visitsPerStation.loading && (
-                  <FlexItem style={{ maxHeight: '400px', width: '400px' }}>
-                    <TopVisitedList
-                      header="Top 10 most visited stations"
-                      modalHeader="Most visited stations"
-                      data={Object.fromEntries(Object.entries(visitsPerStation.data!).map(([station, data]) => [station, data.total]))}
-                      getDisplayName={(key) => getStation(key as StationId).displayName}
-                    />
-                  </FlexItem>
+                  <TopVisitedList
+                    header="Top 10 most visited stations"
+                    modalHeader="Most visited stations"
+                    data={
+                      Object.fromEntries(
+                        Object.entries(visitsPerStation.data!)
+                          .filter(([station, _data]) => stationIsVisible(station as StationId, visibleCategories.data!))
+                          .map(([station, data]) => [station, data.total])
+                      )
+                    }
+                    getDisplayName={(key) => getStation(key as StationId).displayName}
+                  />
                 )}
                 {!visitsPerLine.loading && (
-                  <FlexItem style={{ maxHeight: '400px', width: '400px' }}>
-                    <TopVisitedList
-                      header="Top 10 most visited lines"
-                      modalHeader="Most visited lines"
-                      data={visitsPerLine.data!}
-                      getDisplayName={(key) => Lines[key].displayName}
-                      getColour={(key) => Lines[key].colour}
-                    />
-                  </FlexItem>
+                  <TopVisitedList
+                    header="Top 10 most visited lines"
+                    modalHeader="Most visited lines"
+                    data={Object.fromEntries(Object.entries(visitsPerLine.data!).filter(([line, _data]) => lineIsVisible(line as LineId, visibleCategories.data!)))}
+                    getDisplayName={(key) => Lines[key as LineId].displayName}
+                    getColour={(key) => Lines[key as LineId].colour}
+                  />
                 )}
                 {!visitsPerToc.loading && (
-                  <FlexItem style={{ maxHeight: '400px', width: '400px' }}>
-                    <TopVisitedList
-                      header="Top 10 most visited TOCs"
-                      modalHeader="Most visited TOCs"
-                      data={visitsPerToc.data!}
-                      getDisplayName={(key) => TOCs[key].displayName}
-                      getColour={(key) => TOCs[key].colour}
-                    />
-                  </FlexItem>
+                  <TopVisitedList
+                    header="Top 10 most visited TOCs"
+                    modalHeader="Most visited TOCs"
+                    data={Object.fromEntries(Object.entries(visitsPerToc.data!).filter(([toc, _data]) => tocIsVisible(toc as TOCId, visibleCategories.data!)))}
+                    getDisplayName={(key) => TOCs[key as TOCId].displayName}
+                    getColour={(key) => TOCs[key as TOCId].colour}
+                  />
                 )}
               </Flex>
             </Flex>
@@ -192,5 +151,40 @@ export function HomePage() {
         )}
       </PageSection>
     </>
+  );
+}
+
+function HomePageChartDonut({
+  title,
+  data,
+  getLabel,
+  getColour,
+}: {
+  readonly title: string,
+  readonly data: any[],
+  readonly getLabel: (datum: any) => string,
+  readonly getColour: (datum: any) => string,
+}) {
+  return (
+    <FlexItem style={{ height: "150px", width: "150px" }}>
+      <ChartDonut
+        constrainToVisibleArea
+        style={{
+          data: {
+            fill: ({ datum }) => getColour(datum),
+          },
+        }}
+        labels={({ datum }) => getLabel(datum)}
+        height={150}
+        width={150}
+        title={title}
+        titleComponent={
+          <ChartLabel style={[{
+            fontSize: 16
+          }]} />
+        }
+        data={data}
+      />
+    </FlexItem>
   );
 }

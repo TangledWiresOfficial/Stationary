@@ -1,8 +1,9 @@
 import {JSX, useEffect, useRef, useState} from "react";
 import {Content, Menu, MenuContent, MenuItem, MenuList, Popper, SearchInput} from "@patternfly/react-core";
 import {JourneyPart} from "../utils/journey.ts";
-import {Lines, StationId, stationIds} from "@tangledwires/gb-station-data";
+import {Lines, StationId, stationIds, Stations} from "@tangledwires/gb-station-data";
 import {getStation} from "../utils/station.ts";
+import {useVisibleCategories} from "../hooks/useVisibleCategories.ts";
 
 type StationSearchProps = {
   stations?: StationId[];
@@ -17,6 +18,8 @@ export function StationSearch({
   onUpdate = () => undefined,
   maxAutocompleteOptions = 15
 }: StationSearchProps) {
+  const visibleCategories = useVisibleCategories();
+
   const [value, setValue] = useState('');
   const [autocompleteOptions, setAutocompleteOptions] = useState<JSX.Element[]>([]);
 
@@ -42,6 +45,11 @@ export function StationSearch({
       // Options which start with the search input value are listed first, followed by options which contain
       // the search input value.
       let options = stations
+        .filter((station) => {
+          for (const lineId of Stations[station as StationId].lines) {
+            if (visibleCategories.data!.includes(Lines[lineId].category)) return true;
+          }
+        })
         .filter((stationId) => !exclude.includes(stationId))
         .flatMap((stationId) => getStation(stationId).lines.map((lineId) => [stationId, lineId] as const))
         .filter(([stationId, _lineId]) => getStation(stationId)

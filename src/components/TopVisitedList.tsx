@@ -109,7 +109,7 @@ export function TopVisitedList<K extends PropertyKey>({ header, modalHeader, dat
   );
 
   return (
-    <>
+    <FlexItem style={{ maxHeight: "400px", width: "400px" }}>
       <Panel isScrollable variant="bordered">
         <PanelHeader>
           <Flex>
@@ -129,6 +129,6 @@ export function TopVisitedList<K extends PropertyKey>({ header, modalHeader, dat
         </PanelMain>
       </Panel>
       {modal}
-    </>
+    </FlexItem>
   );
 }

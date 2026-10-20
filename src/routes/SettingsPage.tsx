@@ -1,13 +1,15 @@
 import {PageHeader} from "../components/PageHeader.tsx";
 import {
   Button,
+  Content,
   FileUpload,
   Modal,
   ModalBody,
   ModalFooter,
   ModalHeader,
   ModalVariant,
-  PageSection
+  PageSection,
+  Switch
 } from "@patternfly/react-core";
 import {useJourneys} from "../hooks/useJourneys.ts";
 import {isTauri} from "@tauri-apps/api/core";
@@ -20,10 +22,14 @@ import {v4} from "uuid";
 import {useState} from "react";
 import * as AndroidFs from "tauri-plugin-android-fs-api";
 import {migrate} from "../utils/migrations";
+import {useVisibleCategories} from "../hooks/useVisibleCategories.ts";
+import { Categories, categoryIds } from "@tangledwires/gb-station-data";
 
 export function SettingsPage() {
+  const storage = getStorage();
   const journeys = useJourneys();
   const stationDataVersion = useLastUsedStationDataVersion();
+  const visibleCategories = useVisibleCategories();
 
   const [journeysImporterOpen, setJourneysImporterOpen] = useState(false);
   const [fileToImport, setFileToImport] = useState<File | null>();
@@ -79,7 +85,7 @@ export function SettingsPage() {
 
     const migrated = await migrate(parsed, dataToImport.stationDataVersion);
 
-    await getStorage().setJourneys(migrated.concat(journeys.data!));
+    await storage.setJourneys(migrated.concat(journeys.data!));
 
     closeImporter();
   };
@@ -127,6 +133,38 @@ export function SettingsPage() {
   return (
     <>
       <PageHeader title="Settings" />
+      <PageSection>
+        <Content>
+          <h2>Categories</h2>
+          <p>Choose which types of lines you want to see.</p>
+        </Content>
+        <br />
+        {visibleCategories.data && (
+          <>
+            {categoryIds.map((c) => (
+              <>
+                <Switch
+                  key={c}
+                  label={Categories[c].displayName}
+                  isChecked={visibleCategories.data!.includes(c)}
+                  onChange={async () => {
+                    const currentCategories = await storage.getVisibleCategories();
+                    if (currentCategories.includes(c)) {
+                      console.log(`Removing ${c} from visibleCategories`);
+                      await storage.setVisibleCategories(currentCategories.filter((cc) => cc != c));
+                    } else {
+                      console.log(`Adding ${c} to visibleCategories`);
+                      await storage.setVisibleCategories([...currentCategories, c]);
+                    }
+                    await visibleCategories.refresh();
+                  }}
+                />
+                <br />
+              </>
+            ))}
+          </>
+        )}
+      </PageSection>
       <PageSection>
         {!journeys.loading && !stationDataVersion.loading && (
           <>

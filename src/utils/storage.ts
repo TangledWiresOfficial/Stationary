@@ -2,7 +2,7 @@ import {LazyStore} from "@tauri-apps/plugin-store";
 import {isJourneyData, Journey, toJourney} from "./journey.ts";
 import LZString from "lz-string";
 import {isTauri} from "@tauri-apps/api/core";
-import {VERSION as STATION_DATA_VERSION} from "@tangledwires/gb-station-data";
+import {CategoryId, VERSION as STATION_DATA_VERSION} from "@tangledwires/gb-station-data";
 import {User} from "oidc-client-ts";
 import {ObtainedAchievement} from "./achievements.tsx";
 
@@ -11,6 +11,7 @@ const JOURNEYS_KEY = "journeys";
 const USER_KEY = "user";
 const DELETED_JOURNEY_UUIDS_KEY = "deletedJourneyUuids";
 const OBTAINED_ACHIEVEMENTS_KEY = "obtainedAchievements";
+const VISIBLE_CATEGORIES_KEY = "visibleCategories";
 
 export interface DataStorage {
   // Get the name of the storage implementation
@@ -42,6 +43,12 @@ export interface DataStorage {
 
   // Set the list of obtained achievements
   setObtainedAchievements: (achievements: ObtainedAchievement[]) => Promise<void>;
+
+  // Get the list of categories whose lines are visible to the user
+  getVisibleCategories: () => Promise<CategoryId[]>;
+
+  // Set the list of categories whose lines are visible to the user
+  setVisibleCategories: (categories: CategoryId[]) => Promise<void>;
 }
 
 const TAURI_STORE_PATH = "userdata.json";
@@ -108,6 +115,14 @@ export class TauriStorage implements DataStorage {
 
   public async setObtainedAchievements(achievements: ObtainedAchievement[]) {
     await this.store.set(OBTAINED_ACHIEVEMENTS_KEY, achievements);
+  }
+
+  public async getVisibleCategories() {
+    return await this.store.get(VISIBLE_CATEGORIES_KEY) as CategoryId[] ?? [];
+  }
+
+  public async setVisibleCategories(categories: CategoryId[]) {
+    await this.store.set(VISIBLE_CATEGORIES_KEY, categories);
   }
 }
 
@@ -179,6 +194,18 @@ export class BrowserStorage implements DataStorage {
     const data = this.getData();
 
     data[OBTAINED_ACHIEVEMENTS_KEY] = achievements;
+
+    this.setData(data);
+  }
+
+  public async getVisibleCategories() {
+    return this.getData()[VISIBLE_CATEGORIES_KEY] ?? [];
+  }
+
+  public async setVisibleCategories(categories: CategoryId[]) {
+    const data = this.getData();
+
+    data[VISIBLE_CATEGORIES_KEY] = categories;
 
     this.setData(data);
   }

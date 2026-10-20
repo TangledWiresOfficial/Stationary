@@ -10,17 +10,24 @@ import {
 } from "@patternfly/react-core";
 import {CheckCircleIcon, MinusCircleIcon} from "@patternfly/react-icons";
 import {useVisitsPerStation} from "../hooks/useVisitsPerStation.ts";
-import {Lines, stationIds, Stations} from "@tangledwires/gb-station-data";
+import {Lines, StationId, stationIds, Stations} from "@tangledwires/gb-station-data";
 import React, {useMemo, useState} from "react";
+import {stationIsVisible} from "../utils/categories.ts";
+import {useVisibleCategories} from "../hooks/useVisibleCategories.ts";
 
 type ListVisibility = "all" | "visited" | "notVisited";
 
 export function StationListPage() {
   const visitsPerStation = useVisitsPerStation();
+  const visibleCategories = useVisibleCategories();
 
   const stationsVisited = useMemo(() => {
     if (!visitsPerStation.loading) {
-      return Object.fromEntries(Object.entries(visitsPerStation.data!).filter(([_station, data]) => data.total > 0));
+      return Object.fromEntries(
+        Object.entries(visitsPerStation.data!)
+          .filter(([_station, data]) => data.total > 0)
+          .filter(([stationId, _data]) => stationIsVisible(stationId as StationId, visibleCategories.data!))
+      );
     }
   }, [visitsPerStation]);
 
@@ -35,13 +42,19 @@ export function StationListPage() {
     }
   }
 
+  const visibleStationsIds = useMemo(() => {
+    if (!visibleCategories.loading) {
+      return stationIds.filter((stationId) => stationIsVisible(stationId, visibleCategories.data!));
+    }
+  }, [stationIds, visibleCategories.data]);
+
   return (
     <>
       <PageHeader title="Station list" />
       <PageSection>
-        {stationsVisited && (
+        {stationsVisited && visibleStationsIds && (
           <>
-            Stations visited: {Object.entries(stationsVisited).length}/{stationIds.length} ({((Object.entries(stationsVisited).length / stationIds.length) * 100).toFixed(2)}%)
+            Stations visited: {Object.entries(stationsVisited).length}/{visibleStationsIds.length} ({((Object.entries(stationsVisited).length / visibleStationsIds.length) * 100).toFixed(2)}%)
           </>
         )}
       </PageSection>
@@ -70,7 +83,8 @@ export function StationListPage() {
         </Dropdown>
       </PageSection>
       <PageSection>
-        {stationsVisited && Object.entries(Stations)
+        {stationsVisited && !visibleCategories.loading && Object.entries(Stations)
+          .filter(([key, _station]) => stationIsVisible(key as StationId, visibleCategories.data!))
           .filter(([key, _station]) => {
             switch (listVisibility) {
               case "all": return true;
