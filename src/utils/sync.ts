@@ -90,8 +90,6 @@ export class StationarySync {
       throw new Error(`Failed to sync after ${MAX_SYNC_ATTEMPTS} attempts`);
     }
 
-    console.log(response.data);
-
     await getStorage().setDeletedJourneyUuids([]);
     await getStorage().setJourneys(parseRawJourneys(response.data.map((j: JourneyData) => {
       if (j.description === null) j.description = undefined; // Rails will return null for the description if there isn't one
@@ -105,8 +103,6 @@ export class StationarySync {
 
   private static async getAxios() {
     const user = await getStorage().getUser();
-
-    console.log(user?.access_token);
 
     return axios.create({
       headers: {
