@@ -187,8 +187,8 @@ export class BrowserStorage implements DataStorage {
 
   public async removeOldFields() {
     const data = this.getData();
-    for (const key in data) {
-      delete data[key];
+    for (const field of OLD_FIELDS) {
+      delete data[field];
     }
     this.setData(data);
   }
