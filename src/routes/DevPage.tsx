@@ -9,7 +9,7 @@ import {dismissedWebKitWarning, isWebKit, wasLaunchedFromHomeScreen} from "../ut
 import {Table, Tbody, Td, Tr} from "@patternfly/react-table";
 import {VERSION} from "../version.ts";
 import {getDevModeEnabled} from "../utils/devMode.ts";
-import {getRedirectURI, SYNC_URL} from "../utils/sync.ts";
+import {getRedirectURI, SYNC_URL, userManager} from "../utils/sync.ts";
 import {achievementIds, Achievements} from "../utils/achievements.tsx";
 import {getStation} from "../utils/station.ts";
 
@@ -47,7 +47,8 @@ export function DevPage() {
         <Button onClick={async () => visitAllStations(1)} variant="primary">Visit all stations</Button>
         <Button onClick={async () => visitAllStations(100)} variant="primary">Visit all stations 100 times</Button>
         <Button onClick={async () => console.log(await storage.getJourneys())} variant="primary">Log journeys to console</Button>
-        <Button onClick={async () => console.log(await storage.getUser())} variant="primary">Log user to console</Button>
+        <Button onClick={async () => console.log(await userManager.getUser())} variant="primary">Log user to console</Button>
+        <Button onClick={async () => console.log(await storage.getAllData())} variant="primary">Log all data to console</Button>
         <Button onClick={async () => console.log(await storage.getObtainedAchievements())} variant="primary">Log obtained achievements to console</Button>
         <Button onClick={async () => storage.setJourneys([])} variant="danger">Clear journeys</Button>
         <Button onClick={grantAllAchievements} variant="primary">Grant all achievements</Button>

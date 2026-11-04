@@ -3,12 +3,11 @@ import {isJourneyData, Journey, toJourney} from "./journey.ts";
 import LZString from "lz-string";
 import {isTauri} from "@tauri-apps/api/core";
 import {CategoryId, VERSION as STATION_DATA_VERSION} from "@tangledwires/gb-station-data";
-import {User} from "oidc-client-ts";
+import {StateStore} from "oidc-client-ts";
 import {ObtainedAchievement} from "./achievements.tsx";
 
 const STATION_DATA_VERSION_KEY = "stationDataVersion";
 const JOURNEYS_KEY = "journeys";
-const USER_KEY = "user";
 const DELETED_JOURNEY_UUIDS_KEY = "deletedJourneyUuids";
 const OBTAINED_ACHIEVEMENTS_KEY = "obtainedAchievements";
 const VISIBLE_CATEGORIES_KEY = "visibleCategories";
@@ -21,9 +20,23 @@ const DEFAULT_CATEGORIES = [
   "other",
 ];
 
+// Fields that are no longer used and should be removed from storage
+const OLD_FIELDS = [
+  "user",
+];
+
 export interface DataStorage {
   // Get the name of the storage implementation
   getImplName: () => string;
+
+  // Get all data from storage
+  getAllData: () => Promise<Record<string, unknown>>;
+
+  // Create a StateStore for storing auth state
+  createOidcStateStore: () => StateStore;
+
+  // Remove old fields from storage
+  removeOldFields: () => Promise<void>;
 
   // Get the list of journeys
   getJourneys: () => Promise<Journey[]>;
@@ -33,12 +46,6 @@ export interface DataStorage {
 
   // Get the last version of `@tangledwires/gb-station-data` used to store journey data
   getLastUsedStationDataVersion: () => Promise<string | undefined>;
-
-  // Get the Stationary Sync user data
-  getUser: () => Promise<User | undefined>;
-
-  // Set the Stationary Sync user data
-  setUser: (user: User | undefined) => Promise<void>;
 
   // Get the list of deleted journey UUIDs to be deleted from Stationary Sync later
   getDeletedJourneyUuids: () => Promise<string[]>;
@@ -60,6 +67,7 @@ export interface DataStorage {
 }
 
 const TAURI_STORE_PATH = "userdata.json";
+const TAURI_OIDC_STORE_PATH = "authstore.json";
 
 export class TauriStorage implements DataStorage {
   private store;
@@ -70,7 +78,31 @@ export class TauriStorage implements DataStorage {
 
   public getImplName() {
     return "TauriStorage";
-}
+  }
+
+  public async getAllData() {
+    return Object.fromEntries(await this.store.entries());
+  }
+
+  public createOidcStateStore() {
+    const oidcStore = new LazyStore(TAURI_OIDC_STORE_PATH);
+    return {
+      set: (key: string, value: string) => oidcStore.set(key, value),
+      get: (key: string) => oidcStore.get(key) as Promise<string | null>,
+      remove: async (key: string) => {
+        const value = await oidcStore.get(key);
+        await oidcStore.delete(key);
+        return value as string | null;
+      },
+      getAllKeys: () => oidcStore.keys(),
+    };
+  }
+
+  public async removeOldFields() {
+    for (const field of OLD_FIELDS) {
+      await this.store.delete(field);
+    }
+  }
 
   public async getJourneys() {
     const raw = await this.store.get(JOURNEYS_KEY);
@@ -85,22 +117,6 @@ export class TauriStorage implements DataStorage {
 
   public async getLastUsedStationDataVersion() {
     return await this.store.get(STATION_DATA_VERSION_KEY) as string;
-  }
-
-  public async getUser() {
-    const storageString = await this.store.get(USER_KEY) as string;
-
-    if (!storageString) return undefined;
-
-    return User.fromStorageString(storageString);
-  }
-
-  public async setUser(user: User | undefined) {
-    if (user === undefined) {
-      await this.store.delete(USER_KEY);
-    } else {
-      await this.store.set(USER_KEY, user?.toStorageString());
-    }
   }
 
   public async getDeletedJourneyUuids() {
@@ -135,10 +151,46 @@ export class TauriStorage implements DataStorage {
 }
 
 const BROWSER_DATA_KEY = "data";
+const BROWSER_OIDC_STORE_KEY = "oidc";
 
 export class BrowserStorage implements DataStorage {
   public getImplName() {
     return "BrowserStorage";
+  }
+
+  public async getAllData() {
+    return this.getData();
+  }
+
+  public createOidcStateStore() {
+    return {
+      set: async (key: string, value: string) => {
+        const data = this.getOidcData();
+        data[key] = value;
+        this.setOidcData(data);
+      },
+      get: async (key: string) => {
+        return this.getOidcData()[key];
+      },
+      remove: async (key: string) => {
+        const data = this.getOidcData();
+        const value = data[key];
+        delete data[key];
+        this.setOidcData(data);
+        return value;
+      },
+      getAllKeys: async () => {
+        return Object.keys(this.getOidcData());
+      },
+    };
+  }
+
+  public async removeOldFields() {
+    const data = this.getData();
+    for (const key in data) {
+      delete data[key];
+    }
+    this.setData(data);
   }
 
   public async getJourneys() {
@@ -158,22 +210,6 @@ export class BrowserStorage implements DataStorage {
 
   public async getLastUsedStationDataVersion() {
     return this.getData()[STATION_DATA_VERSION_KEY];
-  }
-
-  public async getUser() {
-    const storageString = this.getData()[USER_KEY];
-
-    if (!storageString) return undefined;
-
-    return User.fromStorageString(storageString);
-  }
-
-  public async setUser(user: User | undefined) {
-    const data = this.getData();
-
-    data[USER_KEY] = user?.toStorageString();
-
-    this.setData(data);
   }
 
   public async getDeletedJourneyUuids() {
@@ -219,18 +255,34 @@ export class BrowserStorage implements DataStorage {
   }
 
   private getData() {
-    const compressed = localStorage.getItem(BROWSER_DATA_KEY);
+    return this.getCompressedJsonData(BROWSER_DATA_KEY);
+  }
+
+  private setData(data: object) {
+    this.setCompressedJsonData(BROWSER_DATA_KEY, data);
+  }
+
+  private getOidcData() {
+    return this.getCompressedJsonData(BROWSER_OIDC_STORE_KEY);
+  }
+
+  private setOidcData(data: object) {
+    this.setCompressedJsonData(BROWSER_OIDC_STORE_KEY, data);
+  }
+
+  private getCompressedJsonData(key: string) {
+    const compressed = localStorage.getItem(key);
     if (!compressed) return {};
 
     const json = LZString.decompress(compressed);
     return json ? JSON.parse(json) : {};
   }
 
-  private setData(data: object) {
+  private setCompressedJsonData(key: string, data: object) {
     const json = JSON.stringify(data);
     const compressed = LZString.compress(json);
 
-    localStorage.setItem(BROWSER_DATA_KEY, compressed);
+    localStorage.setItem(key, compressed);
   }
 }
 

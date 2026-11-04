@@ -10,13 +10,17 @@ export const SYNC_URL = import.meta.env.VITE_STATIONARY_SYNC_URL ?? "https://sta
 const MAX_SYNC_ATTEMPTS = 3;
 
 const redirectNavigator = isTauri() ? new TauriNavigator() : undefined;
+const oidcStore = getStorage().createOidcStateStore();
 
 export const userManager = new UserManager({
   authority: "https://auth.tangledwires.co.uk/realms/master",
   client_id: "stationary-sync",
   redirect_uri: getRedirectURI(),
+  post_logout_redirect_uri: getLogoutRedirectURI(),
   response_type: "code",
   scope: "openid profile offline_access",
+  stateStore: oidcStore,
+  userStore: oidcStore,
 }, redirectNavigator);
 
 export async function login() {
@@ -30,20 +34,27 @@ export async function login() {
 
 export async function logout() {
   console.log("Logging out...");
-  await getStorage().setUser(undefined);
+  await userManager.signoutRedirect();
 }
 
 export async function handleCallback(url: string) {
   const user = await userManager.signinCallback(url);
   console.log(`Logged in as ${user?.profile.name} (${user?.profile.email})`);
-  await getStorage().setUser(user);
 }
 
 export function getRedirectURI() {
-  if (!isTauri()) {
-    return window.location.origin + "/auth/callback";
-  } else {
+  if (isTauri()) {
     return "stationary://auth/callback";
+  } else {
+    return window.location.origin + "/auth/callback";
+  }
+}
+
+export function getLogoutRedirectURI() {
+  if (isTauri()) {
+    return "stationary://"
+  } else {
+    return window.location.origin;
   }
 }
 
@@ -102,7 +113,7 @@ export class StationarySync {
   }
 
   private static async getAxios() {
-    const user = await getStorage().getUser();
+    const user = await userManager.getUser();
 
     return axios.create({
       headers: {

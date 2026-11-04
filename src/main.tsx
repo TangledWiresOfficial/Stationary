@@ -12,6 +12,7 @@ import '@patternfly/patternfly/patternfly-charts.css';
 import "@patternfly/react-core/dist/styles/base.css";
 import "@saurl/tauri-plugin-safe-area-insets-css-api";
 import "./App.css";
+import {getStorage} from "./utils/storage.ts";
 
 // oidc-client-ts logging
 Log.setLogger(console);
@@ -60,6 +61,10 @@ await migrateAll();
 // Achievements
 
 await checkAchievements();
+
+// Remove old fields in storage
+
+await getStorage().removeOldFields();
 
 // React
 
