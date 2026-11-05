@@ -2,9 +2,9 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="68.037994mm"
-   height="67.499992mm"
-   viewBox="0 0 68.037994 67.499992"
+   width="67.500008mm"
+   height="67.500008mm"
+   viewBox="0 0 67.500007 67.500007"
    version="1.1"
    id="svg1"
    inkscape:version="1.4.4 (dcaf3e7d9e, 2026-05-05)"
@@ -23,9 +23,9 @@
      inkscape:pagecheckerboard="false"
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
-     inkscape:zoom="1.4142136"
-     inkscape:cx="-16.263456"
-     inkscape:cy="179.95868"
+     inkscape:zoom="5.6568544"
+     inkscape:cx="69.031298"
+     inkscape:cy="66.998366"
      inkscape:window-width="3440"
      inkscape:window-height="1366"
      inkscape:window-x="0"
@@ -38,26 +38,27 @@
      inkscape:label="Base"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-74.436052,-112.43972)">
+     transform="translate(-74.43605,-112.43971)">
     <ellipse
-       style="fill:#ffcd00;fill-opacity:1;stroke:#ffcd00;stroke-width:3.49999;stroke-linecap:round;stroke-linejoin:round"
+       style="fill:#ffcd00;fill-opacity:1;stroke:#ffcd00;stroke-width:3.48613;stroke-linecap:round;stroke-linejoin:round"
        id="path1"
-       cx="108.45505"
+       cx="108.18605"
        cy="146.18971"
-       rx="32.269001"
-       ry="32" />
+       rx="32.006935"
+       ry="32.006931" />
     <ellipse
-       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:3.49999;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:0.10498"
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:3.48613;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:0.10498"
        id="path1-1"
-       cx="108.45505"
+       cx="108.18606"
        cy="146.18971"
-       rx="32.269001"
-       ry="32" />
+       rx="32.006935"
+       ry="32.006939" />
   </g>
   <g
      inkscape:groupmode="layer"
      id="layer2"
-     inkscape:label="Track">
+     inkscape:label="Track"
+     transform="translate(1.505561e-5,1.2853584e-5)">
     <rect
        style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:3.19504;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:0.10498"
        id="rect1"

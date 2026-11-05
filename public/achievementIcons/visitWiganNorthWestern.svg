@@ -25,8 +25,8 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
      inkscape:zoom="2.8284273"
-     inkscape:cx="39.774754"
-     inkscape:cy="138.23937"
+     inkscape:cx="84.676032"
+     inkscape:cy="157.33125"
      inkscape:window-width="3440"
      inkscape:window-height="1366"
      inkscape:window-x="0"
@@ -58,10 +58,11 @@
        id="image1"
        x="61.033031"
        y="112.43972"
-       clip-path="url(#clipPath2)" /><ellipse
-       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:3.49999;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:0.10498"
+       clip-path="url(#clipPath2)"
+       transform="matrix(0.99209274,0,0,1,0.5885855,0)" /><ellipse
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:3.48613;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:0.10498"
        id="path1-1"
-       cx="108.45505"
+       cx="108.18605"
        cy="146.18971"
-       rx="32.269001"
-       ry="32" /></g></svg>
+       rx="32.006935"
+       ry="32.006931" /></g></svg>

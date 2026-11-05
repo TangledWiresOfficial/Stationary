@@ -2,9 +2,9 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="68.037994mm"
+   width="67.5mm"
    height="67.499992mm"
-   viewBox="0 0 68.037994 67.499992"
+   viewBox="0 0 67.5 67.499992"
    version="1.1"
    id="svg1"
    inkscape:version="1.4.4 (dcaf3e7d9e, 2026-05-05)"
@@ -23,9 +23,9 @@
      inkscape:pagecheckerboard="false"
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
-     inkscape:zoom="2.0000001"
-     inkscape:cx="81.999996"
-     inkscape:cy="120.74999"
+     inkscape:zoom="2.8284273"
+     inkscape:cx="88.56512"
+     inkscape:cy="142.12846"
      inkscape:window-width="3440"
      inkscape:window-height="1366"
      inkscape:window-x="0"
@@ -39,7 +39,7 @@
        id="Triangle"
        refX="0"
        refY="0"
-       orient="0.00"
+       orient="0"
        inkscape:stockid="Triangle arrow"
        markerWidth="1"
        markerHeight="1"
@@ -57,22 +57,22 @@
     <rect
        x="0"
        y="0"
-       width="257.15147"
-       height="255.11808"
+       width="257.15146"
+       height="255.11807"
        id="rect1" />
   </defs>
   <g
      inkscape:label="Base"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-74.436052,-112.43972)">
+     transform="translate(-74.43605,-112.43972)">
     <ellipse
-       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:3.49999;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:0.10498"
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:3.48613;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:0.10498"
        id="path1-1"
-       cx="108.45505"
+       cx="108.18605"
        cy="146.18971"
-       rx="32.269001"
-       ry="32" />
+       rx="32.006935"
+       ry="32.006931" />
     <circle
        style="fill:#e5e5e5;stroke:none;stroke-width:2.382;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
        id="path1"
@@ -80,17 +80,17 @@
        cy="146.18971"
        r="2" />
     <path
-       style="fill:none;stroke:#e5e5e5;stroke-width:2.382;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Triangle)"
+       style="fill:none;stroke:#e5e5e5;stroke-width:2.38281;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Triangle)"
        id="path2"
        sodipodi:type="arc"
-       sodipodi:cx="108.80551"
-       sodipodi:cy="146.18971"
-       sodipodi:rx="19.793751"
-       sodipodi:ry="19.793751"
+       sodipodi:cx="108.80559"
+       sodipodi:cy="146.2041"
+       sodipodi:rx="19.79327"
+       sodipodi:ry="19.807728"
        sodipodi:start="3.6651914"
        sodipodi:end="2.6179939"
        sodipodi:arc-type="arc"
-       d="m 91.66362,136.29284 a 19.793751,19.793751 0 0 1 22.26489,-9.22242 19.793751,19.793751 0 0 1 14.67075,19.11929 19.793751,19.793751 0 0 1 -14.67075,19.1193 19.793751,19.793751 0 0 1 -22.26489,-9.22242"
+       d="m 91.664113,136.30024 a 19.79327,19.807728 0 0 1 22.264347,-9.22893 19.79327,19.807728 0 0 1 14.6704,19.13279 19.79327,19.807728 0 0 1 -14.6704,19.1328 19.79327,19.807728 0 0 1 -22.264347,-9.22893"
        sodipodi:open="true" />
   </g>
 </svg>

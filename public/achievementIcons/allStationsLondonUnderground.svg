@@ -2,9 +2,9 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="68.037994mm"
+   width="67.5mm"
    height="67.499992mm"
-   viewBox="0 0 68.037994 67.499992"
+   viewBox="0 0 67.5 67.499992"
    version="1.1"
    id="svg1"
    inkscape:version="1.4.4 (dcaf3e7d9e, 2026-05-05)"
@@ -23,9 +23,9 @@
      inkscape:pagecheckerboard="false"
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
-     inkscape:zoom="2.0000001"
-     inkscape:cx="-72.499996"
-     inkscape:cy="118.74999"
+     inkscape:zoom="2.8284273"
+     inkscape:cx="246.24992"
+     inkscape:cy="117.02617"
      inkscape:window-width="3440"
      inkscape:window-height="1366"
      inkscape:window-x="0"
@@ -37,13 +37,13 @@
     <rect
        x="0"
        y="0"
-       width="257.15147"
-       height="255.11808"
+       width="257.15146"
+       height="255.11807"
        id="rect1" />
   </defs>
   <g
      id="g11"
-     transform="matrix(0.61365838,0,0,0.61365838,-12.005381,-12.275622)">
+     transform="matrix(0.61363572,0,0,0.61365838,-12.272679,-12.275622)">
     <path
        d="m 0.626,-54.996 a 55,55 0 0 1 28.581,8.392 l -4.866,7.572 A 46,46 0 0 0 0.626,-45.996 Z"
        transform="translate(75,75)"
