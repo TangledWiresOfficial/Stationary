@@ -2,9 +2,9 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="68.037994mm"
+   width="67.5mm"
    height="67.499992mm"
-   viewBox="0 0 68.037994 67.499992"
+   viewBox="0 0 67.5 67.499992"
    version="1.1"
    id="svg1"
    inkscape:version="1.4.4 (dcaf3e7d9e, 2026-05-05)"
@@ -36,8 +36,8 @@
      id="defs1"><rect
        x="0"
        y="0"
-       width="257.15147"
-       height="255.11808"
+       width="257.15146"
+       height="255.11807"
        id="rect1" /><clipPath
        clipPathUnits="userSpaceOnUse"
        id="clipPath2"><ellipse
@@ -50,7 +50,7 @@
      inkscape:label="Base"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-74.436052,-112.43972)"><image
+     transform="translate(-74.43605,-112.43972)"><image
        width="90.610703"
        height="67.862442"
        preserveAspectRatio="none"

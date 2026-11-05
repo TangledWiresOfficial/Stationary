@@ -21,15 +21,17 @@ export const Achievements: Record<string, Achievement> = {
     iconPath: "/achievementIcons/visitWiganNorthWestern.svg",
 
     conditionCheck: async (storage) => {
-      const journeys = await storage.getJourneys();
+      return singleStationCheck("wiganNorthWestern", storage);
+    }
+  },
+  visitBasingstoke: {
+    name: "Basingstoke",
+    description: "Visit Basingstoke",
+    quote: "By tilting the device four-dimensionally, you can access Water World, Low Resolution World, Wibbly Wobbly World, and Basingstoke.",
+    iconPath: "/achievementIcons/visitBasingstoke.svg",
 
-      for (const j of journeys) {
-        for (const p of j.parts) {
-          if (p.station === "wiganNorthWestern") return true;
-        }
-      }
-
-      return false;
+    conditionCheck: async (storage) => {
+      return singleStationCheck("basingstoke", storage);
     }
   },
   journeySameStartAndEnd: {
@@ -97,6 +99,24 @@ export type ObtainedAchievement = {
   achievementId: AchievementId;
   obtainedAt: Date;
 };
+
+/**
+ * Check if a single station has been visited.
+ *
+ * @param station The station to check
+ * @param storage Storage
+ */
+async function singleStationCheck(station: StationId, storage: DataStorage) {
+  const journeys = await storage.getJourneys();
+
+  for (const j of journeys) {
+    for (const p of j.parts) {
+      if (p.station === station) return true;
+    }
+  }
+
+  return false;
+}
 
 /**
  * Check if all stations on specified lines have been visited.
